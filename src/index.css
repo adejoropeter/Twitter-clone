@@ -2,3 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* table,th,td{
+  border: 1px solid black;
+  text-align: left;
+}
+th{
+    background-color: #EEE8F8;
+} */
+
+.content-dahboard div:not(:last-child){
+    border-bottom: 1px solid #C7AFE4;
+
+}

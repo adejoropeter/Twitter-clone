@@ -1,12 +1,12 @@
 import React from "react";
 import TransactionSta from "./TransactionSta";
 
-const DashboardPart2 = () => {
+const DashboardCol2 = () => {
   return (
-    <div className="border w-full h-fit">
+    <div className="border w-full h-fit p-6  rounded-lg">
       <TransactionSta />
     </div>
   );
 };
 
-export default DashboardPart2;
+export default DashboardCol2;

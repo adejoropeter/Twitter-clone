@@ -2,7 +2,7 @@ import React from "react";
 import { HiOutlineCash, HiOutlineChartSquareBar } from "react-icons/hi";
 import { BsWallet2 } from "react-icons/bs";
 
-const DashboardPart1 = () => {
+const DashboardCol1 = () => {
   return (
     <div className="flex flex-col w-full gap-4 mb-10">
       <div className="flex">
@@ -42,4 +42,4 @@ const DashboardPart1 = () => {
   );
 };
 
-export default DashboardPart1;
+export default DashboardCol1;

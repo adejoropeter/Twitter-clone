@@ -1,12 +1,14 @@
 import React from "react";
-import DashboardPart1 from "./DashboardPart1";
-import DashboardPart2 from "./DashboardPart2.jsx";
+import DashboardCol1 from "./dashboardCol1/DashboardCol1";
+import DashboardCol2 from "./dashboardCol2/DashboardCol2.jsx";
+import DashboardCol3 from "./dashboardCol3/DashboardCol3";
 
 const Dashboard = () => {
   return (
     <div className="w-full">
-      <DashboardPart1 />
-      <DashboardPart2 />
+      <DashboardCol1 />
+      <DashboardCol2 />
+      <DashboardCol3/>
     </div>
   );
 };

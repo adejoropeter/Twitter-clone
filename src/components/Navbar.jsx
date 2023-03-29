@@ -24,7 +24,7 @@ const Navbar = () => {
         }}
       >
         <div className="flex items-center gap-3">
-          <BsGrid size="20px"/>
+          <BsGrid className="text-lg"/>
           <p>Dashboard</p>
         </div>
       </NavLink>
@@ -37,7 +37,7 @@ const Navbar = () => {
         }}
       >
         <div className="flex items-center gap-3">
-          <BsFillBarChartLineFill size="20px"/>
+          <BsFillBarChartLineFill className="text-lg"/>
           <p>Company Branch</p>
         </div>
       </NavLink>
@@ -50,7 +50,7 @@ const Navbar = () => {
         }}
       >
         <div className="flex items-center gap-3">
-          <BsJournalBookmark size="20px"/>
+          <BsJournalBookmark className="text-lg"/>
           <p>Transaction History</p>
         </div>
       </NavLink>
@@ -63,7 +63,7 @@ const Navbar = () => {
         }}
       >
         <div className="flex items-center gap-3">
-          <TbCashBanknote size="25px"/>
+          <TbCashBanknote className="text-lg"/>
           <p>Cash out</p>
         </div>
       </NavLink>
@@ -76,7 +76,7 @@ const Navbar = () => {
         }}
       >
         <div className="flex items-center gap-3">
-          <FiSettings size="20px"/>
+          <FiSettings className="text-lg"/>
           <p>Settings</p>
         </div>
       </NavLink>
