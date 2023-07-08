@@ -44,9 +44,9 @@ const Explore = () => {
       </div>
       {/* Side bar */}
       {
-        localStorage.getItem("user") === null ?(
+        localStorage.getItem("user")  ?(
           
-      <div className="w-[75%] px-10 py-4 h-fit sticky top-0">
+      <div className=" w-[75%] px-10 py-4 h-fit sticky top-0">
         <div className="w-5/6 rounded-2xl p-4 border border-[#16181c] gap-4 h-fit flex flex-col">
           <div className="flex-col flex ">
             <h2 className=" mb-4 text-xl font-bold text-white">

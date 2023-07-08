@@ -134,13 +134,30 @@ const Login = () => {
 
               <LoginButton
                 handleClickEvent={currIdx === 0 ? GoToNext : handleSubmit}
-                text={currIdx === 1 ? (loading ? "Loading" : "Log in") : "Next"}
+                text={
+                  currIdx === 1 ? (
+                    loading ? (
+                      <div
+                        class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#1D9BF0] border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status"
+                      >
+                        <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                          Loading...
+                        </span>
+                      </div>
+                    ) : (
+                      "Log in"
+                    )
+                  ) : (
+                    "Next"
+                  )
+                }
                 textColor="black"
                 space={"10px"}
                 disabled={
                   currIdx === 1
                     ? inputDetails[1]?.value.includes("twitter") ||
-                      inputDetails[1]?.value.length<=5
+                      inputDetails[1]?.value.length <= 5
                     : !inputDetails[0]?.value ||
                       inputDetails[0]?.value.includes("twitter") ||
                       !inputDetails[0]?.value.includes("@gmail.com")
