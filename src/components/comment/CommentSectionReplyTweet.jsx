@@ -7,17 +7,17 @@ import { TbCalendarTime } from "react-icons/tb";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { addToTweetArr } from "../redux/tweetSlice";
-import { clearInputField } from "../redux/inputFieldSlice";
-import Button from "./Button";
+import { addToTweetArr } from "../../redux/tweetSlice";
+import { clearInputField } from "../../redux/inputFieldSlice";
+import Button from "../button/Button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "../firebase";
-const AddTweet = () => {
+import { auth, db } from "../../firebase";
+const CommentSectionReplyTweet = () => {
   const dispatch = useDispatch();
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
-  const state = useSelector((state) => state.input.value);
-  const bool = useSelector((state) => state.input.bool);
+  const state = useSelector((state) => state.comment.value);
+  const bool = useSelector((state) => state.comment.bool);
   const tweet = useSelector((state) => state.post.tweet);
   const name = useSelector((state) => state.user.user_details);
 
@@ -28,23 +28,23 @@ const AddTweet = () => {
     ?.filter((_, i) => i < 35)
     ?.map((a) => a);
   const handleAddTweet = async () => {
-    console.log(tweet)
-    dispatch(
-      addToTweetArr({
-        text: text?.join("") || "Nothing here",
-        name: "Adejoro Peter",
-        username: "@ade_peter",
-        comment: 1,
-        likes: 1,
-        retweet: 3,
-      })
-    );
-    await addDoc(collection(db, "tweets"), {
-      text: text?.join(""),
-      name: name?.name,
-      // profilePic:
-      timeStamp: serverTimestamp(),
-    });
+    // console.log(tweet);
+    // dispatch(
+    //   addToCommentArr({
+    //     text: text?.join("") || "Nothing here",
+    //     name: "Adejoro Peter",
+    //     username: "@ade_peter",
+    //     comment: 1,
+    //     likes: 1,
+    //     retweet: 3,
+    //   })
+    // );
+    // await addDoc(collection(db, "tweets"), {
+    //   text: text?.join(""),
+    //   name: name?.name,
+    //   // profilePic:
+    //   timeStamp: serverTimestamp(),
+    // });
     console.log(auth);
     dispatch(clearInputField());
   };
@@ -127,22 +127,15 @@ const AddTweet = () => {
           </div>
         ) : null}
         <Button
-          text="Tweet"
+          text="Reply"
           onClickFn={handleAddTweet}
           color={!state?.value?.length ? "#808080" : "#ffffff"}
           bg={!state?.value?.length ? "#005D3E" : "#00BA7C"}
           // disabled={!state?.value?.length}
         />
-        {/* <button
-          disabled={!state?.value?.length}
-          onClick={handleAddTweet}
-          className="w-20 h-10 bg-[#00BA7C] rounded-full disabled:bg-[#005D3E] disabled:text-[#808080] font-bold text-md flex justify-center items-center"
-        >
-          Tweet
-        </button> */}
       </div>
     </div>
   );
 };
 
-export default AddTweet;
+export default CommentSectionReplyTweet;

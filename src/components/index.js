@@ -1,8 +1,8 @@
 import { lazy } from "react";
 
 export { default as Navbar } from "./Navbar";
-export { default as UploadTweet } from "./UploadTweet";
-export { default as Tweet } from "./Tweet";
+export { default as UploadTweet } from "./tweet/UploadTweet";
+export { default as Tweet } from "./tweet/Tweet";
 export const Following = lazy(() => import("../pages/home/Following"));
 export const ForYou = lazy(() => import("../pages/home/ForYou"));
 export const Message = lazy(() => import("../pages/message/Message"));

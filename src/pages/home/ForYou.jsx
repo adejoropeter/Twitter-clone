@@ -1,7 +1,7 @@
 import { collection, getDoc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Tweet from "../../components/Tweet";
+import Tweet from "../../components/tweet/Tweet";
 import { db } from "../../firebase";
 import { addToTweetArr } from "../../redux/tweetSlice";
 import { BiDotsHorizontal } from "react-icons/bi";
@@ -10,16 +10,16 @@ import { TbChartAreaLine } from "react-icons/tb";
 
 const ForYou = () => {
   const dispatch = useDispatch();
-const tweet=useSelector(state=>state.post.tweet)
+  const tweet = useSelector((state) => state.post.tweet);
   const name = useSelector((state) => state.user.user_details);
   // const [tweet, setTweet] = useState([
   //   { name: "Adejoro Peter", text: "lorem ipsum" },
   // ]);
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchTweet = async () => {
       let list = [];
-      setLoading(true)
+      setLoading(true);
 
       try {
         const querySnapshot = await getDocs(collection(db, "tweets"));
@@ -29,7 +29,7 @@ const tweet=useSelector(state=>state.post.tweet)
         // dispatch(addToTweetArr(list));
         // setTweet(list)
         // console.log(list)
-        setLoading(false)
+        setLoading(false);
       } catch (error) {}
     };
     fetchTweet();

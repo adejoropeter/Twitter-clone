@@ -1,18 +1,52 @@
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import UploadTweet from "../../components/UploadTweet";
+import UploadTweet from "../../components/tweet/UploadTweet";
 import HomeRightBar from "./HomeRightBar";
 import { AiOutlineTwitter } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { addToTweetArr } from "../../redux/tweetSlice";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { clearInputField } from "../../redux/inputFieldSlice";
+import { auth, db } from "../../firebase";
 const Home = () => {
   const [nav, setNav] = useState("for you");
+  const tweet = useSelector((state) => state.post.tweet);
+  const state = useSelector((state) => state.input.value);
+  const profileName = useSelector((state) => state.user.user_details);
+  const dispatch = useDispatch();
+  const inputVal = state?.value?.join("");
+  const text = inputVal
+    ?.split("")
+    ?.filter((_, i) => i < 35)
+    ?.map((a) => a);
+  const handleAddTweet = async () => {
+    console.log(tweet);
+    dispatch(
+      addToTweetArr({
+        text: text?.join("") || "Nothing here",
+        profileName: "Adejoro Peter",
+        username: "@ade_peter",
+        comment: 1,
+        likes: 1,
+        retweet: 3,
+      })
+    );
+    await addDoc(collection(db, "tweets"), {
+      text: text?.join(""),
+      profileName: profileName?.name,
+      // profilePic:
+      timeStamp: serverTimestamp(),
+    });
+    console.log(auth);
+    dispatch(clearInputField());
+  };
   return (
     <div className="flex w-screen  sm:w-fit md:w-[60%] lg:w-full min-h-full   xsm:border-l-2  border-l-[#16181c]">
       <main className=" w-full min-h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
         <header className="border-b sticky w-full top-0 backdrop-blur-md border-[#16181c]   sm:h-[115px] blur-0 flex flex-col justify-between z-10">
-        
           <div className="pl-4 py-4 relative xsm:hidden block">
             <div className="absolute">
-              <img src="/ldl" className="bg-gray-300 w-8 h-8 rounded-full "/>
+              <img src="/ldl" className="bg-gray-300 w-8 h-8 rounded-full " />
             </div>
             <div className="flex justify-center">
               <AiOutlineTwitter className="text-[#00BA7C] " size={30} />
@@ -68,9 +102,9 @@ const Home = () => {
                 ></p>
               </div>
             </NavLink>
-          </div> 
+          </div>
         </header>
-        <UploadTweet />
+        <UploadTweet handleAddTweet={handleAddTweet} />
 
         <Outlet />
       </main>

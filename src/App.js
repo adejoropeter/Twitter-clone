@@ -25,6 +25,7 @@ import { auth, db } from "./firebase";
 import { signOut } from "firebase/auth";
 import { logout, showButton } from "./redux/LoginSlice";
 import axios from "axios";
+import Comment from "./pages/comment/Comment";
 // import { logout } from "./redux/LoginSlice";
 const App = () => {
   const { pathname } = useLocation();
@@ -35,6 +36,7 @@ const App = () => {
   const toggleButton = useSelector((state) => state.login.showLogoutButton);
   const user = useSelector((state) => state.user.user_details);
   const id = curr?.user?.uid;
+  const [urlName, setUrlName] = useState("");
   console.log(user);
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -83,29 +85,43 @@ const App = () => {
         <Suspense
           fallback={
             <div className="w-screen relative h-screen flex items-center">
-              <div className="flex w-full h-screen  animate-ping items-center absolute  gap-2  animate- transition-shadow justify-center">
+              {/* <div className="flex w-full h-screen  animate-ping items-center absolute  gap-2  animate- transition-shadow justify-center">
                 <span className=" h-3 w-3 rounded-full bg-[#200047] opacity-75"></span>
                 <span className="  rounded-full h-3 w-3 bg-[#200047]"></span>
                 <span className=" rounded-full h-3 w-3 bg-[#200047]"></span>
+              </div> */}
+              <div
+                class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#1D9BF0] border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite] mx-auto"
+                role="status"
+              >
+                <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                  Loading...
+                </span>
               </div>
             </div>
           }
         >
-        <Navbar />
-        <Routes>
-              <Route path="/" element={<Home />}>
-                <Route path="/following" element={<Following />}></Route>
-                <Route path="/foryou" element={<ForYou />}></Route>
-              </Route>
+          <Navbar />
+          {/* Navbar needs to be place inside each pages routes incase of an incorrect route */}
+          <Routes>
+            <Route path="/" element={<Home />}>
+              <Route path="/following" element={<Following />}></Route>
+              <Route path="/foryou" element={<ForYou />}></Route>
+            </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="/notifications" element={<Notification />}></Route>
 
               <Route path="/messages" element={<Message />}></Route>
             </Route>
             <Route path="/explore" element={<Explore />}></Route>
+            <Route path="/comment/:name" element={<Comment />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/settings" element={<Settings />}></Route>
+            <Route
+              path="*"
+              element={<div className="text-white">ERROR</div>}
+            ></Route>
           </Routes>
         </Suspense>
       </div>

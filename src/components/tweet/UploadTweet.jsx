@@ -1,20 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import { BsImageFill } from "react-icons/bs";
-import { RiFileGifFill } from "react-icons/ri";
-import { BiPlus, BiPoll, BiWorld } from "react-icons/bi";
-import { GrEmoji } from "react-icons/gr";
-import { TbCalendarTime } from "react-icons/tb";
-import { HiOutlineLocationMarker } from "react-icons/hi";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import DragDropInputComponent from "./DragDropInputComponent";
+import DragDropInputComponent from "../DragDropInputComponent";
 import UploadTweetInput from "./UploadTweetInput";
 import AddTweet from "./AddTweet";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useSelector } from "react-redux";
-const UploadTweet = ({}) => {
+import { BiWorld } from "react-icons/bi";
+const UploadTweet = ({ handleAddTweet }) => {
   const curr = useSelector((state) => state.login.currentUser);
-  const [bool, setBool] = useState(false); /* import it to a global state*/
   const [img, setImg] = useState("");
   const id = curr?.user?.uid;
   useEffect(() => {
@@ -33,6 +27,7 @@ const UploadTweet = ({}) => {
     // console.log(img);
     fetchData();
   }, []);
+
   return (
     <div className="flex h-fit p-5 gap-5  w-full border-b border-[#16181c]">
       <div className="bg-blue-400 w-fit"></div>
@@ -61,7 +56,7 @@ const UploadTweet = ({}) => {
           </div>
         </div>
 
-        <AddTweet />
+        <AddTweet handleAddTweet={handleAddTweet} />
       </div>
     </div>
   );

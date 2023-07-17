@@ -3,7 +3,7 @@ import React from "react";
 import { RiSettings3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { Tweet } from "../../components";
-import CustomButton from "../../components/CustomButton";
+import CustomButton from "../../components/button/CustomButton";
 import SignInWithGoogleButton from "../../components/SignInWithGoogleButton";
 import { auth, provider } from "../../firebase";
 import HomeRightBar from "../home/HomeRightBar";

@@ -1,5 +1,5 @@
 import React from "react";
-import UploadTweet from "../../components/UploadTweet";
+import UploadTweet from "../../components/tweet/UploadTweet";
 import { motion } from "framer-motion";
 const Following = () => {
   const listParent = {
@@ -35,7 +35,8 @@ const Following = () => {
       >
         {[1, 2, 3].map((a) => {
           return (
-            <motion.div key={a}
+            <motion.div
+              key={a}
               variants={listChild}
               animate="visible"
               initial="hidden"

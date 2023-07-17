@@ -7,7 +7,7 @@ import { auth } from "../../firebase";
 
 const HomeRightBar = () => {
   return (
-    <div className="lg:flex hidden h-fit sticky top-0  w-[75%]  overflow-hidden flex-col gap-6  py-4">
+    <div className="lg:flex hidden h-fit sticky top-0  w-[75%]  overflow-hidden flex-col gap-6  p-4">
       <div className="w-full h-fit bg-black pl- shadow-xl">
         <div className=" rounded-full flex items-center gap-2 px-2 sticky top-0 w-[350px] h-[53px] bg-[#202327] justify-between pl-6">
           <BiSearch  className="text-[#00BA7C] w-[10%] h-10 mt-1" size={""} />

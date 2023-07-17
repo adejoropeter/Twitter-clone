@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showIcons, stateValue } from "../redux/inputFieldSlice";
-import InputValue from "./InputValue";
+import { showIcons, stateValue } from "../../redux/commentSlice";
+import InputValue from "../tweet/InputValue";
+import CommentValue from "./CommentValue";
 
-const UploadTweetInput = () => {
+const CommentTweetInput = () => {
   const [inputBool, setInputBool] = useState(false);
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
   const ref = useRef(null);
-  const state = useSelector((state) => state.input.value);
-  const bool = useSelector((state) => state.input.bool);
+  const state = useSelector((state) => state.comment.value);
+  const bool = useSelector((state) => state.comment.bool);
 
   const dispatch = useDispatch();
   const changeInputPlaceHolder = () => {
@@ -30,7 +31,7 @@ const UploadTweetInput = () => {
 
   return (
     <>
-      <InputValue />
+      <CommentValue />
       <abbr title="Note: space is replaced with underscores ( _ )">
         <input
           onMouseEnter={mouseEnter}
@@ -62,4 +63,4 @@ const UploadTweetInput = () => {
   );
 };
 
-export default UploadTweetInput;
+export default CommentTweetInput;

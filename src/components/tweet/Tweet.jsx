@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiDotsHorizontal, BiDownload } from "react-icons/bi";
 import { FaComment, FaRetweet } from "react-icons/fa";
 import { TbChartAreaLine } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router";
+import {
+  setShowTweetToTrue,
+  setUserUrlName,
+  viewTweet,
+} from "../../redux/tweetSlice";
 
 const Tweet = ({ tweet }) => {
+  const urlName = useSelector((state) => state.post.userUrlName);
+  const dispatch = useDispatch();
+  const navigate = useNavigate("");
+  const { pathname } = useLocation();
   const handleClick = () => {
-    console.log("Click");
-    console.log(tweet);
+    dispatch(viewTweet(tweet));
+    dispatch(setUserUrlName(tweet?.profileName));
+    navigate(`/comment/${tweet.profileName}`);
   };
   const handleMouseEnter = () => {
     console.log(tweet?.name);
@@ -18,10 +30,7 @@ const Tweet = ({ tweet }) => {
       onClick={handleClick}
     >
       <div className="flex gap-4 w-full hover:bg-[#080808] relative">
-        <div
-          className="w-10 absolute"
-          onMouseEnter={handleMouseEnter}
-        >
+        <div className="w-10 absolute" onMouseEnter={handleMouseEnter}>
           <img
             src={"/assets/image.png"}
             alt=""
@@ -33,7 +42,7 @@ const Tweet = ({ tweet }) => {
           <div className="flex justify-between  h-full  ">
             <div className="flex gap-2">
               <p className="w-20 sm:w-40 lg:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
-                {tweet?.name}
+                {tweet?.profileName}
               </p>
               <div className="text-[#6A6F74]  flex gap-1  ">
                 <p>{tweet?.username}</p>

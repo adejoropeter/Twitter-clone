@@ -3,14 +3,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { clearLoginInputField } from "../redux/LoginSlice";
 import { clearSignupInputField } from "../redux/signupSlice";
-import Button from "./Button";
+import Button from "./button/Button";
 
-const TwitterLoginSignup = ({
-
-}) => {
+const TwitterLoginSignup = ({}) => {
   const navigate = useNavigate();
   const params = useParams();
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   return (
     <div className="w-full h-fit py-3 bg-[#358AC4] sticky bottom-0 flex justify-around  items-center select-none gap-10">
       <div className="text-white ">
@@ -27,7 +25,7 @@ const TwitterLoginSignup = ({
           border="1px solid white"
           onClickFn={() => {
             navigate("/login");
-            dispatch(clearLoginInputField())
+            dispatch(clearLoginInputField());
           }}
         />
         <Button
@@ -37,8 +35,7 @@ const TwitterLoginSignup = ({
           text="Sign up"
           onClickFn={() => {
             navigate("/signup");
-          dispatch(clearSignupInputField())
-           
+            dispatch(clearSignupInputField());
           }}
         />
       </div>
