@@ -16,7 +16,7 @@ const CommentTweetInput = () => {
   const changeInputPlaceHolder = () => {
     const value = Object.values(ref.current?.attributes);
     value[1].value = inputBool
-      ? "What's happening"
+      ? "Tweet your reply!"
       : "Minimum of 35 characters🙏";
   };
 

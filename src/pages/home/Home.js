@@ -20,7 +20,6 @@ const Home = () => {
     ?.filter((_, i) => i < 35)
     ?.map((a) => a);
   const handleAddTweet = async () => {
-    console.log(tweet);
     dispatch(
       addToTweetArr({
         text: text?.join("") || "Nothing here",
@@ -31,13 +30,13 @@ const Home = () => {
         retweet: 3,
       })
     );
-    await addDoc(collection(db, "tweets"), {
-      text: text?.join(""),
-      profileName: profileName?.name,
+    // await addDoc(collection(db, "tweets"), {
+    //   text: text?.join(""),
+    //   profileName: profileName?.name,
       // profilePic:
-      timeStamp: serverTimestamp(),
-    });
-    console.log(auth);
+    //   timeStamp: serverTimestamp(),
+    // });
+    // console.log(auth);
     dispatch(clearInputField());
   };
   return (

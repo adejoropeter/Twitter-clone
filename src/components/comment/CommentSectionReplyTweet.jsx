@@ -7,18 +7,21 @@ import { TbCalendarTime } from "react-icons/tb";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { addToTweetArr } from "../../redux/tweetSlice";
+import { addToTweetArr, setAddComment } from "../../redux/tweetSlice";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import Button from "../button/Button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase";
+import { clearCommentInputField } from "../../redux/commentSlice";
 const CommentSectionReplyTweet = () => {
   const dispatch = useDispatch();
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
   const state = useSelector((state) => state.comment.value);
   const bool = useSelector((state) => state.comment.bool);
-  const tweet = useSelector((state) => state.post.tweet);
+  const tweets = useSelector((state) => state.post.tweet);
+  const tweet = useSelector((state) => state.post.viewTweet);
+
   const name = useSelector((state) => state.user.user_details);
 
   const [img, setImg] = useState("");
@@ -29,24 +32,18 @@ const CommentSectionReplyTweet = () => {
     ?.map((a) => a);
   const handleAddTweet = async () => {
     // console.log(tweet);
-    // dispatch(
-    //   addToCommentArr({
-    //     text: text?.join("") || "Nothing here",
-    //     name: "Adejoro Peter",
-    //     username: "@ade_peter",
-    //     comment: 1,
-    //     likes: 1,
-    //     retweet: 3,
-    //   })
-    // );
+    dispatch(
+      setAddComment({id:tweet.id,profileName:"Ade",text:text})
+    );
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),
     //   name: name?.name,
     //   // profilePic:
     //   timeStamp: serverTimestamp(),
     // });
-    console.log(auth);
-    dispatch(clearInputField());
+    console.log(tweet)
+    console.log(tweets)
+    dispatch(clearCommentInputField());
   };
   return (
     <div className="flex sm:items-center gap-2 justify-between flex-col sm:flex-row">
@@ -131,7 +128,7 @@ const CommentSectionReplyTweet = () => {
           onClickFn={handleAddTweet}
           color={!state?.value?.length ? "#808080" : "#ffffff"}
           bg={!state?.value?.length ? "#005D3E" : "#00BA7C"}
-          // disabled={!state?.value?.length}
+          disabled={!state?.value?.length}
         />
       </div>
     </div>

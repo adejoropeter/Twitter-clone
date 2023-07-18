@@ -14,7 +14,7 @@ export const inputFieldSlice = createSlice({
       state.bool = action.payload;
     },
     clearInputField: (state) => {
-      state.value = "";
+      state.value = [];
     },
   },
 });

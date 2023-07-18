@@ -111,7 +111,7 @@ const AddTweet = ({ handleAddTweet }) => {
           onClickFn={handleAddTweet}
           color={!state?.value?.length ? "#808080" : "#ffffff"}
           bg={!state?.value?.length ? "#005D3E" : "#00BA7C"}
-          // disabled={!state?.value?.length}
+          disabled={!state?.value?.length}
         />
         {/* <button
           disabled={!state?.value?.length}
