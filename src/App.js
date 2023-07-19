@@ -33,7 +33,6 @@ const App = () => {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.login.currentUser);
   const curr = useSelector((state) => state.login.currentUser);
-  const toggleButton = useSelector((state) => state.login.showLogoutButton);
   const user = useSelector((state) => state.user.user_details);
   const id = curr?.user?.uid;
   const [urlName, setUrlName] = useState("");
@@ -55,18 +54,7 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      // localStorage.removeItem("user");
-      dispatch(logout());
-      navigate("/explore");
-      // window.location.reload()
-      dispatch(showButton());
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
   if (pathname === "/signup") {
     dispatch(resetCurr());
   }
@@ -102,7 +90,7 @@ const App = () => {
           }
         >
           <Navbar />
-          {/* Navbar needs to be place inside each pages routes incase of an incorrect route */}
+          {/* Navbar needs to be placed inside each pages routes incase of an incorrect route */}
           <Routes>
             <Route path="/" element={<Home />}>
               <Route path="/following" element={<Following />}></Route>
@@ -126,16 +114,7 @@ const App = () => {
         </Suspense>
       </div>
       {currentUser ? null : <TwitterLoginSignup />}
-      {toggleButton ? (
-        <div className="fixed max-w-[400px] top-[450px]  sm:left-32 translate-x-0 z h-fit p-2  bg-[#000000] rounded-lg shadow-[0px_0px_10px_3px] shadow-white">
-          <h3
-            onClick={handleLogout}
-            className="text-white hover:bg-[#16181C] cursor-pointer flex justify-center bg-black w-full "
-          >
-            Log out {"kkks"}
-          </h3>
-        </div>
-      ) : null}
+      
     </>
   );
 };

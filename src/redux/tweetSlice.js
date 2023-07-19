@@ -10,20 +10,24 @@ export const tweetSlice = createSlice({
         profileName: "Adejoro Peter sks djdjdjdjjdjjdj",
         text: "lorem ipsum",
         comment: [{ profileName: "Adejoro Samson", text: "I Hate you" }],
+        retweeted: false,
       },
       {
         id: 1,
         profileName: "Peter Samson",
         text: "lorem ipsum",
+        retweeted: true,
         comment: [{ profileName: "Peter Samson", text: "I love you" }],
       },
       {
         id: 2,
+        retweeted: false,
         profileName: "Adejoro Joshua",
         text: "lorem ipsum",
         comment: [{ profileName: "Adejoro Joshua", text: "I Dislike you" }],
       },
     ],
+    retweetedTweet: [],
     viewTweet: null,
     showTweet: false,
   },
@@ -44,14 +48,41 @@ export const tweetSlice = createSlice({
       state.tweet = state.tweet.map((twt, id) => {
         return twt.id === action.payload.id
           ? {
-            ...twt, comment: [...twt.comment, {
-              profileName: action.payload.profileName, text:action.payload.text}]
-          }
+              ...twt,
+              comment: [
+                ...twt.comment,
+                {
+                  profileName: action.payload.profileName,
+                  text: action.payload.text,
+                },
+              ],
+            }
           : twt;
       });
     },
+    setRetweet: (state, action) => {
+      state.tweet = state.tweet.map((twt, id) => {
+        return twt.id === action.payload.id
+          ? {
+              ...twt,
+              retweeted: !twt.retweeted,
+            }
+          : twt;
+      });
+    },
+    setAddToRetweetArr: (state) => {
+      state.retweetedTweet = state.tweet.filter(
+        (twt) => twt.retweeted !== false
+      );
+    },
   },
 });
-export const { addToTweetArr, viewTweet, setUserUrlName, setAddComment } =
-  tweetSlice.actions;
+export const {
+  addToTweetArr,
+  setRetweet,
+  viewTweet,
+  setUserUrlName,
+  setAddComment,
+  setAddToRetweetArr,
+} = tweetSlice.actions;
 export default tweetSlice.reducer;

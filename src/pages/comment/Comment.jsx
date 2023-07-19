@@ -91,11 +91,9 @@ const Comment = () => {
                                 className=""
                               />
                             </div>
-                            <div>
-                              <p>
-                                {a?.text} Lorem ipsum dolor sit amet
-                                consectetur, adipisicing elit. Cupiditate, hic.
-                              </p>
+                            <div className="flex gap-2">
+                              <p className="text-[#1D9BF0]">@{ tweet.profileName}</p>
+                              <p>{a?.text}</p>
                             </div>
                           </div>
                         </div>

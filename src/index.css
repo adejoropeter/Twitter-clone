@@ -40,7 +40,7 @@ input::-webkit-inner-spin-button {
   transition: transform 0.3s ease-in-out;
 }
 
-.tweet-border:not(:last-child){
+.tweet-border{
   border-bottom: 1px solid #16181c;
 
 }

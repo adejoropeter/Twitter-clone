@@ -5,20 +5,32 @@ import { TbChartAreaLine } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import {
+  setAddToRetweetArr,
+  setRetweet,
   setShowTweetToTrue,
   setUserUrlName,
   viewTweet,
 } from "../../redux/tweetSlice";
+import { auth } from "../../firebase";
 
 const Tweet = ({ tweet }) => {
   const urlName = useSelector((state) => state.post.userUrlName);
+  const tweets = useSelector((state) => state.post.retweetedTweet);
+
   const dispatch = useDispatch();
   const navigate = useNavigate("");
+  
   const { pathname } = useLocation();
-  const handleClick = () => {
+  // console.log(auth.currentUser);
+  useEffect(() => {
+    dispatch(setAddToRetweetArr())
+  },[tweet.retweeted])
+  const handleClick = (e) => {
+    // e.stopPropagation()
     dispatch(viewTweet(tweet));
     dispatch(setUserUrlName(tweet?.profileName));
     navigate(`/comment/${tweet.profileName}`);
+    // console.log("Parent!!!!!!!!!!!!!!");
   };
   const handleMouseEnter = () => {
     console.log(tweet?.name);
@@ -26,7 +38,7 @@ const Tweet = ({ tweet }) => {
   };
   return (
     <div
-      className="p-5 w-full  hover:bg-[#080808] cursor-pointer tweet-border overflow-hidden "
+      className="px-5 py-2 w-full  hover:bg-[#080808] cursor-pointer tweet-border overflow-hidden "
       onClick={handleClick}
     >
       <div className="flex gap-4 w-full hover:bg-[#080808] relative">
@@ -67,12 +79,20 @@ const Tweet = ({ tweet }) => {
             </p>
           </div>
 
-          <div className="flex gap-2 w-full">
+          <div className="flex gap-4 w-full">
             <div className="flex items-center gap-2 text-[#6A6F74]">
               <FaComment color="" />
-              <p>1,222</p>
+              <p>{tweet?.comment?.length}</p>
             </div>
-            <div className="flex items-center gap-2 text-[#6A6F74]">
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(setRetweet({ id: tweet.id }));
+                // dispatch(setAddToRetweetArr())
+                console.log(tweets)
+              }}
+              className="flex items-center gap-2 text-[#6A6F74]"
+            >
               <FaRetweet />
               <p>1,222</p>
             </div>

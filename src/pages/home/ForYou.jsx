@@ -34,17 +34,18 @@ const ForYou = () => {
     };
     fetchTweet();
   }, []);
-  console.log(tweet);
   return (
     <>
       {/* <div className="border-b" >hjj</div> */}
-      {tweet?.map((tweet, i) => {
-        return (
-          <>
-            <Tweet tweet={tweet} key={i} />
-          </>
-        );
-      })}
+      {tweet
+        // .sort((a, b) => a - b)
+        .map((tweet, i) => {
+          return (
+            <>
+              <Tweet tweet={tweet} key={i} />
+            </>
+          );
+        })}
     </>
   );
 };

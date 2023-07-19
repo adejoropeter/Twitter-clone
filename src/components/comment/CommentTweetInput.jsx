@@ -54,7 +54,7 @@ const CommentTweetInput = () => {
           type="text"
           value={state?.value?.join("") || ""}
           ref={ref}
-          placeholder="What's happening?"
+          placeholder="Tweet your reply!"
           className={`placeholder:text-[#6A6F74] placeholder:font-normal outline-none placeholder:text-lg sm:placeholder:text-2xl text-sm sm:text-lg w-full border-none bg-transparent h-fit mb-4  resize-none overflow-hidden
             `}
         ></input>
