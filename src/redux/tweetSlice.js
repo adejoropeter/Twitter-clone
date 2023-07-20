@@ -9,6 +9,7 @@ export const tweetSlice = createSlice({
         id: 0,
         profileName: "Adejoro Peter ",
         text: "lorem ipsum",
+        showTweetDlt: false,
         comment: [
           {
             profileName: "Adejoro Samson",
@@ -23,6 +24,8 @@ export const tweetSlice = createSlice({
         profileName: "Peter Samson",
         text: "Drop a comment on what u currently learing",
         retweeted: true,
+        showTweetDlt: false,
+
         comment: [
           {
             showDlt: false,
@@ -36,6 +39,8 @@ export const tweetSlice = createSlice({
         retweeted: false,
         profileName: "Adejoro Joshua",
         text: "lorem ipsum",
+        showTweetDlt: false,
+
         comment: [
           {
             showDlt: false,
@@ -80,7 +85,7 @@ export const tweetSlice = createSlice({
           : twt;
       });
     },
-    setShowDlt: (state, action) => {
+    setShowCommentDlt: (state, action) => {
       state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id
           ? {
@@ -91,6 +96,13 @@ export const tweetSlice = createSlice({
                   : cmt;
               }),
             }
+          : twt;
+      });
+    },
+    setShowTweetDlt: (state, action) => {
+      state.tweet = state.tweet.map((twt) => {
+        return twt.id === action.payload.id
+          ? { ...twt, showTweetDlt: !twt.showTweetDlt }
           : twt;
       });
     },
@@ -106,6 +118,10 @@ export const tweetSlice = createSlice({
             }
           : twt;
       });
+    },
+
+    deleteTweet: (state, action) => {
+      state.tweet = state.tweet.filter((twt) => twt.id !== action.payload.id);
     },
 
     setRetweet: (state, action) => {
@@ -132,7 +148,9 @@ export const {
   setUserUrlName,
   setAddComment,
   setAddToRetweetArr,
-  setShowDlt,
-  deleteComment
+  setShowCommentDlt,
+  setShowTweetDlt,
+  deleteTweet,
+  deleteComment,
 } = tweetSlice.actions;
 export default tweetSlice.reducer;

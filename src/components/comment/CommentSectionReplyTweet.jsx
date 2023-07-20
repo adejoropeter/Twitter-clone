@@ -117,9 +117,7 @@ const CommentSectionReplyTweet = () => {
               </p>
             </div>
             <div className="h-full w-2 border-l-2 border-[#1D1F23] "></div>
-            <div className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer">
-              <BiPlus className="text-[#00BA7C]" size={"20"} />
-            </div>
+           
           </div>
         ) : null}
         <Button

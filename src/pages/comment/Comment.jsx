@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import HomeRightBar from "../home/HomeRightBar";
 import {
   deleteComment,
-  setShowDlt,
-  setShowTweetToFalse,
+  setShowCommentDlt,
 } from "../../redux/tweetSlice";
 import { useNavigate } from "react-router-dom";
 import AddTweet from "../../components/tweet/AddTweet";
@@ -57,81 +56,82 @@ const Comment = () => {
               .map((a) => {
                 return (
                   <div>
-                    {
-                      a.comment.length?"Yes":"No"
-                    }
-                    {a?.comment?.map((a) => (
-                      <div
-                        className="p-5 w-full  hover:bg-[#080808]  tweet-border overflow-hidden "
-                        // onClick={handleClick}
-                      >
-                        <div className="flex gap-4 w-full hover:bg-[#080808] relative">
+                    {a?.comment.length
+                      ? a?.comment?.map((a) => (
                           <div
-                            className="w-10 absolute"
-                            // onMouseEnter={handleMouseEnter}
+                            className="p-5 w-full  hover:bg-[#080808]  tweet-border overflow-hidden "
+                            // onClick={handleClick}
                           >
-                            <img
-                              src={"/assets/image.png"}
-                              alt=""
-                              className="w-10 h-10 rounded-full min-w-full"
-                            />
-                          </div>
-
-                          <div className="ml-14 w-full flex flex-col ">
-                            <div className="flex justify-between  h-full  ">
-                              <div className="flex gap-2">
-                                <p className="w-20 sm:w-40 lg:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
-                                  {a?.profileName}
-                                </p>
-                                <div className="text-[#6A6F74]  flex gap-1  ">
-                                  <p>@piro</p>
-                                  <p className="font-bold">.</p>
-
-                                  <p className="text-sm sm:text-lg">May 13</p>
-                                </div>
-                              </div>
-                              <div className="relative">
-                                {a.showDlt && (
-                                  <p
-                                    onClick={() => {
-                                      deleteComment({
-                                        id: tweet.id,
-                                        cmtId: a.id,
-                                      });
-                                      console.log(comment);
-                                    }}
-                                    className="absolute top-4 bg-black w-fit p-2 right-5 shadow-sm shadow-orange-50 cursor-pointer"
-                                  >
-                                    Delete
-                                  </p>
-                                )}
-                                <BiDotsHorizontal
-                                  color="#6A6F74"
-                                  size="20px"
-                                  fontWeight="400"
-                                  cursor={"pointer"}
-                                  className=""
-                                  onClick={() =>
-                                    dispatch(
-                                      setShowDlt({
-                                        id: tweet.id,
-                                        cmtId: a.id,
-                                      })
-                                    )
-                                  }
+                            <div className="flex gap-4 w-full hover:bg-[#080808] relative">
+                              <div
+                                className="w-10 absolute"
+                                // onMouseEnter={handleMouseEnter}
+                              >
+                                <img
+                                  src={"/assets/image.png"}
+                                  alt=""
+                                  className="w-10 h-10 rounded-full min-w-full"
                                 />
                               </div>
-                            </div>
-                            <div className="flex gap-2">
-                              <p className="text-[#1D9BF0]">
-                                @{tweet?.profileName}
-                              </p>
-                              <p>{a?.text}</p>
+
+                              <div className="ml-14 w-full flex flex-col ">
+                                <div className="flex justify-between  h-full  ">
+                                  <div className="flex gap-2">
+                                    <p className="w-20 sm:w-40 lg:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
+                                      {a?.profileName}
+                                    </p>
+                                    <div className="text-[#6A6F74]  flex gap-1  ">
+                                      <p>@piro</p>
+                                      <p className="font-bold">.</p>
+
+                                      <p className="text-sm sm:text-lg">
+                                        May 13
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="relative">
+                                    {a.showDlt && (
+                                      <p
+                                        onClick={() => {
+                                         dispatch(deleteComment({
+                                            id: tweet.id,
+                                            cmtId: a.id,
+                                          }));
+                                          console.log(comment);
+                                        }}
+                                        className="absolute top-4 bg-black w-fit p-2 right-5 shadow-sm shadow-orange-50 cursor-pointer"
+                                      >
+                                        Delete
+                                      </p>
+                                    )}
+                                    <BiDotsHorizontal
+                                      color="#6A6F74"
+                                      size="20px"
+                                      fontWeight="400"
+                                      cursor={"pointer"}
+                                      className=""
+                                      onClick={() =>
+                                        dispatch(
+                                          setShowCommentDlt({
+                                            id: tweet.id,
+                                            cmtId: a.id,
+                                          })
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div className="flex gap-2">
+                                  <p className="text-[#1D9BF0]">
+                                    @{tweet?.profileName}
+                                  </p>
+                                  <p>{a?.text}</p>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    ))}
+                        ))
+                      : <blockquote className="pt-10 w-full text-center">No comment!! Be the first to react to this tweet🙏😲</blockquote>}
                   </div>
                 );
               })}

@@ -5,9 +5,10 @@ import { TbChartAreaLine } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import {
+  deleteTweet,
   setAddToRetweetArr,
   setRetweet,
-  setShowTweetToTrue,
+  setShowTweetDlt,
   setUserUrlName,
   viewTweet,
 } from "../../redux/tweetSlice";
@@ -15,16 +16,16 @@ import { auth } from "../../firebase";
 
 const Tweet = ({ tweet }) => {
   const urlName = useSelector((state) => state.post.userUrlName);
-  const tweets = useSelector((state) => state.post.retweetedTweet);
+  const tweets = useSelector((state) => state.post.tweet);
 
   const dispatch = useDispatch();
   const navigate = useNavigate("");
-  
+
   const { pathname } = useLocation();
   // console.log(auth.currentUser);
   useEffect(() => {
-    dispatch(setAddToRetweetArr())
-  },[tweet.retweeted])
+    dispatch(setAddToRetweetArr());
+  }, [tweet.retweeted]);
   const handleClick = (e) => {
     // e.stopPropagation()
     dispatch(viewTweet(tweet));
@@ -35,6 +36,10 @@ const Tweet = ({ tweet }) => {
   const handleMouseEnter = () => {
     console.log(tweet?.name);
     console.log("Mouse Enter");
+  };
+  const handleShowDelete = (e) => {
+    e.stopPropagation();
+    dispatch(setShowTweetDlt({ id: tweet.id }));
   };
   return (
     <div
@@ -63,19 +68,36 @@ const Tweet = ({ tweet }) => {
                 <p className="text-sm sm:text-lg">May 13</p>
               </div>
             </div>
-
-            <BiDotsHorizontal
-              color="#6A6F74"
-              size="20px"
-              fontWeight="400"
-              cursor={"pointer"}
-              className=""
-            />
+            <div>
+              <div className="relative">
+                {tweet.showTweetDlt && (
+                  <p
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      // deleteTweet({
+                      //   id: tweet.id,
+                      // });
+                      dispatch(deleteTweet({id:tweet.id}))
+                      console.log(tweet.id);
+                    }}
+                    className="absolute top-4 bg-black w-fit p-2 right-5 shadow-sm shadow-orange-50 cursor-pointer"
+                  >
+                    Delete
+                  </p>
+                )}
+                <BiDotsHorizontal
+                  color="#6A6F74"
+                  size="20px"
+                  fontWeight="400"
+                  cursor={"pointer"}
+                  className=""
+                  onClick={(e) => handleShowDelete(e)}
+                />
+              </div>
+            </div>
           </div>
           <div>
-            <p>
-              {tweet?.text}
-            </p>
+            <p>{tweet?.text}</p>
           </div>
 
           <div className="flex gap-4 w-full">
@@ -88,7 +110,7 @@ const Tweet = ({ tweet }) => {
                 e.stopPropagation();
                 dispatch(setRetweet({ id: tweet.id }));
                 // dispatch(setAddToRetweetArr())
-                console.log(tweets)
+                console.log(tweets);
               }}
               className="flex items-center gap-2 text-[#6A6F74]"
             >
