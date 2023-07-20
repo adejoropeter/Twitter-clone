@@ -25,15 +25,16 @@ const Home = () => {
         text: text?.join("") || "Nothing here",
         profileName: "Adejoro Peter",
         username: "@ade_peter",
-        comment: 1,
+        comment: [],
         likes: 1,
-        retweet: 3,
+        id: Math.random(),
+        retweeted: false,
       })
     );
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),
     //   profileName: profileName?.name,
-      // profilePic:
+    // profilePic:
     //   timeStamp: serverTimestamp(),
     // });
     // console.log(auth);

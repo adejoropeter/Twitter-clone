@@ -7,24 +7,42 @@ export const tweetSlice = createSlice({
     tweet: [
       {
         id: 0,
-        profileName: "Adejoro Peter sks djdjdjdjjdjjdj",
+        profileName: "Adejoro Peter ",
         text: "lorem ipsum",
-        comment: [{ profileName: "Adejoro Samson", text: "I Hate you" }],
+        comment: [
+          {
+            profileName: "Adejoro Samson",
+            text: "I Hate you",
+            showDlt: false,
+          },
+        ],
         retweeted: false,
       },
       {
         id: 1,
         profileName: "Peter Samson",
-        text: "lorem ipsum",
+        text: "Drop a comment on what u currently learing",
         retweeted: true,
-        comment: [{ profileName: "Peter Samson", text: "I love you" }],
+        comment: [
+          {
+            showDlt: false,
+            profileName: "Peter Samson",
+            text: "I love you",
+          },
+        ],
       },
       {
         id: 2,
         retweeted: false,
         profileName: "Adejoro Joshua",
         text: "lorem ipsum",
-        comment: [{ profileName: "Adejoro Joshua", text: "I Dislike you" }],
+        comment: [
+          {
+            showDlt: false,
+            profileName: "Adejoro Joshua",
+            text: "I Dislike you",
+          },
+        ],
       },
     ],
     retweetedTweet: [],
@@ -54,12 +72,42 @@ export const tweetSlice = createSlice({
                 {
                   profileName: action.payload.profileName,
                   text: action.payload.text,
+                  showDlt: false,
+                  id: action.payload.cmtId,
                 },
               ],
             }
           : twt;
       });
     },
+    setShowDlt: (state, action) => {
+      state.tweet = state.tweet.map((twt) => {
+        return twt.id === action.payload.id
+          ? {
+              ...twt,
+              comment: twt.comment.map((cmt) => {
+                return cmt.id === action.payload.cmtId
+                  ? { ...cmt, showDlt: !cmt.showDlt }
+                  : cmt;
+              }),
+            }
+          : twt;
+      });
+    },
+
+    deleteComment: (state, action) => {
+      state.tweet = state.tweet.map((twt) => {
+        return twt.id === action.payload.id
+          ? {
+              ...twt,
+              comment: twt.comment.filter((cmt) => {
+                return cmt.id !== action.payload.cmtId;
+              }),
+            }
+          : twt;
+      });
+    },
+
     setRetweet: (state, action) => {
       state.tweet = state.tweet.map((twt, id) => {
         return twt.id === action.payload.id
@@ -84,5 +132,7 @@ export const {
   setUserUrlName,
   setAddComment,
   setAddToRetweetArr,
+  setShowDlt,
+  deleteComment
 } = tweetSlice.actions;
 export default tweetSlice.reducer;

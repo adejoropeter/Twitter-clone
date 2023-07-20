@@ -54,7 +54,14 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
-  
+  const [state, setState] = useState([1, 2, 3, 4]);
+  const dlt = (b) => {
+    const d = state.filter((a) => {
+      return a !== b;
+    });
+    setState(d);
+  };
+
   if (pathname === "/signup") {
     dispatch(resetCurr());
   }
@@ -114,7 +121,14 @@ const App = () => {
         </Suspense>
       </div>
       {currentUser ? null : <TwitterLoginSignup />}
-      
+
+      {/* <div>
+        {state.map((a) => (
+          <p onClick={() => dlt(a)} className="bg-red-300 w-fit">
+            {a}
+          </p>
+        ))}
+      </div> */}
     </>
   );
 };

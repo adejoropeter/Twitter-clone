@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { BsImageFill } from "react-icons/bs";
 import { RiFileGifFill } from "react-icons/ri";
 import { BiPlus, BiPoll } from "react-icons/bi";
@@ -15,15 +15,14 @@ import { auth, db } from "../../firebase";
 import { clearCommentInputField } from "../../redux/commentSlice";
 const CommentSectionReplyTweet = () => {
   const dispatch = useDispatch();
+  const id = Math.random();
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
   const state = useSelector((state) => state.comment.value);
   const bool = useSelector((state) => state.comment.bool);
   const tweets = useSelector((state) => state.post.tweet);
   const tweet = useSelector((state) => state.post.viewTweet);
-
   const name = useSelector((state) => state.user.user_details);
-
   const [img, setImg] = useState("");
   const inputVal = state?.value?.join("");
   const text = inputVal
@@ -33,7 +32,7 @@ const CommentSectionReplyTweet = () => {
   const handleAddTweet = async () => {
     // console.log(tweet);
     dispatch(
-      setAddComment({id:tweet.id,profileName:"Ade",text:text})
+      setAddComment({ id: tweet.id, profileName: "Ade", text: text, cmtId: id })
     );
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),
@@ -41,8 +40,8 @@ const CommentSectionReplyTweet = () => {
     //   // profilePic:
     //   timeStamp: serverTimestamp(),
     // });
-    console.log(tweet)
-    console.log(tweets)
+    console.log(tweet);
+    console.log(tweets);
     dispatch(clearCommentInputField());
   };
   return (

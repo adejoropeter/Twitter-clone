@@ -74,8 +74,7 @@ const Tweet = ({ tweet }) => {
           </div>
           <div>
             <p>
-              {tweet?.text} Lorem ipsum dolor sit amet consectetur, adipisicing
-              elit. Cupiditate, hic.
+              {tweet?.text}
             </p>
           </div>
 
