@@ -5,7 +5,8 @@ import tweetReducer from "./tweetSlice";
 import loginDetails from "./LoginSlice";
 import signupSlice from "./signupSlice";
 import userSlice from "./userSlice";
-import commentSlice  from "./commentSlice";
+import commentSlice from "./commentSlice";
+import composeSlice from "./composeSlice";
 export default configureStore({
   reducer: {
     post: tweetReducer,
@@ -13,6 +14,7 @@ export default configureStore({
     login: loginDetails,
     signup: signupSlice,
     user: userSlice,
-    comment:commentSlice
+    comment: commentSlice,
+    composeTweet: composeSlice,
   },
 });

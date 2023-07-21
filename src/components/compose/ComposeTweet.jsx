@@ -14,18 +14,15 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { addToGrpTweet } from "../../redux/composeSlice";
-const AddTweet = ({ handleAddTweet }) => {
+const ComposeTweet = ({ handleAddTweet }) => {
   const dispatch = useDispatch();
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
   const state = useSelector((state) => state.input.value);
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
-    const idx = compose.length - 1 ;
-    const id = idx+1;
-
-  // console.log()
-
+ const idx = compose.length - 1;
+ const id = idx + 1;
   const navigate = useNavigate();
   const [img, setImg] = useState("");
   const inputVal = state?.value?.join("");
@@ -36,7 +33,7 @@ const AddTweet = ({ handleAddTweet }) => {
 
   return (
     <div className="flex sm:items-center gap-2 justify-between flex-col sm:flex-row">
-      <div className="flex gap-1">
+      <div className="flex ">
         <abbr
           title="Media"
           className="hover:bg-[#00130D] flex justify-center items-center w-10 h-10 rounded-full cursor-pointer"
@@ -51,12 +48,6 @@ const AddTweet = ({ handleAddTweet }) => {
           <label htmlFor="file">
             <BsImageFill size={"16px"} className="text-[#00BA7C] " />
           </label>
-        </abbr>
-        <abbr
-          title="GIF"
-          className="hover:bg-[#00130D] flex justify-center items-center w-10 h-10 rounded-full cursor-pointer"
-        >
-          <RiFileGifFill size={"16px"} className="text-[#00BA7C] " />
         </abbr>
 
         <abbr
@@ -85,7 +76,7 @@ const AddTweet = ({ handleAddTweet }) => {
         </abbr>
       </div>
       <div className="flex gap-3 items-center">
-        {state?.value?.length ? (
+        {/* {state?.value?.length ? (
           <div className={`items-center  flex justify-center`}>
             <div className="flex items-end justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full relative">
               <motion.div
@@ -106,25 +97,23 @@ const AddTweet = ({ handleAddTweet }) => {
                   : null}
               </p>
             </div>
-            <div className="h-full w-2 border-l-2 border-[#1D1F23] "></div>
-            <div
-              className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer"
-              onClick={() => {
-                dispatch(
-                  addToGrpTweet({
-                    inputText: text,
-                    isDisabled: true,
-                    id,
-                  })
-                );
-                navigate("/compose");
-                console.log(compose);
-              }}
-            >
-              <BiPlus className="text-[#00BA7C]" size={"20"} />
-            </div>
-          </div>
-        ) : null}
+            <div className="h-full w-2 border-l-2 border-[#1D1F23] "></div> */}
+        <div
+          className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer"
+          onClick={() => {
+            dispatch(
+              addToGrpTweet({
+                inputText: [],
+                isDisabled: false,
+                id,
+              })
+            );
+          }}
+        >
+          <BiPlus className="text-[#00BA7C]" size={"20"} />
+        </div>
+        {/* </div>
+        ) : null} */}
         <Button
           text="Tweet"
           onClickFn={handleAddTweet}
@@ -144,4 +133,4 @@ const AddTweet = ({ handleAddTweet }) => {
   );
 };
 
-export default AddTweet;
+export default ComposeTweet;

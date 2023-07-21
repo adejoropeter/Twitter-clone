@@ -26,6 +26,7 @@ import { signOut } from "firebase/auth";
 import { logout, showButton } from "./redux/LoginSlice";
 import axios from "axios";
 import Comment from "./pages/comment/Comment";
+import Compose from "./pages/Compose";
 // import { logout } from "./redux/LoginSlice";
 const App = () => {
   const { pathname } = useLocation();
@@ -99,17 +100,17 @@ const App = () => {
           <Navbar />
           {/* Navbar needs to be placed inside each pages routes incase of an incorrect route */}
           <Routes>
-            <Route path="/" element={<Home />}>
-              <Route path="/following" element={<Following />}></Route>
-              <Route path="/foryou" element={<ForYou />}></Route>
-            </Route>
             <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<Home />}>
+                <Route path="/following" element={<Following />}></Route>
+                <Route path="/foryou" element={<ForYou />}></Route>
+              </Route>
               <Route path="/notifications" element={<Notification />}></Route>
-
               <Route path="/messages" element={<Message />}></Route>
+              <Route path="/comment/:name" element={<Comment />}></Route>
+              <Route path="/compose" element={<Compose />}></Route>
             </Route>
             <Route path="/explore" element={<Explore />}></Route>
-            <Route path="/comment/:name" element={<Comment />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/settings" element={<Settings />}></Route>
