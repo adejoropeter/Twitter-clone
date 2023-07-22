@@ -30,14 +30,28 @@ export const composeSlice = createSlice({
       state.groupTweet = state.groupTweet.map((cmp) => {
         return cmp.id === state.currIdx
           ? { ...cmp, isFade: true }
-          : {...cmp,isFade:false};
+          : { ...cmp, isFade: false };
       });
     },
     setCurrIdx: (state, action) => {
       state.currIdx = action.payload;
     },
+    resetGroupTweet: (state) => {
+      state.currIdx = 0;
+      state.groupTweet = [];
+    },
+    setGroupTweetTo4: (state) => {
+      state.groupTweet.length = 4;
+    },
   },
 });
 
-export const { addToGrpTweet, backGroundColor,onChange ,setCurrIdx} = composeSlice.actions;
+export const {
+  addToGrpTweet,
+  resetGroupTweet,
+  backGroundColor,
+  onChange,
+      setCurrIdx,
+  setGroupTweetTo4
+} = composeSlice.actions;
 export default composeSlice.reducer;

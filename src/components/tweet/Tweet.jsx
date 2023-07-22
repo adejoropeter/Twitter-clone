@@ -37,7 +37,7 @@ const Tweet = ({ tweet }) => {
     console.log(tweet?.name);
     console.log("Mouse Enter");
   };
-   
+
   const handleShowDelete = (e) => {
     e.stopPropagation();
     dispatch(setShowTweetDlt({ id: tweet.id }));
@@ -48,14 +48,32 @@ const Tweet = ({ tweet }) => {
       onClick={handleClick}
     >
       <div className="flex gap-4 w-full hover:bg-[#080808] relative">
-        <div className="w-10 absolute" onMouseEnter={handleMouseEnter}>
+        <div
+          className={`${
+            tweet.isThread
+              ? "flex flex-col items-center gap-2 h-full w-12"
+              : "w-10"
+          }   absolute  `}
+          onMouseEnter={handleMouseEnter}
+        >
           <img
             src={"/assets/image.png"}
             alt=""
-            className="w-10 h-10 rounded-full min-w-full"
+            className={` ${
+              tweet.isThread ? "h-10 w-10" : "h-10 w-10"
+            } rounded-full `}
           />
+          {tweet.isThread && (
+            <div className="border-l border-[#3b3c3ea3] h-10"></div>
+          )}
+          {tweet.isThread && (
+            <img
+              src={"/assets/image.png"}
+              alt=""
+              className={`h-5 w-5 rounded-full `}
+            />
+          )}
         </div>
-
         <div className="ml-14 w-full flex flex-col ">
           <div className="flex justify-between  h-full  ">
             <div className="flex gap-2">
@@ -79,7 +97,6 @@ const Tweet = ({ tweet }) => {
                       //   id: tweet.id,
                       // });
                       dispatch(deleteTweet({ id: tweet.id }));
-                   
                     }}
                     className="absolute top-4 bg-black w-fit p-2 right-5 shadow-sm shadow-orange-50 cursor-pointer"
                   >
@@ -111,7 +128,6 @@ const Tweet = ({ tweet }) => {
                 e.stopPropagation();
                 dispatch(setRetweet({ id: tweet.id }));
                 // dispatch(setAddToRetweetArr())
-                
               }}
               className="flex items-center gap-2 text-[#6A6F74]"
             >
@@ -130,8 +146,8 @@ const Tweet = ({ tweet }) => {
             </div> */}
           </div>
           {tweet.isThread && (
-            <div className="">
-              <h2 className="text-[#00BA7C]">Show Thread</h2>
+            <div className="w-fit mt-2 flex items-center ">
+              <h2 className="text-[#00BA7C] font-bold">Show this Thread</h2>
             </div>
           )}
         </div>

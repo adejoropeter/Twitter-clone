@@ -11,6 +11,8 @@ import {
   addToTweetArr,
   setAddComment,
   setAddComposedComment,
+  setAddComposedComment2,
+  setAddComposedComment3,
 } from "../../redux/tweetSlice";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import Button from "../button/Button";
@@ -20,12 +22,15 @@ import { useNavigate } from "react-router-dom";
 import {
   addToGrpTweet,
   backGroundColor,
+  resetGroupTweet,
   setCurrIdx,
+  setGroupTweetTo4,
 } from "../../redux/composeSlice";
 const ComposeTweet = () => {
   const dispatch = useDispatch();
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
+  const navigate = useNavigate();
   const tweet = useSelector((state) => state.post.tweet);
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
@@ -39,36 +44,113 @@ const ComposeTweet = () => {
         return { ...a, text: a.inputText, id, profileName, showDlt };
       });
   };
- 
+
   const text = compose[0]?.inputText;
   const inputTextWithEmptyValue = compose.find((a) => {
     return a.inputText === "";
   });
   const handleAddTweet = () => {
-    
-    dispatch(
-      addToTweetArr({
-        ...compose[0],
-        profileName: "Adejoro Peter",
-        username: "@ade_peter",
-        comment: [],
-        likes: 1,
-        id: tweet[tweet.length - 1].id + 1,
-        retweeted: false,
-        text,
-        isThread: true,
-      })
-    );
+    compose.length > 1
+      ? dispatch(
+          addToTweetArr({
+            ...compose[0],
+            profileName: "Adejoro Peter",
+            username: "@ade_peter",
+            comment: [],
+            likes: 1,
+            id: tweet[tweet.length - 1].id + 1,
+            retweeted: false,
+            text,
+            isThread: true,
+          })
+        )
+      : dispatch(
+          addToTweetArr({
+            ...compose[0],
+            profileName: "Adejoro Peter",
+            username: "@ade_peter",
+            comment: [],
+            likes: 1,
+            id: tweet[tweet.length - 1].id + 1,
+            retweeted: false,
+            text,
+          })
+        );
 
-    dispatch(
-     
+    //     dispatch(
+    //       setAddComment({
+    //         id: tweet[tweet.length - 1].id + 1,
+    //         profileName: "Ade",
+    //         text: compose[1].inputText,
+    //         cmtId: Math.random(),
+    //       })
+    //     );
+    console.log(compose[1]);
+    compose.length - 1 === 1
+      ? dispatch(
           setAddComment({
             id: tweet[tweet.length - 1].id + 1,
             profileName: "Ade",
-            text: compose[1].inputText,
+            text: compose[1]?.inputText,
             cmtId: Math.random(),
           })
-    );
+        )
+      : compose.length - 1 === 2
+      ? dispatch(
+          setAddComposedComment2({
+            id: tweet[tweet.length - 1].id + 1,
+            // first comment
+            firstComment: compose[1],
+            firstCommentProfileName: "Ade",
+            firstCommentText: compose[1]?.inputText,
+            firstCommentCmtId: Math.random(),
+            //second comment
+            secondComment: compose[2],
+            secondCommentProfileName: "Ade",
+            secondCommentText: compose[2]?.inputText,
+            secondCommentCmtId: Math.random(),
+          })
+        )
+      : compose.length - 1 === 3
+      ? dispatch(
+          setAddComposedComment3({
+            id: tweet[tweet.length - 1].id + 1,
+            // first comment
+            firstComment: compose[1],
+            firstCommentProfileName: "Ade",
+            firstCommentText: compose[1]?.inputText,
+            firstCommentCmtId: Math.random(),
+            //second comment
+            secondComment: compose[2],
+            secondCommentProfileName: "Ade",
+            secondCommentText: compose[2]?.inputText,
+            secondCommentCmtId: Math.random(),
+            //third comment
+            thirdComment: compose[3],
+            thirdCommentProfileName: "Ade",
+            thirdCommentText: compose[3]?.inputText,
+            thirdCommentCmtId: Math.random(),
+          })
+        )
+      : console.log("can't dispatch comment greater than 2");
+    //     dispatch(
+    //       setAddComposedComment({
+    //         id: tweet[tweet.length - 1].id + 1,
+    //         // first comment
+    //         firstComment: compose[1],
+    //         firstCommentProfileName: "Ade",
+    //         firstCommentText: compose[1]?.inputText,
+    //         firstCommentCmtId: Math.random(),
+    //         //second comment
+    //         secondComment: compose[2],
+    //         secondCommentProfileName: "Ade",
+    //         secondCommentText: compose[2]?.inputText,
+    //         secondCommentCmtId: Math.random(),
+    //       })
+    //     );
+    dispatch(resetGroupTweet());
+    dispatch(clearInputField());
+    navigate("/foryou");
     // console.log(
 
     // );
@@ -154,16 +236,19 @@ const ComposeTweet = () => {
         <div
           className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer"
           onClick={() => {
-            dispatch(
-              addToGrpTweet({
-                inputText: "",
-                isDisabled: false,
-                id,
-                isFade: true,
-              })
-            );
-            dispatch(setCurrIdx(id));
+            compose.length - 1 !== 3
+              ? dispatch(
+                  addToGrpTweet({
+                    inputText: "",
+                    isDisabled: false,
+                    id,
+                    isFade: true,
+                  })
+                )
+              : dispatch(setGroupTweetTo4());
+                dispatch(setCurrIdx(id));
             dispatch(backGroundColor());
+            console.log(compose);
           }}
         >
           <BiPlus className="text-[#00BA7C]" size={"20"} />

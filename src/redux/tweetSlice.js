@@ -85,16 +85,60 @@ export const tweetSlice = createSlice({
           : twt;
       });
     },
-    // setAddComposedComment: (state, action) => {
-    //   state.tweet = state.tweet.map((twt) => {
-    //     return twt.id === action.payload.id
-    //       ? {
-    //           ...twt,
-    //           comment: [...twt.comment,],
-    //         }
-    //       : twt;
-    //   });
-    // },
+    setAddComposedComment2: (state, action) => {
+      state.tweet = state.tweet.map((twt) => {
+        return twt.id === action.payload.id
+          ? {
+              ...twt,
+              comment: [
+                ...twt.comment,
+                {
+                  ...action.payload.firstComment,
+                  text: action.payload.firstCommentText,
+                  profileName: action.payload.firstCommentProfileName,
+                  cmtId: action.payload.firstCommentCmtId,
+                },
+                {
+                  ...action.payload.secondComment,
+                  text: action.payload.secondCommentText,
+                  profileName: action.payload.secondCommentProfileName,
+                  cmtId: action.payload.secondCommentCmtId,
+                },
+              ],
+            }
+          : twt;
+      });
+    },
+    setAddComposedComment3: (state, action) => {
+      state.tweet = state.tweet.map((twt) => {
+        return twt.id === action.payload.id
+          ? {
+              ...twt,
+              comment: [
+                ...twt.comment,
+                {
+                  ...action.payload.firstComment,
+                  text: action.payload.firstCommentText,
+                  profileName: action.payload.firstCommentProfileName,
+                  cmtId: action.payload.firstCommentCmtId,
+                },
+                {
+                  ...action.payload.secondComment,
+                  text: action.payload.secondCommentText,
+                  profileName: action.payload.secondCommentProfileName,
+                  cmtId: action.payload.secondCommentCmtId,
+                },
+                {
+                  ...action.payload.thirdComment,
+                  text: action.payload.thirdCommentText,
+                  profileName: action.payload.thirdCommentProfileName,
+                  cmtId: action.payload.thirdCommentCmtId,
+                },
+              ],
+            }
+          : twt;
+      });
+    },
     setShowCommentDlt: (state, action) => {
       state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id
@@ -162,6 +206,7 @@ export const {
   setShowTweetDlt,
   deleteTweet,
   deleteComment,
-  setAddComposedComment,
+  setAddComposedComment2,
+  setAddComposedComment3,
 } = tweetSlice.actions;
 export default tweetSlice.reducer;
