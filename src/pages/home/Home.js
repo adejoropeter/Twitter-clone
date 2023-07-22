@@ -27,10 +27,11 @@ const Home = () => {
         username: "@ade_peter",
         comment: [],
         likes: 1,
-        id: Math.random(),
+        id: tweet[tweet.length - 1].id + 1,
         retweeted: false,
       })
     );
+    console.log();
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),
     //   profileName: profileName?.name,

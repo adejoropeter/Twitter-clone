@@ -5,22 +5,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AddTweet from "../components/tweet/AddTweet";
 import ComposeTweet from "../components/compose/ComposeTweet";
-import { onChange, setCurrIdx } from "../redux/composeSlice";
+import { backGroundColor, onChange, setCurrIdx } from "../redux/composeSlice";
 // import { auth } from "../../firebase";
 // import {} from "../../redux/LoginSlice";
 const Compose = () => {
-  const state = useSelector((state) => state.input.value);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
-  const inputVal = state?.value?.join("");
+//   const inputVal = state?.value?.join("");
   //   const idx = compose.length - 1 ;
   //   const idx2 = idx+1;
 
-  const text = inputVal
-    ?.split("")
-    ?.filter((_, i) => i < 35)
-    ?.map((a) => a);
+//   const text = inputVal
+//     ?.split("")
+//     ?.filter((_, i) => i < 35)
+//     ?.map((a) => a);
+
   const dispatch = useDispatch();
-  console.log(compose);
   const navigate = useNavigate();
   return (
     <div className="w-full h-screen bg-[#242d34b3] fixed  z-50 overflow-y-hidden ">
@@ -47,7 +46,7 @@ const Compose = () => {
             Drafts
           </div>
         </div>
-        <div className="overflow-x-hidden w-full h-[350px] py-4 ">
+        <div className=" w-full h-fit py-4 ">
           <div className="w-[400px] flex flex-col px-4 gap-4 ">
             {compose.map((cmpTweet) => (
               <div className="flex gap-4 items-center">
@@ -55,13 +54,23 @@ const Compose = () => {
                   onClick={() => console.log(cmpTweet.inputText)}
                   src={"/assets/image.png"}
                   alt=""
-                  className="w-[40px] h-[40px] rounded-full cursor-pointer"
+                  className={`${
+                    !cmpTweet.isFade ? "blur-lg" : ""
+                  } w-[40px] h-[40px] rounded-full cursor-pointer`}
                 />
                 {/* <h1 className="text-white">{cmpTweet.inputText}</h1> */}
                 <input
-                  onClick={() => dispatch(setCurrIdx(cmpTweet.id))}
+                  placeholder="Add another Tweet!"
+                  onClick={() => {
+                    dispatch(setCurrIdx(cmpTweet.id));
+                    dispatch(backGroundColor());
+                  }}
                   type="text"
-                  className="text-black disabled:bg-gray-600"
+                  className={`text-lg outline-none placeholder:text-lg bg-black ${
+                    cmpTweet.isFade
+                      ? "text-white"
+                      : "bg-black text-[rgba(231,233,234,0.65)]"
+                  }`}
                   disabled={cmpTweet.isDisabled}
                   value={cmpTweet.inputText || ""}
                   onChange={(e) => dispatch(onChange(e.target.value))}

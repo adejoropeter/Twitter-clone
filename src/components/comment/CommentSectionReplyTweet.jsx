@@ -117,7 +117,6 @@ const CommentSectionReplyTweet = () => {
               </p>
             </div>
             <div className="h-full w-2 border-l-2 border-[#1D1F23] "></div>
-           
           </div>
         ) : null}
         <Button

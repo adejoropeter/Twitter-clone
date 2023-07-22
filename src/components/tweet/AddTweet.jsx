@@ -13,7 +13,7 @@ import Button from "../button/Button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import { addToGrpTweet } from "../../redux/composeSlice";
+import { addToGrpTweet, setCurrIdx } from "../../redux/composeSlice";
 const AddTweet = ({ handleAddTweet }) => {
   const dispatch = useDispatch();
   //   const [state, setState] = useState([]);
@@ -32,7 +32,7 @@ const AddTweet = ({ handleAddTweet }) => {
   const text = inputVal
     ?.split("")
     ?.filter((_, i) => i < 35)
-    ?.map((a) => a);
+    ?.map((a) => a).join("");
 
   return (
     <div className="flex sm:items-center gap-2 justify-between flex-col sm:flex-row">
@@ -117,6 +117,7 @@ const AddTweet = ({ handleAddTweet }) => {
                     id,
                   })
                 );
+                // dispatch(setCurrIdx({id}))
                 navigate("/compose");
                 console.log(compose);
               }}

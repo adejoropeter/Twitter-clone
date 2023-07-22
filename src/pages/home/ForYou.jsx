@@ -37,15 +37,11 @@ const ForYou = () => {
   return (
     <>
       {/* <div className="border-b" >hjj</div> */}
-      {tweet
-        // .sort((a, b) => a - b)
-        .map((tweet, i) => {
-          return (
-            <>
-              <Tweet tweet={tweet} key={i} />
-            </>
-          );
-        })}
+      {tweet.map((tweet, i) => {
+        return (
+            <Tweet tweet={tweet} key={i} />
+        );
+      })}
     </>
   );
 };

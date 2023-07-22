@@ -7,29 +7,85 @@ import { TbCalendarTime } from "react-icons/tb";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { addToTweetArr } from "../../redux/tweetSlice";
+import {
+  addToTweetArr,
+  setAddComment,
+  setAddComposedComment,
+} from "../../redux/tweetSlice";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import Button from "../button/Button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import { addToGrpTweet } from "../../redux/composeSlice";
-const ComposeTweet = ({ handleAddTweet }) => {
+import {
+  addToGrpTweet,
+  backGroundColor,
+  setCurrIdx,
+} from "../../redux/composeSlice";
+const ComposeTweet = () => {
   const dispatch = useDispatch();
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
-  const state = useSelector((state) => state.input.value);
+  const tweet = useSelector((state) => state.post.tweet);
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
- const idx = compose.length - 1;
- const id = idx + 1;
-  const navigate = useNavigate();
+  //   console.log(compose);
+  const filteredComposedTweet = (id, profileName, showDlt) => {
+    return compose
+      .filter((_, idx) => {
+        return idx > 0;
+      })
+      .map((a) => {
+        return { ...a, text: a.inputText, id, profileName, showDlt };
+      });
+  };
+  console.log(...filteredComposedTweet(1, "Peter", true));
+  const text = compose[0]?.inputText;
+  const inputTextWithEmptyValue = compose.find((a) => {
+    return a.inputText === "";
+  });
+  const handleAddTweet = () => {
+    console.log(compose);
+    dispatch(
+      addToTweetArr({
+        ...compose[0],
+        profileName: "Adejoro Peter",
+        username: "@ade_peter",
+        comment: [],
+        likes: 1,
+        id: tweet[tweet.length - 1].id + 1,
+        retweeted: false,
+        text,
+        isThread: true,
+      })
+    );
+
+    dispatch(
+      setAddComment({
+        id: tweet[tweet.length - 1].id + 1,
+        ...filteredComposedTweet(tweet[tweet.length - 1].id + 1, "Ade", false),
+      })
+      //     setAddComment({
+      //       id: tweet[tweet.length - 1].id + 1,
+      //       profileName: "Ade",
+      //       text: compose[1].inputText,
+      //       cmtId: Math.random(),
+      //     })
+    );
+    // console.log(
+
+    // );
+  };
+  console.log(tweet);
+  const idx = compose.length - 1;
+  const id = idx + 1;
+  //   const navigate = useNavigate();
   const [img, setImg] = useState("");
-  const inputVal = state?.value?.join("");
-  const text = inputVal
-    ?.split("")
-    ?.filter((_, i) => i < 35)
-    ?.map((a) => a);
+  //   const inputVal = state?.value?.join("");
+  //   const text = inputVal
+  //     ?.split("")
+  //     ?.filter((_, i) => i < 35)
+  //     ?.map((a) => a);
 
   return (
     <div className="flex sm:items-center gap-2 justify-between flex-col sm:flex-row">
@@ -103,11 +159,14 @@ const ComposeTweet = ({ handleAddTweet }) => {
           onClick={() => {
             dispatch(
               addToGrpTweet({
-                inputText: [],
+                inputText: "",
                 isDisabled: false,
                 id,
+                isFade: true,
               })
             );
+            dispatch(setCurrIdx(id));
+            dispatch(backGroundColor());
           }}
         >
           <BiPlus className="text-[#00BA7C]" size={"20"} />
@@ -115,19 +174,13 @@ const ComposeTweet = ({ handleAddTweet }) => {
         {/* </div>
         ) : null} */}
         <Button
-          text="Tweet"
+          text={compose.length > 1 ? "Tweet All" : "Tweet"}
           onClickFn={handleAddTweet}
-          color={!state?.value?.length ? "#808080" : "#ffffff"}
-          bg={!state?.value?.length ? "#005D3E" : "#00BA7C"}
-          disabled={!state?.value?.length}
+          color={
+            inputTextWithEmptyValue?.inputText === "" ? "#808080" : "#ffffff"
+          }
+          disabled={inputTextWithEmptyValue?.inputText === "" ? true : false}
         />
-        {/* <button
-          disabled={!state?.value?.length}
-          onClick={handleAddTweet}
-          className="w-20 h-10 bg-[#00BA7C] rounded-full disabled:bg-[#005D3E] disabled:text-[#808080] font-bold text-md flex justify-center items-center"
-        >
-          Tweet
-        </button> */}
       </div>
     </div>
   );

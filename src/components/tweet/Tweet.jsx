@@ -37,6 +37,7 @@ const Tweet = ({ tweet }) => {
     console.log(tweet?.name);
     console.log("Mouse Enter");
   };
+  console.log(tweet);
   const handleShowDelete = (e) => {
     e.stopPropagation();
     dispatch(setShowTweetDlt({ id: tweet.id }));
@@ -77,7 +78,7 @@ const Tweet = ({ tweet }) => {
                       // deleteTweet({
                       //   id: tweet.id,
                       // });
-                      dispatch(deleteTweet({id:tweet.id}))
+                      dispatch(deleteTweet({ id: tweet.id }));
                       console.log(tweet.id);
                     }}
                     className="absolute top-4 bg-black w-fit p-2 right-5 shadow-sm shadow-orange-50 cursor-pointer"
@@ -128,6 +129,11 @@ const Tweet = ({ tweet }) => {
               <BiDownload />
             </div> */}
           </div>
+          {tweet.isThread && (
+            <div className="">
+              <h2 className="text-[#00BA7C]">Show Thread</h2>
+            </div>
+          )}
         </div>
       </div>
     </div>

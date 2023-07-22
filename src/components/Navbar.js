@@ -49,7 +49,7 @@ const Navbar = () => {
             {currentUser && (
               <NavLink
                 to="/foryou"
-                className={({ isActive }) => isActive && setState("home")}
+                className={({ isActive }) => isActive ? setState("home"):""}
               >
                 <abbr
                   title="Home"
@@ -66,7 +66,7 @@ const Navbar = () => {
 
             <NavLink
               to="/explore"
-              className={({ isActive }) => isActive && setState("explore")}
+              className={({ isActive }) => isActive ?setState("explore"):""}
             >
               <abbr
                 title="Explore"
@@ -83,7 +83,7 @@ const Navbar = () => {
               <NavLink
                 to="/notifications"
                 className={({ isActive }) =>
-                  isActive && setState("notifications")
+                  isActive ? setState("notifications"):""
                 }
               >
                 <abbr
@@ -101,7 +101,7 @@ const Navbar = () => {
             {currentUser ? (
               <NavLink
                 to="/messages"
-                className={({ isActive }) => isActive && setState("messages")}
+                className={({ isActive }) => isActive ? setState("messages"):""}
               >
                 <abbr
                   title="Messages"
@@ -133,7 +133,7 @@ const Navbar = () => {
             )}
             <NavLink
               to="/settings"
-              className={({ isActive }) => isActive && setState("settings")}
+              className={({ isActive }) => isActive ? setState("settings"):""}
             >
               <abbr
                 title="Notifications"

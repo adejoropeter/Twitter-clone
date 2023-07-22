@@ -6,7 +6,7 @@ const a = [1, 1, 1, 2];
 export const composeSlice = createSlice({
   name: "input-field",
   initialState: {
-    groupTweet: [{ inputText: ["lol"], id: 0, isDisable: false }],
+    groupTweet: [],
     currIdx: 0,
   },
   reducers: {
@@ -26,11 +26,18 @@ export const composeSlice = createSlice({
           : cmp;
       });
     },
+    backGroundColor: (state) => {
+      state.groupTweet = state.groupTweet.map((cmp) => {
+        return cmp.id === state.currIdx
+          ? { ...cmp, isFade: true }
+          : {...cmp,isFade:false};
+      });
+    },
     setCurrIdx: (state, action) => {
       state.currIdx = action.payload;
     },
   },
 });
 
-export const { addToGrpTweet, onChange ,setCurrIdx} = composeSlice.actions;
+export const { addToGrpTweet, backGroundColor,onChange ,setCurrIdx} = composeSlice.actions;
 export default composeSlice.reducer;

@@ -68,7 +68,7 @@ export const tweetSlice = createSlice({
       state.viewTweet = action.payload;
     },
     setAddComment: (state, action) => {
-      state.tweet = state.tweet.map((twt, id) => {
+      state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id
           ? {
               ...twt,
@@ -85,6 +85,16 @@ export const tweetSlice = createSlice({
           : twt;
       });
     },
+    // setAddComposedComment: (state, action) => {
+    //   state.tweet = state.tweet.map((twt) => {
+    //     return twt.id === action.payload.id
+    //       ? {
+    //           ...twt,
+    //           comment: [...twt.comment,],
+    //         }
+    //       : twt;
+    //   });
+    // },
     setShowCommentDlt: (state, action) => {
       state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id
@@ -152,5 +162,6 @@ export const {
   setShowTweetDlt,
   deleteTweet,
   deleteComment,
+  setAddComposedComment,
 } = tweetSlice.actions;
 export default tweetSlice.reducer;
