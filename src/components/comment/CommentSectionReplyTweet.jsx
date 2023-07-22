@@ -40,8 +40,8 @@ const CommentSectionReplyTweet = () => {
     //   // profilePic:
     //   timeStamp: serverTimestamp(),
     // });
-    console.log(tweet);
-    console.log(tweets);
+    // console.log(tweet);
+    // console.log(tweets);
     dispatch(clearCommentInputField());
   };
   return (

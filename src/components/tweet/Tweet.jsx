@@ -37,7 +37,7 @@ const Tweet = ({ tweet }) => {
     console.log(tweet?.name);
     console.log("Mouse Enter");
   };
-  console.log(tweet);
+   
   const handleShowDelete = (e) => {
     e.stopPropagation();
     dispatch(setShowTweetDlt({ id: tweet.id }));
@@ -79,7 +79,7 @@ const Tweet = ({ tweet }) => {
                       //   id: tweet.id,
                       // });
                       dispatch(deleteTweet({ id: tweet.id }));
-                      console.log(tweet.id);
+                   
                     }}
                     className="absolute top-4 bg-black w-fit p-2 right-5 shadow-sm shadow-orange-50 cursor-pointer"
                   >
@@ -111,7 +111,7 @@ const Tweet = ({ tweet }) => {
                 e.stopPropagation();
                 dispatch(setRetweet({ id: tweet.id }));
                 // dispatch(setAddToRetweetArr())
-                console.log(tweets);
+                
               }}
               className="flex items-center gap-2 text-[#6A6F74]"
             >

@@ -51,7 +51,7 @@ const Compose = () => {
             {compose.map((cmpTweet) => (
               <div className="flex gap-4 items-center">
                 <img
-                  onClick={() => console.log(cmpTweet.inputText)}
+                
                   src={"/assets/image.png"}
                   alt=""
                   className={`${

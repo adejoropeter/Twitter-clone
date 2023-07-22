@@ -39,13 +39,13 @@ const ComposeTweet = () => {
         return { ...a, text: a.inputText, id, profileName, showDlt };
       });
   };
-  console.log(...filteredComposedTweet(1, "Peter", true));
+ 
   const text = compose[0]?.inputText;
   const inputTextWithEmptyValue = compose.find((a) => {
     return a.inputText === "";
   });
   const handleAddTweet = () => {
-    console.log(compose);
+    
     dispatch(
       addToTweetArr({
         ...compose[0],
@@ -61,22 +61,19 @@ const ComposeTweet = () => {
     );
 
     dispatch(
-      setAddComment({
-        id: tweet[tweet.length - 1].id + 1,
-        ...filteredComposedTweet(tweet[tweet.length - 1].id + 1, "Ade", false),
-      })
-      //     setAddComment({
-      //       id: tweet[tweet.length - 1].id + 1,
-      //       profileName: "Ade",
-      //       text: compose[1].inputText,
-      //       cmtId: Math.random(),
-      //     })
+     
+          setAddComment({
+            id: tweet[tweet.length - 1].id + 1,
+            profileName: "Ade",
+            text: compose[1].inputText,
+            cmtId: Math.random(),
+          })
     );
     // console.log(
 
     // );
   };
-  console.log(tweet);
+
   const idx = compose.length - 1;
   const id = idx + 1;
   //   const navigate = useNavigate();
