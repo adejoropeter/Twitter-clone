@@ -19,6 +19,18 @@ export const composeSlice = createSlice({
         },
       ];
     },
+    addToGrpTweetjks: (state, action) => {
+      state.currIdx = state.currIdx + 1;
+      state.groupTweet = [
+        ...state.groupTweet,
+        {
+          ...action.payload.firstTweet,
+        },
+        {
+          ...action.payload.secondTweet,
+        },
+      ];
+    },
     onChange: (state, action) => {
       state.groupTweet = state.groupTweet.map((cmp) => {
         return cmp.id === state.currIdx
@@ -51,7 +63,8 @@ export const {
   resetGroupTweet,
   backGroundColor,
   onChange,
-      setCurrIdx,
-  setGroupTweetTo4
+  setCurrIdx,
+  setGroupTweetTo4,
+  addToGrpTweetjks,
 } = composeSlice.actions;
 export default composeSlice.reducer;

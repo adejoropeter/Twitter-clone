@@ -13,7 +13,11 @@ import Button from "../button/Button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import { addToGrpTweet, setCurrIdx } from "../../redux/composeSlice";
+import {
+  addToGrpTweet,
+  addToGrpTweetjks,
+  setCurrIdx,
+} from "../../redux/composeSlice";
 const AddTweet = ({ handleAddTweet }) => {
   const dispatch = useDispatch();
   //   const [state, setState] = useState([]);
@@ -21,8 +25,9 @@ const AddTweet = ({ handleAddTweet }) => {
   const state = useSelector((state) => state.input.value);
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
-    const idx = compose.length - 1 ;
-    const id = idx+1;
+  const idx = compose.length - 1;
+  const id = idx + 1;
+  const idx2 = id + 1;
 
   // console.log()
 
@@ -32,7 +37,8 @@ const AddTweet = ({ handleAddTweet }) => {
   const text = inputVal
     ?.split("")
     ?.filter((_, i) => i < 35)
-    ?.map((a) => a).join("");
+    ?.map((a) => a)
+    .join("");
 
   return (
     <div className="flex sm:items-center gap-2 justify-between flex-col sm:flex-row">
@@ -111,12 +117,12 @@ const AddTweet = ({ handleAddTweet }) => {
               className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer"
               onClick={() => {
                 dispatch(
-                  addToGrpTweet({
-                    inputText: text,
-                    isDisabled: true,
-                    id,
+                  addToGrpTweetjks({
+                    firstTweet: { inputText: text, isDisabled: true, id },
+                    secondTweet: { inputText: "", isDisabled: false, id:idx2 },
                   })
                 );
+
                 // dispatch(setCurrIdx({id}))
                 navigate("/compose");
                 console.log(compose);

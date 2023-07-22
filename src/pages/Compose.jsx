@@ -77,7 +77,10 @@ const Compose = () => {
                   }`}
                   disabled={cmpTweet.isDisabled}
                   value={cmpTweet.inputText || ""}
-                  onChange={(e) => dispatch(onChange(e.target.value))}
+                  onChange={(e) => {
+                        console.log(compose)
+                    dispatch(onChange(e.target.value));
+                  }}
                 />
               </div>
             ))}
