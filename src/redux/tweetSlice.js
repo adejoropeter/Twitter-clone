@@ -38,7 +38,7 @@ export const tweetSlice = createSlice({
         id: 2,
         retweeted: false,
         profileName: "Adejoro Joshua",
-        text: "lorem ipsum",
+        text: "Peter",
         showTweetDlt: false,
 
         comment: [
@@ -53,14 +53,16 @@ export const tweetSlice = createSlice({
     retweetedTweet: [],
     viewTweet: null,
     showTweet: false,
+    
   },
   reducers: {
     addToTweetArr: (state, action) => {
-      state.tweet = [...state.tweet, { ...action.payload }];
+      // state.tweet=state.tweet.reverse()
+      state.tweet = [{ ...action.payload }, ...state.tweet];
     },
-    // addToTweetArr: (state, action) => {
-    //   state.tweet = action.payload;
-    // },
+    reverseTweetArr: (state) => {
+      state.tweet = state.tweet.reverse();
+    },
     setUserUrlName: (state, action) => {
       state.userUrlName = action.payload;
     },
@@ -205,6 +207,7 @@ export const {
   setShowCommentDlt,
   setShowTweetDlt,
   deleteTweet,
+  reverseTweetArr,
   deleteComment,
   setAddComposedComment2,
   setAddComposedComment3,
