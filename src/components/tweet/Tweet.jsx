@@ -64,7 +64,7 @@ const Tweet = ({ tweet }) => {
             } rounded-full `}
           />
           {tweet.isThread && (
-            <div className="border-l border-[#3b3c3ea3] h-10"></div>
+            <div className="border-l-2 border-[#5b5c5da3] h-10"></div>
           )}
           {tweet.isThread && (
             <img

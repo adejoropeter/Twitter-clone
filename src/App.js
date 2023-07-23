@@ -1,7 +1,14 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import "./index.css";
 
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  redirect,
+  Navigate,
+} from "react-router-dom";
 import {
   Navbar,
   Following,
@@ -111,8 +118,14 @@ const App = () => {
               <Route path="/compose" element={<Compose />}></Route>
             </Route>
             <Route path="/explore" element={<Explore />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/signup" element={<Signup />}></Route>
+            <Route
+              path="/login"
+              element={auth ? <Navigate to="/foryou" /> : <Login />}
+            ></Route>
+            <Route
+              path="/signup"
+              element={auth ? <Navigate to="/foryou" /> : <Signup />}
+            />
             <Route path="/settings" element={<Settings />}></Route>
             <Route
               path="*"

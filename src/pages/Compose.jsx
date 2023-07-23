@@ -7,6 +7,7 @@ import AddTweet from "../components/tweet/AddTweet";
 import ComposeTweet from "../components/compose/ComposeTweet";
 import {
   backGroundColor,
+  filterGroupTweet,
   onChange,
   resetGroupTweet,
   setCurrIdx,
@@ -15,23 +16,18 @@ import {
 // import {} from "../../redux/LoginSlice";
 const Compose = () => {
   const compose = useSelector((state) => state.composeTweet.groupTweet);
-  //   const inputVal = state?.value?.join("");
-  //   const idx = compose.length - 1 ;
-  //   const idx2 = idx+1;
-
-  //   const text = inputVal
-  //     ?.split("")
-  //     ?.filter((_, i) => i < 35)
-  //     ?.map((a) => a);
   const handleClick = (id) => {
     dispatch(setCurrIdx(id));
     dispatch(backGroundColor());
   };
+  const inputTextWithEmptyValue = compose.find((a) => {
+    return a.inputText === "";
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <div className="w-full h-screen bg-[#242d34b3] fixed  z-50 overflow-y-hidden ">
-      <div className="bg-black overflow-scroll w-[600px]  h-fit  top-[50%] left-[50%]  -translate-x-[50%] -translate-y-[50%] flex flex-col rounded-2xl overflow-x-hidden relative ">
+      <div className="bg-black overflow-scroll sm:w-[600px]  h-fit  top-[50%] left-[50%]  -translate-x-[50%] -translate-y-[50%] flex flex-col rounded-2xl overflow-x-hidden relative ">
         <div className="flex items-center py-2 px-4">
           <div className="flex-1 flex items-center ">
             <abbr
@@ -55,7 +51,7 @@ const Compose = () => {
           </div>
         </div>
         <div className=" w-full h-fit py-4 ">
-          <div className="w-[400px] flex flex-col px-4 gap-4 ">
+          <div className="w-full sm:w-[400px] flex flex-col px-4 gap-4 ">
             {compose.map((cmpTweet) => (
               <div className="flex gap-4 items-center">
                 <img
@@ -78,10 +74,20 @@ const Compose = () => {
                   disabled={cmpTweet.isDisabled}
                   value={cmpTweet.inputText || ""}
                   onChange={(e) => {
-                        console.log(compose)
+                    console.log(compose);
                     dispatch(onChange(e.target.value));
                   }}
                 />
+                <div>
+                  {cmpTweet.isFade ? (
+                    <TbX
+                      className="text-white"
+                      onClick={() =>
+                        dispatch(filterGroupTweet({ id: cmpTweet.id }))
+                      }
+                    />
+                  ) : null}
+                </div>
               </div>
             ))}
             <ComposeTweet />

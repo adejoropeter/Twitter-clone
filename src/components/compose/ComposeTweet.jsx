@@ -35,15 +35,7 @@ const ComposeTweet = () => {
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
   //   console.log(compose);
-  const filteredComposedTweet = (id, profileName, showDlt) => {
-    return compose
-      .filter((_, idx) => {
-        return idx > 0;
-      })
-      .map((a) => {
-        return { ...a, text: a.inputText, id, profileName, showDlt };
-      });
-  };
+
 
   const text = compose[0]?.inputText;
   const inputTextWithEmptyValue = compose.find((a) => {
@@ -133,27 +125,9 @@ const ComposeTweet = () => {
           })
         )
       : console.log("can't dispatch comment greater than 2");
-    //     dispatch(
-    //       setAddComposedComment({
-    //         id: tweet[tweet.length - 1].id + 1,
-    //         // first comment
-    //         firstComment: compose[1],
-    //         firstCommentProfileName: "Ade",
-    //         firstCommentText: compose[1]?.inputText,
-    //         firstCommentCmtId: Math.random(),
-    //         //second comment
-    //         secondComment: compose[2],
-    //         secondCommentProfileName: "Ade",
-    //         secondCommentText: compose[2]?.inputText,
-    //         secondCommentCmtId: Math.random(),
-    //       })
-    //     );
     dispatch(resetGroupTweet());
     dispatch(clearInputField());
     navigate("/foryou");
-    // console.log(
-
-    // );
   };
 
   const idx = compose.length - 1;

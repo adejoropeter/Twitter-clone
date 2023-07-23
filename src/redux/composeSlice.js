@@ -55,13 +55,20 @@ export const composeSlice = createSlice({
     setGroupTweetTo4: (state) => {
       state.groupTweet.length = 4;
     },
+    filterGroupTweet: (state, action) => {
+      state.groupTweet = state.groupTweet?.filter((cmp) => {
+        return cmp.id !== action.payload.id;
+      });
+    },
   },
 });
+
 
 export const {
   addToGrpTweet,
   resetGroupTweet,
   backGroundColor,
+  filterGroupTweet,
   onChange,
   setCurrIdx,
   setGroupTweetTo4,
