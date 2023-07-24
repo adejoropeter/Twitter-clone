@@ -136,13 +136,7 @@ const App = () => {
       </div>
       {currentUser ? null : <TwitterLoginSignup />}
 
-      {/* <div>
-        {state.map((a) => (
-          <p onClick={() => dlt(a)} className="bg-red-300 w-fit">
-            {a}
-          </p>
-        ))}
-      </div> */}
+      
     </>
   );
 };

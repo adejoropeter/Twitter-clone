@@ -7,7 +7,7 @@ import { TbCalendarTime } from "react-icons/tb";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { addToTweetArr } from "../../redux/tweetSlice";
+import { addToCopyTweetArr, addToTweetArr } from "../../redux/tweetSlice";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import Button from "../button/Button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -25,21 +25,33 @@ const AddTweet = ({ handleAddTweet }) => {
   const state = useSelector((state) => state.input.value);
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
+  const tweet = useSelector((state) => state.post.tweet);
+  const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
   const idx = compose.length - 1;
   const id = idx + 1;
   const idx2 = id + 1;
 
   // console.log()
-
   const navigate = useNavigate();
   const [img, setImg] = useState("");
   const inputVal = state?.value?.join("");
   const text = inputVal
     ?.split("")
     ?.filter((_, i) => i < 35)
-    ?.map((a) => a)
-    .join("");
-
+    ?.map((a) => a);
+  const handleAdd = () => {
+    // console.log(...copyOfNewTweets)
+    // text:  text?.join(""),
+    // profileName: "Adejoro Peter",
+    // username: "@ade_peter",
+    // comment: [],
+    // likes: 1,
+    // id: tweet[tweet.length - 1].id + 1,
+    // retweeted: false,
+    dispatch(addToTweetArr(...[copyOfNewTweets]));
+    console.log(tweet);
+    console.log(copyOfNewTweets);
+  };
   return (
     <div className="flex sm:items-center gap-2 justify-between flex-col sm:flex-row">
       <div className="flex gap-1">
@@ -117,9 +129,10 @@ const AddTweet = ({ handleAddTweet }) => {
               className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer"
               onClick={() => {
                 dispatch(
+                  
                   addToGrpTweetjks({
-                    firstTweet: { inputText: text, isDisabled: true, id },
-                    secondTweet: { inputText: "", isDisabled: false, id:idx2 },
+                    firstTweet: { inputText: text.join(""), isDisabled: true, id },
+                    secondTweet: { inputText: "", isDisabled: false, id: idx2 },
                   })
                 );
 
@@ -139,13 +152,12 @@ const AddTweet = ({ handleAddTweet }) => {
           bg={!state?.value?.length ? "#005D3E" : "#00BA7C"}
           disabled={!state?.value?.length}
         />
-        {/* <button
-          disabled={!state?.value?.length}
-          onClick={handleAddTweet}
+        <button
+          onClick={handleAdd}
           className="w-20 h-10 bg-[#00BA7C] rounded-full disabled:bg-[#005D3E] disabled:text-[#808080] font-bold text-md flex justify-center items-center"
         >
-          Tweet
-        </button> */}
+          Add{" "}
+        </button>
       </div>
     </div>
   );

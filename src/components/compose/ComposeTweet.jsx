@@ -44,7 +44,7 @@ const ComposeTweet = () => {
   const handleAddTweet = () => {
     compose.length > 1
       ? dispatch(
-          addToTweetArr({
+          addToTweetArr([{
             ...compose[0],
             profileName: "Adejoro Peter",
             username: "@ade_peter",
@@ -54,7 +54,7 @@ const ComposeTweet = () => {
             retweeted: false,
             text,
             isThread: true,
-          })
+          }])
         )
       : dispatch(
           addToTweetArr({

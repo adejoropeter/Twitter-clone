@@ -22,6 +22,52 @@ const Tweet = ({ tweet }) => {
   const navigate = useNavigate("");
 
   const { pathname } = useLocation();
+  const a = [
+    {
+      id: 0,
+      profileName: "Adejoro Peter ",
+      text: "lorem ipsum",
+      showTweetDlt: false,
+      comment: [
+        {
+          profileName: "Adejoro Samson",
+          text: "I Hate you",
+          showDlt: false,
+        },
+      ],
+      retweeted: false,
+    },
+    {
+      id: 1,
+      profileName: "Peter Samson",
+      text: "Drop a comment on what u currently learning",
+      retweeted: true,
+      showTweetDlt: false,
+
+      comment: [
+        {
+          showDlt: false,
+          profileName: "Peter Samson",
+          text: "I love you",
+        },
+      ],
+    },
+    {
+      id: 2,
+      retweeted: false,
+      profileName: "Adejoro Joshua",
+      text: "lorem ipsum",
+      showTweetDlt: false,
+
+      comment: [
+        {
+          showDlt: false,
+          profileName: "Adejoro Joshua",
+          text: "I Dislike you",
+        },
+      ],
+    },
+  ];
   // console.log(auth.currentUser);
   useEffect(() => {
     dispatch(setAddToRetweetArr());
@@ -31,6 +77,7 @@ const Tweet = ({ tweet }) => {
     dispatch(viewTweet(tweet));
     dispatch(setUserUrlName(tweet?.profileName));
     navigate(`/comment/${tweet.profileName}`);
+    console.log(a.reverse())
     // console.log("Parent!!!!!!!!!!!!!!");
   };
   const handleMouseEnter = () => {

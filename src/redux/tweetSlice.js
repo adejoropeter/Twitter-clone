@@ -22,7 +22,7 @@ export const tweetSlice = createSlice({
       {
         id: 1,
         profileName: "Peter Samson",
-        text: "Drop a comment on what u currently learing",
+        text: "Drop a comment on what u currently learning",
         retweeted: true,
         showTweetDlt: false,
 
@@ -53,12 +53,33 @@ export const tweetSlice = createSlice({
     retweetedTweet: [],
     viewTweet: null,
     showTweet: false,
-    
+    copyOfNewTweets: [
+      {
+        id: 4,
+        profileName: "Peter Samson",
+        text: "Drop a comment on what u currently learning",
+        retweeted: true,
+        showTweetDlt: false,
+
+        comment: [
+          {
+            showDlt: false,
+            profileName: "Peter Samson",
+            text: "I love you",
+          },
+        ],
+      },
+    ],
   },
   reducers: {
     addToTweetArr: (state, action) => {
-      // state.tweet=state.tweet.reverse()
-      state.tweet = [{ ...action.payload }, ...state.tweet];
+      state.tweet = [...action.payload , ...state.tweet];
+    },
+    addToCopyTweetArr: (state, action) => {
+      state.copyOfNewTweets=[...state.copyOfNewTweets,...action.payload]
+    },
+    clearCopyTweetArr: (state) => {
+      state.copyOfNewTweets = [];
     },
     reverseTweetArr: (state) => {
       state.tweet = state.tweet.reverse();
@@ -207,6 +228,8 @@ export const {
   setShowCommentDlt,
   setShowTweetDlt,
   deleteTweet,
+  addToCopyTweetArr,
+  clearCopyTweetArr,
   reverseTweetArr,
   deleteComment,
   setAddComposedComment2,

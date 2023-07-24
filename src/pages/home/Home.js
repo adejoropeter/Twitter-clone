@@ -2,15 +2,21 @@ import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import UploadTweet from "../../components/tweet/UploadTweet";
 import HomeRightBar from "./HomeRightBar";
-import { AiOutlineTwitter } from "react-icons/ai";
+import { AiOutlineArrowDown, AiOutlineTwitter } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { addToTweetArr } from "../../redux/tweetSlice";
+import {
+  addToCopyTweetArr,
+  addToTweetArr,
+  reverseTweetArr,
+} from "../../redux/tweetSlice";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import { auth, db } from "../../firebase";
+import { BiArrowFromTop } from "react-icons/bi";
 const Home = () => {
   const [nav, setNav] = useState("for you");
   const tweet = useSelector((state) => state.post.tweet);
+  const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
   const state = useSelector((state) => state.input.value);
   const profileName = useSelector((state) => state.user.user_details);
   const dispatch = useDispatch();
@@ -20,18 +26,28 @@ const Home = () => {
     ?.filter((_, i) => i < 35)
     ?.map((a) => a);
   const handleAddTweet = async () => {
-    dispatch(
-      addToTweetArr({
-        text: text?.join("") || "Nothing here",
-        profileName: "Adejoro Peter",
-        username: "@ade_peter",
-        comment: [],
-        likes: 1,
-        id: tweet[tweet.length - 1].id + 1,
-        retweeted: false,
-      })
-    );
-    console.log();
+    // dispatch(
+    //   addToTweetArr({
+    //     text: text?.join("") || "Nothing here",
+    //     profileName: "Adejoro Peter",
+    //     username: "@ade_peter",
+    //     comment: [],
+    //     likes: 1,
+    //     id: tweet[tweet.length - 1].id + 1,
+    //     retweeted: false,
+    //   })
+    // );
+    console.log(copyOfNewTweets);
+    const newArr = {
+      text: text?.join(""),
+      profileName: "Adejoro Peter",
+      username: "@ade_peter",
+      comment: [],
+      likes: 1,
+      id: copyOfNewTweets[copyOfNewTweets.length - 1].id + 1,
+      retweeted: false,
+    };
+    dispatch(addToCopyTweetArr([newArr]));
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),
     //   profileName: profileName?.name,
@@ -39,7 +55,7 @@ const Home = () => {
     //   timeStamp: serverTimestamp(),
     // });
     // console.log(auth);
-    dispatch(clearInputField());
+    // dispatch(clearInputField());
   };
   return (
     <div className="flex w-screen  sm:w-fit md:w-[60%] lg:w-full min-h-full   xsm:border-l-2  border-l-[#16181c]">
@@ -105,6 +121,12 @@ const Home = () => {
             </NavLink>
           </div>
         </header>
+        <div className="fixed z-10     top-36 left-[15%] sm:left-[50%] translate-x-[50%] ">
+          <div className="bg-green-400 flex items-center gap-1 fit rounded-full py-1 px-3">
+            <h1 className=""> New Tweet </h1>
+            <AiOutlineArrowDown />
+          </div>
+        </div>
         <UploadTweet handleAddTweet={handleAddTweet} />
 
         <Outlet />

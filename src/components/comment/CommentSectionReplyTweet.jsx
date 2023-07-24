@@ -30,7 +30,7 @@ const CommentSectionReplyTweet = () => {
     ?.filter((_, i) => i < 35)
     ?.map((a) => a);
   const handleAddTweet = async () => {
-    // console.log(tweet);
+    console.log(tweets);
     dispatch(
       setAddComment({ id: tweet.id, profileName: "Ade", text: text, cmtId: id })
     );
