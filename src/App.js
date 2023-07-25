@@ -44,7 +44,7 @@ const App = () => {
   const user = useSelector((state) => state.user.user_details);
   const id = curr?.user?.uid;
   const [urlName, setUrlName] = useState("");
-  console.log(user);
+  // console.log(user);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     const docRef = doc(db, "users", id);
@@ -74,7 +74,6 @@ const App = () => {
     dispatch(resetCurr());
   }
   const [file, setFile] = useState("");
-
   const handle = () => {
     // const formData = new FormData();
     // formData.append("image", file);

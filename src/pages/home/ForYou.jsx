@@ -40,7 +40,7 @@ const ForYou = () => {
       
       {tweet.map((tweet, i) => {
         return (
-            <Tweet tweet={tweet} key={i} />
+            <Tweet tweet={tweet} key={tweet?.id} />
         );
       })}
     </>

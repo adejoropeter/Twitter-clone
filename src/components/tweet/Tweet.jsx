@@ -85,10 +85,12 @@ const Tweet = ({ tweet }) => {
                 {tweet?.profileName}
               </p>
               <div className="text-[#6A6F74]  flex gap-1  ">
-                <p>{tweet?.username}</p>
+                <p className="w-20 sm:w-40 lg:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
+                  {tweet?.username}
+                </p>
                 <p className="font-bold">.</p>
 
-                <p className="text-sm sm:text-lg">May 13</p>
+                <p className="x text-sm sm:text-lg">May 13</p>
               </div>
             </div>
             <div>

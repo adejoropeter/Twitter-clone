@@ -41,90 +41,88 @@ const ComposeTweet = () => {
     return a.inputText === "";
   });
   const handleAddTweet = () => {
-    compose.length > 1
-      && dispatch(
-          addToTweetArr([
-            {
-              ...compose[0],
-              profileName: "Adejoro Peter",
-              username: "@ade_peter",
-              comment: [],
-              likes: 1,
-              id: tweet[0]?.id + 1 || 0,
-              retweeted: false,
-              text,
-              isThread: true,
-            },
-          ])
-        )
-       //     dispatch(
-      //     addToTweetArr({
-      //       ...compose[0],
-      //       profileName: "Adejoro Peter",
-      //       username: "@ade_peter",
-      //       comment: [],
-      //       likes: 1,
-      //       id: tweet[tweet.length - 1].id + 1,
-      //       retweeted: false,
-      //       text,
-      //     })
-      //   );
+    compose.length > 1 &&
+      dispatch(
+        addToTweetArr([
+          {
+            ...compose[0],
+            profileName: "Adejoro Peter",
+            username: "@ade_peter",
+            comment: [],
+            likes: 1,
+            id: tweet[0]?.id + 1 || 0,
+            retweeted: false,
+            text,
+            isThread: true,
+          },
+        ])
+      );
+    compose.length === 1 &&
+      dispatch(
+        addToTweetArr([
+          {
+            ...compose[0],
+            profileName: "Adejoro Peter",
+            username: "@ade_peter",
+            comment: [],
+            likes: 1,
+            id: tweet[0]?.id + 1 || 0,
+            retweeted: false,
+            text,
+            isThread: false,
+          },
+        ])
+      );
 
-      //     dispatch(
-      //       setAddComment({
-      //         id: tweet[tweet.length - 1].id + 1,
-      //         profileName: "Ade",
-      //         text: compose[1].inputText,
-      //         cmtId: Math.random(),
-      //       })
-      //     );
-      compose.length -1===1
-      && dispatch(
-          setAddComment({
-            id: tweet[0]?.id+1||0,
-            profileName: "Ade",
-            text: compose[1]?.inputText,
-            cmtId: Math.random(),
-          })
-        )
-      compose.length - 1 === 2
-      && dispatch(
-          setAddComposedComment2({
-            id: tweet[0]?.id + 1||0,
-            // first comment
-            firstComment: compose[1],
-            firstCommentProfileName: "Ade",
-            firstCommentText: compose[1]?.inputText,
-            firstCommentCmtId: Math.random(),
-            //second comment
-            secondComment: compose[2],
-            secondCommentProfileName: "Ade",
-            secondCommentText: compose[2]?.inputText,
-            secondCommentCmtId: Math.random(),
-          })
-        )
-      compose.length - 1 === 3
-      && dispatch(
-          setAddComposedComment3({
-            id: tweet[0]?.id + 1||0,
-            // first comment
-            firstComment: compose[1],
-            firstCommentProfileName: "Ade",
-            firstCommentText: compose[1]?.inputText,
-            firstCommentCmtId: Math.random(),
-            //second comment
-            secondComment: compose[2],
-            secondCommentProfileName: "Ade",
-            secondCommentText: compose[2]?.inputText,
-            secondCommentCmtId: Math.random(),
-            //third comment
-            thirdComment: compose[3],
-            thirdCommentProfileName: "Ade",
-            thirdCommentText: compose[3]?.inputText,
-            thirdCommentCmtId: Math.random(),
-          })
-        )
-     
+    compose.length - 1 === 1 &&
+      dispatch(
+        setAddComment({
+          id: tweet[0]?.id + 1 || 0,
+          profileName: "Ade",
+          text: compose[1]?.inputText,
+          cmtId: Math.random(),
+        })
+      );
+    compose.length - 1 === 2 &&
+      dispatch(
+        setAddComposedComment2({
+          id: tweet[0]?.id + 1 || 0,
+          // first comment
+          firstComment: compose[1],
+          firstCommentProfileName: "Ade",
+          firstCommentText: compose[1]?.inputText,
+          firstCommentCmtId: Math.random(),
+          //second comment
+          secondComment: compose[2],
+          secondCommentProfileName: "Ade",
+          secondCommentText: compose[2]?.inputText,
+          secondCommentCmtId: Math.random(),
+        })
+      );
+    compose.length - 1 === 3 &&
+      dispatch(
+        setAddComposedComment3({
+          id: tweet[0]?.id + 1 || 0,
+          // first comment
+          firstComment: compose[1],
+          firstCommentProfileName: "Ade",
+          firstCommentText: compose[1]?.inputText,
+          firstCommentCmtId: Math.random(),
+          //second comment
+          secondComment: compose[2],
+          secondCommentProfileName: "Ade",
+          secondCommentText: compose[2]?.inputText,
+          secondCommentCmtId: Math.random(),
+          //third comment
+          thirdComment: compose[3],
+          thirdCommentProfileName: "Ade",
+          thirdCommentText: compose[3]?.inputText,
+          thirdCommentCmtId: Math.random(),
+        })
+      );
+    setTimeout(() => {
+      document.documentElement.scrollTop = 110;
+    }, 200);
     dispatch(resetGroupTweet());
     dispatch(clearInputField());
     navigate("/foryou");

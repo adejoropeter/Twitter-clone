@@ -42,6 +42,11 @@ const Home = () => {
     // );
     console.log(copyOfNewTweets);
     console.log(tweet);
+    // const idd = copyOfNewTweets.map((copy) => {
+    //   console.log(copy)
+    //   return copy?.id +1;
+    // });
+    // console.log(idd)
     const newArr = {
       text: text?.join(""),
       profileName: "Adejoro Peter",
@@ -49,7 +54,7 @@ const Home = () => {
       comment: [],
       likes: 1,
       // id: copyOfNewTweets.length - 1 + 1 || 0,
-      id:tweet[0]?.id||0,
+      id: Math.random(),
       retweeted: false,
     };
     dispatch(addToCopyTweetArr([newArr]));
@@ -60,7 +65,7 @@ const Home = () => {
     //   timeStamp: serverTimestamp(),
     // });
     // console.log(auth);
-    // dispatch(clearInputField());
+    dispatch(clearInputField());
   };
 
   return (
@@ -139,6 +144,9 @@ const Home = () => {
             setStat(false);
             dispatch(addToTweetArr(...[copyOfNewTweets]));
             dispatch(clearCopyTweetArr());
+            setTimeout(() => {
+              document.documentElement.scrollTop = 100;
+            }, 200);
           }}
           className="fixed top-[10%] opacity-0 z-10 left-[50%] -translate-x-[50%] "
         >
