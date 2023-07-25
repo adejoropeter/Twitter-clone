@@ -5,78 +5,75 @@ export const tweetSlice = createSlice({
     //   loading state goes here
     userUrlName: "",
     tweet: [
-      {
-        id: 0,
-        profileName: "Adejoro Peter ",
-        text: "lorem ipsum",
-        showTweetDlt: false,
-        comment: [
-          {
-            profileName: "Adejoro Samson",
-            text: "I Hate you",
-            showDlt: false,
-          },
-        ],
-        retweeted: false,
-      },
-      {
-        id: 1,
-        profileName: "Peter Samson",
-        text: "Drop a comment on what u currently learning",
-        retweeted: true,
-        showTweetDlt: false,
-
-        comment: [
-          {
-            showDlt: false,
-            profileName: "Peter Samson",
-            text: "I love you",
-          },
-        ],
-      },
-      {
-        id: 2,
-        retweeted: false,
-        profileName: "Adejoro Joshua",
-        text: "Peter",
-        showTweetDlt: false,
-
-        comment: [
-          {
-            showDlt: false,
-            profileName: "Adejoro Joshua",
-            text: "I Dislike you",
-          },
-        ],
-      },
+      // {
+      //   id: 2,
+      //   profileName: "Adejoro Peter ",
+      //   text: "lorem ipsum",
+      //   showTweetDlt: false,
+      //   comment: [
+      //     {
+      //       profileName: "Adejoro Samson",
+      //       text: "I Hate you",
+      //       showDlt: false,
+      //     },
+      //   ],
+      //   retweeted: false,
+      // },
+      // {
+      //   id: 1,
+      //   profileName: "Peter Samson",
+      //   text: "Drop a comment on what u currently learning",
+      //   retweeted: true,
+      //   showTweetDlt: false,
+      //   comment: [
+      //     {
+      //       showDlt: false,
+      //       profileName: "Peter Samson",
+      //       text: "I love you",
+      //     },
+      //   ],
+      // },
+      // {
+      //   id: 0,
+      //   retweeted: false,
+      //   profileName: "Adejoro Joshua",
+      //   text: "Peter",
+      //   showTweetDlt: false,
+      //   comment: [
+      //     {
+      //       showDlt: false,
+      //       profileName: "Adejoro Joshua",
+      //       text: "I Dislike you",
+      //     },
+      //   ],
+      // },
     ],
     retweetedTweet: [],
     viewTweet: null,
     showTweet: false,
     copyOfNewTweets: [
-      {
-        id: 4,
-        profileName: "Peter Samson",
-        text: "Drop a comment on what u currently learning",
-        retweeted: true,
-        showTweetDlt: false,
-
-        comment: [
-          {
-            showDlt: false,
-            profileName: "Peter Samson",
-            text: "I love you",
-          },
-        ],
-      },
+      // {
+      //   id: 4,
+      //   profileName: "Peter Samson",
+      //   text: "Drop a comment on what u currently learning",
+      //   retweeted: true,
+      //   showTweetDlt: false,
+      //   comment: [
+      //     {
+      //       showDlt: false,
+      //       profileName: "Peter Samson",
+      //       text: "I love you",
+      //     },
+      //   ],
+      // },
     ],
   },
   reducers: {
     addToTweetArr: (state, action) => {
-      state.tweet = [...action.payload , ...state.tweet];
+      state.tweet = [...action.payload, ...state.tweet];
     },
     addToCopyTweetArr: (state, action) => {
-      state.copyOfNewTweets=[...state.copyOfNewTweets,...action.payload]
+      state.copyOfNewTweets = [ ...state.copyOfNewTweets,...action.payload,];
     },
     clearCopyTweetArr: (state) => {
       state.copyOfNewTweets = [];

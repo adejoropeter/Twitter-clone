@@ -16,24 +16,24 @@ const ForYou = () => {
   //   { name: "Adejoro Peter", text: "lorem ipsum" },
   // ]);
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    const fetchTweet = async () => {
-      let list = [];
-      setLoading(true);
+  // useEffect(() => {
+  //   const fetchTweet = async () => {
+  //     let list = [];
+  //     setLoading(true);
 
-      try {
-        const querySnapshot = await getDocs(collection(db, "tweets"));
-        querySnapshot.forEach((user) => {
-          list.push({ id: user.id, ...user.data() });
-        });
-        // dispatch(addToTweetArr(list));
-        // setTweet(list)
-        // console.log(list)
-        setLoading(false);
-      } catch (error) {}
-    };
-    fetchTweet();
-  }, []);
+  //     try {
+  //       const querySnapshot = await getDocs(collection(db, "tweets"));
+  //       querySnapshot.forEach((user) => {
+  //         list.push({ id: user.id, ...user.data() });
+  //       });
+  //       // dispatch(addToTweetArr(list));
+  //       // setTweet(list)
+  //       // console.log(list)
+  //       setLoading(false);
+  //     } catch (error) {}
+  //   };
+  //   fetchTweet();
+  // }, []);
   return (
     <>
       {/* <div className="border-b" >hjj</div> */}

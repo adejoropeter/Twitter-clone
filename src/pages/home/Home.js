@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import UploadTweet from "../../components/tweet/UploadTweet";
 import HomeRightBar from "./HomeRightBar";
 import { AiOutlineArrowDown, AiOutlineTwitter } from "react-icons/ai";
+import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCopyTweetArr,
   addToTweetArr,
+  clearCopyTweetArr,
   reverseTweetArr,
 } from "../../redux/tweetSlice";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -19,6 +21,7 @@ const Home = () => {
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
   const state = useSelector((state) => state.input.value);
   const profileName = useSelector((state) => state.user.user_details);
+  const [stat, setStat] = useState(false);
   const dispatch = useDispatch();
   const inputVal = state?.value?.join("");
   const text = inputVal
@@ -38,13 +41,15 @@ const Home = () => {
     //   })
     // );
     console.log(copyOfNewTweets);
+    console.log(tweet);
     const newArr = {
       text: text?.join(""),
       profileName: "Adejoro Peter",
       username: "@ade_peter",
       comment: [],
       likes: 1,
-      id: copyOfNewTweets[copyOfNewTweets.length - 1].id + 1,
+      // id: copyOfNewTweets.length - 1 + 1 || 0,
+      id:tweet[0]?.id||0,
       retweeted: false,
     };
     dispatch(addToCopyTweetArr([newArr]));
@@ -57,6 +62,7 @@ const Home = () => {
     // console.log(auth);
     // dispatch(clearInputField());
   };
+
   return (
     <div className="flex w-screen  sm:w-fit md:w-[60%] lg:w-full min-h-full   xsm:border-l-2  border-l-[#16181c]">
       <main className=" w-full min-h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
@@ -121,12 +127,26 @@ const Home = () => {
             </NavLink>
           </div>
         </header>
-        <div className="fixed z-10     top-36 left-[15%] sm:left-[50%] translate-x-[50%] ">
-          <div className="bg-green-400 flex items-center gap-1 fit rounded-full py-1 px-3">
+
+        <motion.div
+          initial={{ position: "fixed", top: "144px", opacity: 0 }}
+          animate={
+            copyOfNewTweets?.length
+              ? { y: "30%", translateX: "-50%", opacity: 1 }
+              : { top: 0 }
+          }
+          onClick={() => {
+            setStat(false);
+            dispatch(addToTweetArr(...[copyOfNewTweets]));
+            dispatch(clearCopyTweetArr());
+          }}
+          className="fixed top-[10%] opacity-0 z-10 left-[50%] -translate-x-[50%] "
+        >
+          <div className="cursor-pointer bg-green-400 flex items-center gap-1 fit rounded-full py-1 px-3">
             <h1 className=""> New Tweet </h1>
             <AiOutlineArrowDown />
           </div>
-        </div>
+        </motion.div>
         <UploadTweet handleAddTweet={handleAddTweet} />
 
         <Outlet />

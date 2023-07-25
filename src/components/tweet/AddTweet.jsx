@@ -152,12 +152,7 @@ const AddTweet = ({ handleAddTweet }) => {
           bg={!state?.value?.length ? "#005D3E" : "#00BA7C"}
           disabled={!state?.value?.length}
         />
-        <button
-          onClick={handleAdd}
-          className="w-20 h-10 bg-[#00BA7C] rounded-full disabled:bg-[#005D3E] disabled:text-[#808080] font-bold text-md flex justify-center items-center"
-        >
-          Add{" "}
-        </button>
+      
       </div>
     </div>
   );
