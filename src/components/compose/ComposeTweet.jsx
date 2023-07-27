@@ -34,6 +34,7 @@ const ComposeTweet = () => {
   const tweet = useSelector((state) => state.post.tweet);
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
+  const copy = useSelector((state) => state.composeTweet.copyOfGroupTweet);
   //   console.log(compose);
 
   const text = compose[0]?.inputText;
@@ -137,7 +138,25 @@ const ComposeTweet = () => {
   //     ?.split("")
   //     ?.filter((_, i) => i < 35)
   //     ?.map((a) => a);
-
+  const addComposeTweet = () => {
+    console.log(copy)
+    if (compose.length - 1 !== 3) {
+      dispatch(
+        addToGrpTweet({
+          inputText: "",
+          isDisabled: false,
+          id,
+          isFade: true,
+        })
+      );
+      dispatch(backGroundColor());
+    
+    } else {
+      dispatch(setGroupTweetTo4());
+      dispatch(setCurrIdx(compose.length - 1));
+      dispatch(backGroundColor());
+    }
+  };
   return (
     <div className="flex sm:items-center gap-2 justify-between flex-col sm:flex-row">
       <div className="flex ">
@@ -207,21 +226,7 @@ const ComposeTweet = () => {
             <div className="h-full w-2 border-l-2 border-[#1D1F23] "></div> */}
         <div
           className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer"
-          onClick={() => {
-            compose.length - 1 !== 3
-              ? dispatch(
-                  addToGrpTweet({
-                    inputText: "",
-                    isDisabled: false,
-                    id,
-                    isFade: true,
-                  })
-                )
-              : dispatch(setGroupTweetTo4());
-            dispatch(setCurrIdx(id));
-            dispatch(backGroundColor());
-            console.log(compose);
-          }}
+          onClick={addComposeTweet}
         >
           <BiPlus className="text-[#00BA7C]" size={"20"} />
         </div>

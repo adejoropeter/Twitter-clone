@@ -33,7 +33,7 @@ import { signOut } from "firebase/auth";
 import { logout, showButton } from "./redux/LoginSlice";
 import axios from "axios";
 import Comment from "./pages/comment/Comment";
-import Compose from "./pages/Compose";
+import Compose from "./components/compose/Compose";
 // import { logout } from "./redux/LoginSlice";
 const App = () => {
   const { pathname } = useLocation();
@@ -134,8 +134,6 @@ const App = () => {
         </Suspense>
       </div>
       {currentUser ? null : <TwitterLoginSignup />}
-
-      
     </>
   );
 };

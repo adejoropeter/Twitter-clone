@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import {
   addToGrpTweet,
   addToGrpTweetjks,
+  backGroundColor,
   setCurrIdx,
 } from "../../redux/composeSlice";
 const AddTweet = ({ handleAddTweet }) => {
@@ -132,9 +133,12 @@ const AddTweet = ({ handleAddTweet }) => {
                   
                   addToGrpTweetjks({
                     firstTweet: { inputText: text.join(""), isDisabled: true, id },
-                    secondTweet: { inputText: "", isDisabled: false, id: idx2 },
+                    secondTweet: { inputText: "",  isFade: true,isDisabled: false, id: idx2 },
                   })
+
                 );
+                // dispatch(setCurrIdx(1));
+
 
                 // dispatch(setCurrIdx({id}))
                 navigate("/compose");

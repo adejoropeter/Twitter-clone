@@ -7,6 +7,7 @@ export const composeSlice = createSlice({
   name: "input-field",
   initialState: {
     groupTweet: [],
+    copyOfGroupTweet: [],
     currIdx: 0,
   },
   reducers: {
@@ -38,11 +39,16 @@ export const composeSlice = createSlice({
           : cmp;
       });
     },
-    backGroundColor: (state) => {
+    backGroundColor: (state,action) => {
       state.groupTweet = state.groupTweet.map((cmp) => {
         return cmp.id === state.currIdx
-          ? { ...cmp, isFade: true }
+          ? { ...cmp, isFade: state.groupTweet.length>1?true:false }
           : { ...cmp, isFade: false };
+      });
+    },
+    disableFirstObject: (state, action) => {
+      state.copyOfGroupTweet = state.groupTweet?.filter((cmp) => {
+        return cmp.id !== 0;
       });
     },
     setCurrIdx: (state, action) => {
@@ -56,13 +62,16 @@ export const composeSlice = createSlice({
       state.groupTweet.length = 4;
     },
     filterGroupTweet: (state, action) => {
+      state.currIdx = state.groupTweet.length - 1;
       state.groupTweet = state.groupTweet?.filter((cmp) => {
         return cmp.id !== action.payload.id;
       });
+      //     state.groupTweet = state.groupTweet.map((a,i) => {
+      //       return a
+      // });
     },
   },
 });
-
 
 export const {
   addToGrpTweet,
@@ -73,5 +82,6 @@ export const {
   setCurrIdx,
   setGroupTweetTo4,
   addToGrpTweetjks,
+  disableFirstObject,
 } = composeSlice.actions;
 export default composeSlice.reducer;
