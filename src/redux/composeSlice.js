@@ -8,7 +8,7 @@ export const composeSlice = createSlice({
   initialState: {
     groupTweet: [],
     copyOfGroupTweet: [],
-    currIdx: 0,
+    currIdx: 1,
   },
   reducers: {
     addToGrpTweet: (state, action) => {
@@ -39,11 +39,12 @@ export const composeSlice = createSlice({
           : cmp;
       });
     },
-    backGroundColor: (state,action) => {
+    backGroundColor: (state, action) => {
       state.groupTweet = state.groupTweet.map((cmp) => {
         return cmp.id === state.currIdx
-          ? { ...cmp, isFade: state.groupTweet.length>1?true:false }
-          : { ...cmp, isFade: false };
+          ? { ...cmp, isFade: state.groupTweet.length > 1 ? true : false }
+          : //     ? { ...cmp, isFade: true }
+            { ...cmp, isFade: false };
       });
     },
     disableFirstObject: (state, action) => {
@@ -55,7 +56,7 @@ export const composeSlice = createSlice({
       state.currIdx = action.payload;
     },
     resetGroupTweet: (state) => {
-      state.currIdx = 0;
+      state.currIdx = 1;
       state.groupTweet = [];
     },
     setGroupTweetTo4: (state) => {
@@ -66,13 +67,12 @@ export const composeSlice = createSlice({
       state.groupTweet = state.groupTweet?.filter((cmp) => {
         return cmp.id !== action.payload.id;
       });
-      //     state.groupTweet = state.groupTweet.map((a,i) => {
-      //       return a
-      // });
+      state.groupTweet = state.groupTweet.map((a, i) => {
+        return ({ ...a, id:i+1 });
+      });
     },
   },
 });
-
 export const {
   addToGrpTweet,
   resetGroupTweet,

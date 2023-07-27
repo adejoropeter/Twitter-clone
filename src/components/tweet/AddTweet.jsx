@@ -28,9 +28,9 @@ const AddTweet = ({ handleAddTweet }) => {
   const compose = useSelector((state) => state.composeTweet.groupTweet);
   const tweet = useSelector((state) => state.post.tweet);
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
-  const idx = compose.length - 1;
-  const id = idx + 1;
-  const idx2 = id + 1;
+  const idx = compose.length+1;
+  // const id = idx + 1;
+  const idx2 = idx + 1;
 
   // console.log()
   const navigate = useNavigate();
@@ -132,7 +132,7 @@ const AddTweet = ({ handleAddTweet }) => {
                 dispatch(
                   
                   addToGrpTweetjks({
-                    firstTweet: { inputText: text.join(""), isDisabled: true, id },
+                    firstTweet: { inputText: text.join(""), isDisabled: true, id:idx},
                     secondTweet: { inputText: "",  isFade: true,isDisabled: false, id: idx2 },
                   })
 

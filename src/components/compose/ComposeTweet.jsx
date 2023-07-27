@@ -129,7 +129,7 @@ const ComposeTweet = () => {
     navigate("/foryou");
   };
 
-  const idx = compose.length - 1;
+  const idx = compose.length ;
   const id = idx + 1;
   //   const navigate = useNavigate();
   const [img, setImg] = useState("");
@@ -138,23 +138,24 @@ const ComposeTweet = () => {
   //     ?.split("")
   //     ?.filter((_, i) => i < 35)
   //     ?.map((a) => a);
-  const addComposeTweet = () => {
-    console.log(copy)
+  const addComposeTweet = ({eachTweet}) => {
+    console.log(copy);
     if (compose.length - 1 !== 3) {
       dispatch(
         addToGrpTweet({
           inputText: "",
           isDisabled: false,
+          // id:Math.random(),
           id,
           isFade: true,
         })
       );
       dispatch(backGroundColor());
-    
+      console.log(compose.length)
     } else {
       dispatch(setGroupTweetTo4());
       dispatch(setCurrIdx(compose.length - 1));
-      dispatch(backGroundColor());
+      dispatch(backGroundColor( ));
     }
   };
   return (
