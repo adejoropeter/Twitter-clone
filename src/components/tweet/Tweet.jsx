@@ -13,7 +13,7 @@ import {
   viewTweet,
 } from "../../redux/tweetSlice";
 import { auth } from "../../firebase";
-import {motion  } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Tweet = ({ tweet }) => {
   const urlName = useSelector((state) => state.post.userUrlName);
@@ -23,7 +23,7 @@ const Tweet = ({ tweet }) => {
   const navigate = useNavigate("");
 
   const { pathname } = useLocation();
-   
+
   // console.log(auth.currentUser);
   useEffect(() => {
     dispatch(setAddToRetweetArr());
@@ -34,7 +34,7 @@ const Tweet = ({ tweet }) => {
     dispatch(setUserUrlName(tweet?.profileName));
     navigate(`/comment/${tweet.profileName}`);
     // console.log("Parent!!!!!!!!!!!!!!");
-    console.log(tweets)
+    console.log(tweets);
   };
   const handleMouseEnter = () => {
     console.log(tweet?.name);
@@ -45,7 +45,7 @@ const Tweet = ({ tweet }) => {
     e.stopPropagation();
     dispatch(setShowTweetDlt({ id: tweet.id }));
   };
-  const [sta,setSta]=useState(false)
+  const [sta, setSta] = useState(false);
   return (
     <motion.div
       className="px-5 py-2 w-full  hover:bg-[#080808] cursor-pointer tweet-border overflow-hidden "
@@ -78,19 +78,19 @@ const Tweet = ({ tweet }) => {
             />
           )}
         </div>
-        <div className="ml-14 w-full flex flex-col ">
+        <div className="ml-14 w-full flex flex-col gap-2">
           <div className="flex justify-between  h-full  ">
-            <div className="flex gap-2">
-              <p className="w-20 sm:w-40 lg:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="flex gap-2 justify-start w-full">
+              <p className="w-20  sm:w-fit md:w-fit  lg:w- font-bold whitespace-nowrap overflow-hidden text-ellipsis">
                 {tweet?.profileName}
               </p>
               <div className="text-[#6A6F74]  flex gap-1  ">
-                <p className="w-20 sm:w-40 lg:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
+                <p className="w-20  sm:w-fit md:w-fit lg:w-full font-bold whitespace-nowrap overflow-hidden text-ellipsis">
                   {tweet?.username}
                 </p>
                 <p className="font-bold">.</p>
 
-                <p className="x text-sm sm:text-lg">May 13</p>
+                <p className="text-sm sm:text-lg w-full">May 13</p>
               </div>
             </div>
             <div>

@@ -69,7 +69,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex w-screen  sm:w-fit md:w-[60%] lg:w-full min-h-full   xsm:border-l-2  border-l-[#16181c]">
+    <div className="flex w-screen  sm:w-fit md:w-[70%] lg:w-full min-h-full   xsm:border-l-2  border-l-[#16181c]">
       <main className=" w-full min-h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
         <header className="border-b sticky w-full top-0 backdrop-blur-md border-[#16181c]   sm:h-[115px] blur-0 flex flex-col justify-between z-10">
           <div className="pl-4 py-4 relative xsm:hidden block">
@@ -148,7 +148,7 @@ const Home = () => {
               document.documentElement.scrollTop = 100;
             }, 200);
           }}
-          className="fixed top-[10%] opacity-0 z-10 left-[50%] -translate-x-[50%] "
+          className="fixed top-[10%] opacity-0 z-10 left-[50%] md:left-[48%] sm:left-[40%] -translate-x-[50%] "
         >
           <div className="cursor-pointer bg-green-400 flex items-center gap-1 fit rounded-full py-1 px-3">
             <h1 className=""> New Tweet </h1>
