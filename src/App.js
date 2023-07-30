@@ -34,6 +34,8 @@ import { logout, showButton } from "./redux/LoginSlice";
 import axios from "axios";
 import Comment from "./pages/comment/Comment";
 import Compose from "./components/compose/Compose";
+import QuoteTweet from "./quote/QuoteTweet";
+import Quote from "./quote/Quote";
 // import { logout } from "./redux/LoginSlice";
 const App = () => {
   const { pathname } = useLocation();
@@ -114,7 +116,8 @@ const App = () => {
               <Route path="/notifications" element={<Notification />}></Route>
               <Route path="/messages" element={<Message />}></Route>
               <Route path="/comment/:name" element={<Comment />}></Route>
-              <Route path="/compose" element={<Compose />}></Route>
+              <Route path="/compose" element={pathname==="/compose"&&<Compose />}></Route>
+              <Route path="/compose/tweet" element={pathname==="/compose/tweet"&&<Quote />}></Route>
             </Route>
             <Route path="/explore" element={<Explore />}></Route>
             <Route

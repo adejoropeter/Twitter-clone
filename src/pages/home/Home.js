@@ -148,7 +148,7 @@ const Home = () => {
               document.documentElement.scrollTop = 100;
             }, 200);
           }}
-          className="fixed top-[10%] opacity-0 z-10 left-[50%] md:left-[48%] sm:left-[40%] -translate-x-[50%] "
+          className="fixed top-[10%] opacity-0 z-10 left-[50%] md:left-[52%] sm:left-[40%] lg:left-[40%] -translate-x-[50%] "
         >
           <div className="cursor-pointer bg-green-400 flex items-center gap-1 fit rounded-full py-1 px-3">
             <h1 className=""> New Tweet </h1>

@@ -2,7 +2,7 @@ import React from "react";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { TbX } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import AddTweet from "../tweet/AddTweet";
 import ComposeTweet from "./ComposeTweet";
 import {
@@ -119,6 +119,7 @@ const Compose = () => {
             )}
           </div>
         </div>
+        {/* <Outlet/> */}
       </div>
     </div>
   );
