@@ -54,7 +54,7 @@ const Home = () => {
       comment: [],
       likes: 1,
       // id: copyOfNewTweets.length - 1 + 1 || 0,
-      id: Math.random(),
+      id: tweet[0]?.id + 1||Math.random(),
       retweeted: false,
     };
     dispatch(addToCopyTweetArr([newArr]));

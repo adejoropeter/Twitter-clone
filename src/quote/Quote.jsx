@@ -1,14 +1,17 @@
 import React from "react";
 import { TbX } from "react-icons/tb";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/button/Button";
 import QuoteTweet from "./QuoteTweet";
+import { addToTweetArray } from "../redux/quoteSlice";
 
 const Quote = () => {
   const navigate = useNavigate();
   const view = useSelector((state) => state.post.viewTweet);
-  console.log(view);
+  const inputVal = useSelector((state) => state.quote.inputVal);
+  const dispatch = useDispatch();
+  console.log(inputVal);
   return (
     <div className="w-full h-screen bg-[#242d34b3] fixed  z-50 overflow-y-hidden ">
       <div className="bg-black overflow-scroll sm:w-[600px] sm:min-h-0 min-h-screen sm:h-[300px]  top-[35%] left-[50%]  -translate-x-[50%] -translate-y-[50%] flex flex-col sm:rounded-2xl overflow-x-hidden relative ">
@@ -46,11 +49,11 @@ const Quote = () => {
             <p className="border-l-2 h-full border-[#5b5c5da3]"></p>
           </div>
           <div>
-            <h1 className="font-bold">{view.profileName}</h1>
-            <p>{view.text}</p>
+            <h1 className="font-bold">{view?.profileName}</h1>
+            <p>{view?.text}</p>
             <p className="mt-4 font-semibold text-[#6A6F74]">
               Replying to{" "}
-              <span className="text-[#00BA7C]">{view.username}</span>
+              <span className="text-[#00BA7C]">{view?.username}</span>
             </p>
           </div>
         </div>
@@ -65,6 +68,10 @@ const Quote = () => {
           <input
             placeholder="Tweet your Reply!"
             type="text"
+            value={inputVal}
+            onChange={(e) =>
+              dispatch(addToTweetArray({ value: e.target.value }))
+            }
             className="w-full border-none bg-transparent outline-none text-white px-3 text-2xl placeholder:text-[#6A6F74]"
           />
         </div>

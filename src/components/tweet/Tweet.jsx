@@ -24,7 +24,7 @@ const Tweet = ({ tweet }) => {
   const navigate = useNavigate("");
 
   const { pathname } = useLocation();
-
+console.log(view)
   // console.log(auth.currentUser);
   useEffect(() => {
     dispatch(setAddToRetweetArr());
@@ -80,7 +80,7 @@ const Tweet = ({ tweet }) => {
             />
           )}
         </div>
-        <div className="ml-14 w-full flex flex-col gap-1">
+        <div className="ml-14 w-full flex flex-col gap-">
           <div className="flex justify-between  h-full  ">
             <div className="flex gap-2 justify-start w-full">
               <p className="w-20  sm:w-fit md:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
@@ -122,8 +122,14 @@ const Tweet = ({ tweet }) => {
               </div>
             </div>
           </div>
-          <div>
+          <div className="flex flex-col gap-2">
             <p>{tweet?.text}</p>
+            {tweet.isQuote && (
+              <div className="border border-[#5b5c5da3] p-3 rounded-xl w-full">
+                <h3>{view?.profileName }</h3>
+                <p>{ view?.text}</p>
+              </div>
+            )}
           </div>
 
           <div className="flex gap-4 w-full">
@@ -173,220 +179,6 @@ const Tweet = ({ tweet }) => {
 };
 
 export default Tweet;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import { BiDotsHorizontal, BiDownload } from "react-icons/bi";

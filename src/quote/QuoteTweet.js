@@ -11,6 +11,8 @@ import { addDoc, collection, serverTimestamp } from "../firebase";
 // import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/button/Button";
+import { addToTweetArr } from "../redux/tweetSlice";
+import { clearInputVal } from "../redux/quoteSlice";
 
 const QuoteTweet = () => {
   const dispatch = useDispatch();
@@ -18,105 +20,36 @@ const QuoteTweet = () => {
   //   const [bool, setBool] = useState(false);
   const navigate = useNavigate();
   const tweet = useSelector((state) => state.post.tweet);
-  const bool = useSelector((state) => state.input.bool);
-  const compose = useSelector((state) => state.composeTweet.groupTweet);
-  const copy = useSelector((state) => state.composeTweet.copyOfGroupTweet);
+  const text = useSelector((state) => state.quote.inputVal);
+
   //   console.log(compose);
 
   //   const text = compose[0]?.inputText;
   //   const inputTextWithEmptyValue = compose.find((a) => {
   //     return a.inputText === "";
   //   });
-//   const handleAddTweet = () => {
-//     compose.length > 1 &&
-//       dispatch(
-//         addToTweetArr([
-//           {
-//             ...compose[0],
-//             profileName: "Adejoro Peter",
-//             username: "@ade_peter",
-//             comment: [],
-//             likes: 1,
-//             id: tweet[0]?.id + 1 || 0,
-//             retweeted: false,
-//             text,
-//             isThread: true,
-//           },
-//         ])
-//       );
-//     compose.length === 1 &&
-//       dispatch(
-//         addToTweetArr([
-//           {
-//             ...compose[0],
-//             profileName: "Adejoro Peter",
-//             username: "@ade_peter",
-//             comment: [],
-//             likes: 1,
-//             id: tweet[0]?.id + 1 || 0,
-//             retweeted: false,
-//             text,
-//             isThread: false,
-//           },
-//         ])
-//       );
+  const handleAddTweet = () => {
+    dispatch(
+      addToTweetArr([
+        {
+          text: text || "Nothing here",
+          profileName: "Adejoro Peter",
+          username: "@ade_peter",
+          comment: [],
+          likes: 1,
+              id: tweet[0].id + 1,
+      //     id: Math.random(),
+          retweeted: false,
+          isQuote: true,
+        },
+      ])
+    );
+    dispatch(clearInputVal());
+    console.log(tweet);
+  };
 
-//     compose.length - 1 === 1 &&
-//       dispatch(
-//         setAddComment({
-//           id: tweet[0]?.id + 1 || 0,
-//           profileName: "Ade",
-//           text: compose[1]?.inputText,
-//           cmtId: Math.random(),
-//         })
-//       );
-//     compose.length - 1 === 2 &&
-//       dispatch(
-//         setAddComposedComment2({
-//           id: tweet[0]?.id + 1 || 0,
-//           // first comment
-//           firstComment: compose[1],
-//           firstCommentProfileName: "Ade",
-//           firstCommentText: compose[1]?.inputText,
-//           firstCommentCmtId: Math.random(),
-//           //second comment
-//           secondComment: compose[2],
-//           secondCommentProfileName: "Ade",
-//           secondCommentText: compose[2]?.inputText,
-//           secondCommentCmtId: Math.random(),
-//         })
-//       );
-//     compose.length - 1 === 3 &&
-//       dispatch(
-//         setAddComposedComment3({
-//           id: tweet[0]?.id + 1 || 0,
-//           // first comment
-//           firstComment: compose[1],
-//           firstCommentProfileName: "Ade",
-//           firstCommentText: compose[1]?.inputText,
-//           firstCommentCmtId: Math.random(),
-//           //second comment
-//           secondComment: compose[2],
-//           secondCommentProfileName: "Ade",
-//           secondCommentText: compose[2]?.inputText,
-//           secondCommentCmtId: Math.random(),
-//           //third comment
-//           thirdComment: compose[3],
-//           thirdCommentProfileName: "Ade",
-//           thirdCommentText: compose[3]?.inputText,
-//           thirdCommentCmtId: Math.random(),
-//         })
-//       );
-//     setTimeout(() => {
-//       document.documentElement.scrollTop = 110;
-//     }, 200);
-//     //     dispatch(resetGroupTweet());
-//     //     dispatch(clearInputField());
-//     //     navigate("/foryou");
-//   };
-
-//   const idx = compose.length;
-//   const id = idx + 1;
+  //   const idx = compose.length;
+  //   const id = idx + 1;
   //   const navigate = useNavigate();
   const [img, setImg] = useState("");
   //   const inputVal = state?.value?.join("");
@@ -124,26 +57,26 @@ const QuoteTweet = () => {
   //     ?.split("")
   //     ?.filter((_, i) => i < 35)
   //     ?.map((a) => a);
-//   const addComposeTweet = () => {
-//     console.log(copy);
-//     if (compose.length - 1 !== 3) {
-//       dispatch(
-//         addToGrpTweet({
-//           inputText: "",
-//           isDisabled: false,
-//           // id:Math.random(),
-//           id,
-//           isFade: true,
-//         })
-//       );
-//       dispatch(backGroundColor());
-//       console.log(compose.length);
-//     } else {
-//       dispatch(setGroupTweetTo4());
-//       dispatch(setCurrIdx(compose.length - 1));
-//       dispatch(backGroundColor());
-//     }
-//   };
+  //   const addComposeTweet = () => {
+  //     console.log(copy);
+  //     if (compose.length - 1 !== 3) {
+  //       dispatch(
+  //         addToGrpTweet({
+  //           inputText: "",
+  //           isDisabled: false,
+  //           // id:Math.random(),
+  //           id,
+  //           isFade: true,
+  //         })
+  //       );
+  //       dispatch(backGroundColor());
+  //       console.log(compose.length);
+  //     } else {
+  //       dispatch(setGroupTweetTo4());
+  //       dispatch(setCurrIdx(compose.length - 1));
+  //       dispatch(backGroundColor());
+  //     }
+  //   };
   return (
     <div className="flex sm:items-center gap-2 justify-between flex-col sm:flex-row">
       <div className="flex ">
@@ -213,20 +146,20 @@ const QuoteTweet = () => {
             <div className="h-full w-2 border-l-2 border-[#1D1F23] "></div> */}
         <div
           className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer"
-      //     onClick={addComposeTweet}
+          //     onClick={addComposeTweet}
         >
           <BiPlus className="text-[#00BA7C]" size={"20"} />
         </div>
         {/* </div>
         ) : null} */}
         <Button
-      //     text={compose.length > 1 ? "Tweet All" : "Tweet"}
-                          text={"Reply"}
-      //     onClickFn={handleAddTweet}
-      //     color={
-      //       inputTextWithEmptyValue?.inputText === "" ? "#808080" : "#ffffff"
-      //     }
-      //     disabled={inputTextWithEmptyValue?.inputText === "" ? true : false}
+          //     text={compose.length > 1 ? "Tweet All" : "Tweet"}
+          text={"Reply"}
+          onClickFn={handleAddTweet}
+          //     color={
+          //       inputTextWithEmptyValue?.inputText === "" ? "#808080" : "#ffffff"
+          //     }
+          //     disabled={inputTextWithEmptyValue?.inputText === "" ? true : false}
         />
       </div>
     </div>
