@@ -34,14 +34,20 @@ const ForYou = () => {
   //   };
   //   fetchTweet();
   // }, []);
+  const quote = useSelector((state) => state.post.quote);
+
+  // const a = () => {
+  //   return tweet?.map((a, i) => {
+  //     return i;
+  //   });
+  // };
+  // console.log(a());
   return (
     <>
       {/* <div className="border-b" >hjj</div> */}
-      
+
       {tweet.map((tweet, i) => {
-        return (
-            <Tweet tweet={tweet} key={tweet?.id} />
-        );
+        return <Tweet tweet={tweet} key={tweet?.id} />;
       })}
     </>
   );

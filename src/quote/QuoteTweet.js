@@ -20,8 +20,8 @@ const QuoteTweet = () => {
   //   const [bool, setBool] = useState(false);
   const navigate = useNavigate();
   const tweet = useSelector((state) => state.post.tweet);
+  const view = useSelector((state) => state.post.viewTweet);
   const text = useSelector((state) => state.quote.inputVal);
-
   //   console.log(compose);
 
   //   const text = compose[0]?.inputText;
@@ -37,15 +37,17 @@ const QuoteTweet = () => {
           username: "@ade_peter",
           comment: [],
           likes: 1,
-              id: tweet[0].id + 1,
-      //     id: Math.random(),
+          id: tweet[0].id + 1,
+          //     id: Math.random(),
           retweeted: false,
           isQuote: true,
+          quoteTweet: view,
         },
       ])
     );
     dispatch(clearInputVal());
     console.log(tweet);
+    navigate(-1);
   };
 
   //   const idx = compose.length;

@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "@testing-library/react";
 export const tweetSlice = createSlice({
   name: "tweet",
   initialState: {
     //   loading state goes here
     userUrlName: "",
+    quote: [],
     tweet: [
       // {
       //   id: 2,
@@ -73,7 +75,7 @@ export const tweetSlice = createSlice({
       state.tweet = [...action.payload, ...state.tweet];
     },
     addToCopyTweetArr: (state, action) => {
-      state.copyOfNewTweets = [ ...state.copyOfNewTweets,...action.payload,];
+      state.copyOfNewTweets = [...state.copyOfNewTweets, ...action.payload];
     },
     clearCopyTweetArr: (state) => {
       state.copyOfNewTweets = [];
@@ -87,6 +89,14 @@ export const tweetSlice = createSlice({
     viewTweet: (state, action) => {
       state.viewTweet = action.payload;
     },
+    // chosenTweet: (state, action) => {
+    //   state.quote = [...state.quote, action.payload];
+    // },
+    // removeChosenTweet: (state, action) => {
+    //   state.quote = state.quote.filter((_, idx) => {
+    //     return idx !== state.quote.length - 1;
+    //   });
+    // },
     setAddComment: (state, action) => {
       state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id
@@ -224,12 +234,14 @@ export const {
   setAddToRetweetArr,
   setShowCommentDlt,
   setShowTweetDlt,
+  // removeChosenTweet,
   deleteTweet,
   addToCopyTweetArr,
   clearCopyTweetArr,
   reverseTweetArr,
   deleteComment,
   setAddComposedComment2,
+  // chosenTweet,
   setAddComposedComment3,
 } = tweetSlice.actions;
 export default tweetSlice.reducer;

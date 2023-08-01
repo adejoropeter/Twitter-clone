@@ -9,7 +9,8 @@ export const quoteSlice = createSlice({
     addToTweetArray: (state, action) => {
       state.quoteTweet = action.payload.object;
       state.inputVal = action.payload.value;
-    },
+        },
+        
     clearInputVal: (state) => {
       state.inputVal = "";
     },

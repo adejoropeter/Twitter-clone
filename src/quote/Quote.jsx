@@ -5,13 +5,16 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/button/Button";
 import QuoteTweet from "./QuoteTweet";
 import { addToTweetArray } from "../redux/quoteSlice";
+import { removeChosenTweet } from "../redux/tweetSlice";
 
 const Quote = () => {
   const navigate = useNavigate();
   const view = useSelector((state) => state.post.viewTweet);
   const inputVal = useSelector((state) => state.quote.inputVal);
+  const quote = useSelector((state) => state.post.quote);
   const dispatch = useDispatch();
-  console.log(inputVal);
+
+  console.log(quote);
   return (
     <div className="w-full h-screen bg-[#242d34b3] fixed  z-50 overflow-y-hidden ">
       <div className="bg-black overflow-scroll sm:w-[600px] sm:min-h-0 min-h-screen sm:h-[300px]  top-[35%] left-[50%]  -translate-x-[50%] -translate-y-[50%] flex flex-col sm:rounded-2xl overflow-x-hidden relative ">
@@ -28,6 +31,7 @@ const Quote = () => {
                   navigate(-1);
                   // dispatch(resetGroupTweet());
                   // dispatch(resetCurr());
+                  // dispatch(removeChosenTweet())
                   document.body.style.overflow = "visible";
                 }}
               />

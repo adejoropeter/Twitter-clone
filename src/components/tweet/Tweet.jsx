@@ -5,6 +5,7 @@ import { TbChartAreaLine } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import {
+  chosenTweet,
   deleteTweet,
   setAddToRetweetArr,
   setRetweet,
@@ -15,16 +16,15 @@ import {
 import { auth } from "../../firebase";
 import { motion } from "framer-motion";
 
-const Tweet = ({ tweet }) => {
+const Tweet = ({ tweet}) => {
   const urlName = useSelector((state) => state.post.userUrlName);
   const tweets = useSelector((state) => state.post.tweet);
+  const quote = useSelector((state) => state.post.quote);
   const view = useSelector((state) => state.post.viewTweet);
 
   const dispatch = useDispatch();
   const navigate = useNavigate("");
-
   const { pathname } = useLocation();
-console.log(view)
   // console.log(auth.currentUser);
   useEffect(() => {
     dispatch(setAddToRetweetArr());
@@ -32,11 +32,10 @@ console.log(view)
   const handleClick = (e) => {
     // e.stopPropagation()
     dispatch(viewTweet(tweet));
-    // console.log(view)
     dispatch(setUserUrlName(tweet?.profileName));
     navigate(`/comment/${tweet.profileName}`);
     // console.log("Parent!!!!!!!!!!!!!!");
-    console.log(tweets);
+    console.log(tweet);
   };
   const handleMouseEnter = () => {
     console.log(tweet?.name);
@@ -122,12 +121,19 @@ console.log(view)
               </div>
             </div>
           </div>
+
           <div className="flex flex-col gap-2">
             <p>{tweet?.text}</p>
             {tweet.isQuote && (
-              <div className="border border-[#5b5c5da3] p-3 rounded-xl w-full">
-                <h3>{view?.profileName }</h3>
-                <p>{ view?.text}</p>
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // console.log(quote);
+                }}
+                className="border border-[#5b5c5da3] p-3 rounded-xl w-full"
+              >
+                <h3>{tweet?.quoteTweet?.profileName}</h3>
+                <p>{ tweet?.quoteTweet?.text}</p>
               </div>
             )}
           </div>
@@ -138,6 +144,8 @@ console.log(view)
                 e.stopPropagation();
                 console.log();
                 dispatch(viewTweet(tweet));
+                // dispatch(chosenTweet(tweet));
+                // console.log(quote)
                 navigate("/compose/tweet");
               }}
               className="flex items-center gap-2 text-[#6A6F74]"
