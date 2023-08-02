@@ -116,6 +116,7 @@ const App = () => {
               <Route path="/notifications" element={<Notification />}></Route>
               <Route path="/messages" element={<Message />}></Route>
               <Route path="/comment/:name" element={<Comment />}></Route>
+              {/* <Route path="/comment/:name" element={<Comment />}></Route> */}
               <Route path="/compose" element={pathname==="/compose"&&<Compose />}></Route>
               <Route path="/compose/tweet" element={pathname==="/compose/tweet"&&<Quote />}></Route>
             </Route>

@@ -5,7 +5,7 @@ export const tweetSlice = createSlice({
   initialState: {
     //   loading state goes here
     userUrlName: "",
-    quote: [],
+    quote: null,
     tweet: [
       // {
       //   id: 2,
@@ -89,14 +89,6 @@ export const tweetSlice = createSlice({
     viewTweet: (state, action) => {
       state.viewTweet = action.payload;
     },
-    // chosenTweet: (state, action) => {
-    //   state.quote = [...state.quote, action.payload];
-    // },
-    // removeChosenTweet: (state, action) => {
-    //   state.quote = state.quote.filter((_, idx) => {
-    //     return idx !== state.quote.length - 1;
-    //   });
-    // },
     setAddComment: (state, action) => {
       state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id
@@ -208,6 +200,11 @@ export const tweetSlice = createSlice({
       state.tweet = state.tweet.filter((twt) => twt.id !== action.payload.id);
     },
 
+    filterQuotedTweet: (state, action) => {
+      state.quote = state.tweet.filter((a) => {
+        return a.id === action.payload.id;
+      });
+    },
     setRetweet: (state, action) => {
       state.tweet = state.tweet.map((twt, id) => {
         return twt.id === action.payload.id
@@ -229,6 +226,7 @@ export const {
   addToTweetArr,
   setRetweet,
   viewTweet,
+  filterQuotedTweet,
   setUserUrlName,
   setAddComment,
   setAddToRetweetArr,
