@@ -7,68 +7,56 @@ export const tweetSlice = createSlice({
     userUrlName: "",
     quote: null,
     tweet: [
-      // {
-      //   id: 2,
-      //   profileName: "Adejoro Peter ",
-      //   text: "lorem ipsum",
-      //   showTweetDlt: false,
-      //   comment: [
-      //     {
-      //       profileName: "Adejoro Samson",
-      //       text: "I Hate you",
-      //       showDlt: false,
-      //     },
-      //   ],
-      //   retweeted: false,
-      // },
-      // {
-      //   id: 1,
-      //   profileName: "Peter Samson",
-      //   text: "Drop a comment on what u currently learning",
-      //   retweeted: true,
-      //   showTweetDlt: false,
-      //   comment: [
-      //     {
-      //       showDlt: false,
-      //       profileName: "Peter Samson",
-      //       text: "I love you",
-      //     },
-      //   ],
-      // },
-      // {
-      //   id: 0,
-      //   retweeted: false,
-      //   profileName: "Adejoro Joshua",
-      //   text: "Peter",
-      //   showTweetDlt: false,
-      //   comment: [
-      //     {
-      //       showDlt: false,
-      //       profileName: "Adejoro Joshua",
-      //       text: "I Dislike you",
-      //     },
-      //   ],
-      // },
+      {
+        id: 2,
+        profileName: "Ade Peter ",
+        text: "lorem ipsum",
+        showTweetDlt: false,
+        username: "@ade_peter",
+        comment: [
+          {
+            profileName: "Adejoro Samson",
+            text: "I Hate you",
+            showDlt: false,
+          },
+        ],
+        retweeted: false,
+      },
+      {
+        id: 1,
+        profileName: "Peter Samson",
+        text: "Drop a comment on what u're currently learning",
+        retweeted: true,
+        showTweetDlt: false,
+        username: "@peter_sam",
+        comment: [
+          {
+            showDlt: false,
+            profileName: "Peter Samson",
+            text: "I love you",
+          },
+        ],
+      },
+      {
+        id: 0,
+        retweeted: false,
+        profileName: "Adejoro Joshua",
+        text: "Peter",
+        showTweetDlt: false,
+        username: "@josh_ade",
+        comment: [
+          {
+            showDlt: false,
+            profileName: "Adejoro Joshua",
+            text: "I Dislike you",
+          },
+        ],
+      },
     ],
     retweetedTweet: [],
     viewTweet: null,
     showTweet: false,
-    copyOfNewTweets: [
-      // {
-      //   id: 4,
-      //   profileName: "Peter Samson",
-      //   text: "Drop a comment on what u currently learning",
-      //   retweeted: true,
-      //   showTweetDlt: false,
-      //   comment: [
-      //     {
-      //       showDlt: false,
-      //       profileName: "Peter Samson",
-      //       text: "I love you",
-      //     },
-      //   ],
-      // },
-    ],
+    copyOfNewTweets: [],
   },
   reducers: {
     addToTweetArr: (state, action) => {
@@ -89,6 +77,7 @@ export const tweetSlice = createSlice({
     viewTweet: (state, action) => {
       state.viewTweet = action.payload;
     },
+
     setAddComment: (state, action) => {
       state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id
@@ -200,11 +189,6 @@ export const tweetSlice = createSlice({
       state.tweet = state.tweet.filter((twt) => twt.id !== action.payload.id);
     },
 
-    filterQuotedTweet: (state, action) => {
-      state.quote = state.tweet.filter((a) => {
-        return a.id === action.payload.id;
-      });
-    },
     setRetweet: (state, action) => {
       state.tweet = state.tweet.map((twt, id) => {
         return twt.id === action.payload.id
@@ -226,20 +210,17 @@ export const {
   addToTweetArr,
   setRetweet,
   viewTweet,
-  filterQuotedTweet,
   setUserUrlName,
   setAddComment,
   setAddToRetweetArr,
   setShowCommentDlt,
   setShowTweetDlt,
-  // removeChosenTweet,
   deleteTweet,
   addToCopyTweetArr,
   clearCopyTweetArr,
   reverseTweetArr,
   deleteComment,
   setAddComposedComment2,
-  // chosenTweet,
   setAddComposedComment3,
 } = tweetSlice.actions;
 export default tweetSlice.reducer;

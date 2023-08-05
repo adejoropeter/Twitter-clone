@@ -24,10 +24,21 @@ const Home = () => {
   const [stat, setStat] = useState(false);
   const dispatch = useDispatch();
   const inputVal = state?.value?.join("");
+  const a = "ssj";
   const text = inputVal
     ?.split("")
     ?.filter((_, i) => i < 35)
     ?.map((a) => a);
+  const field = (a) => {
+    const b = a.split("/\s+/").map((a) => {
+      return a.startsWith("@") ? (
+        <span className="text-blue-400">{a}</span>
+      ) : (
+        <span className="text-white">{a}</span>
+      );
+    });
+    return b;
+  };
   const handleAddTweet = async () => {
     // dispatch(
     //   addToTweetArr({
@@ -40,21 +51,23 @@ const Home = () => {
     //     retweeted: false,
     //   })
     // );
-    console.log(copyOfNewTweets);
-    console.log(tweet);
+    // console.log(copyOfNewTweets);
+    // console.log(tweet);
     // const idd = copyOfNewTweets.map((copy) => {
     //   console.log(copy)
     //   return copy?.id +1;
     // });
     // console.log(idd)
+
+    // console.log(b.substring(1,6))
     const newArr = {
-      text: text?.join(""),
+      text: text,
       profileName: "Adejoro Peter",
       username: "@ade_peter",
       comment: [],
       likes: 1,
       // id: copyOfNewTweets.length - 1 + 1 || 0,
-      id: tweet[0]?.id + 1||Math.random(),
+      id: tweet[0]?.id + 1 || Math.random(),
       retweeted: false,
     };
     dispatch(addToCopyTweetArr([newArr]));
@@ -120,6 +133,7 @@ const Home = () => {
                   }`}
                 >
                   Following
+                  {field("peter @sam sam")}
                 </h2>
                 <p
                   className={`${

@@ -38,7 +38,6 @@ const QuoteTweet = () => {
           comment: [],
           likes: 1,
           id: tweet[0].id + 1,
-          //     id: Math.random(),
           retweeted: false,
           isQuote: true,
           quoteTweet: view,
@@ -46,7 +45,6 @@ const QuoteTweet = () => {
       ])
     );
     dispatch(clearInputVal());
-    console.log(tweet);
     navigate(-1);
   };
 

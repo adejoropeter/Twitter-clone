@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import HomeRightBar from "../home/HomeRightBar";
-import { deleteComment, setShowCommentDlt } from "../../redux/tweetSlice";
+import {  deleteComment, setShowCommentDlt } from "../../redux/tweetSlice";
 import { useNavigate } from "react-router-dom";
 import AddTweet from "../../components/tweet/AddTweet";
 import { UploadTweet } from "../../components";
@@ -94,7 +94,6 @@ const Comment = () => {
                                             cmtId: a.id,
                                           })
                                         );
-                                        console.log(comment);
                                       }}
                                       className="absolute top-4 bg-black w-fit p-2 right-5 shadow-sm shadow-orange-50 cursor-pointer"
                                     >

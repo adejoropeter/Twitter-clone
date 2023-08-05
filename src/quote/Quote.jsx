@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/button/Button";
 import QuoteTweet from "./QuoteTweet";
 import { addToTweetArray } from "../redux/quoteSlice";
-import { removeChosenTweet } from "../redux/tweetSlice";
 
 const Quote = () => {
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ const Quote = () => {
   const quote = useSelector((state) => state.post.quote);
   const dispatch = useDispatch();
 
-  console.log(quote);
+ 
   return (
     <div className="w-full h-screen bg-[#242d34b3] fixed  z-50 overflow-y-hidden ">
       {/* <div className="bg-black      h-screen   w-full    "> */}
@@ -32,7 +31,6 @@ const Quote = () => {
                   navigate(-1);
                   // dispatch(resetGroupTweet());
                   // dispatch(resetCurr());
-                  // dispatch(removeChosenTweet())
                   document.body.style.overflow = "visible";
                 }}
               />
