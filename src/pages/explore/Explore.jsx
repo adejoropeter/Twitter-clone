@@ -8,10 +8,10 @@ import SignInWithGoogleButton from "../../components/SignInWithGoogleButton";
 import { auth, provider } from "../../firebase";
 import HomeRightBar from "../home/HomeRightBar";
 const Explore = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const signInWithGoogle = async () => {
     try {
-    await  signInWithPopup(auth, provider);
+      await signInWithPopup(auth, provider);
     } catch (error) {
       console.log(error);
     }
@@ -23,74 +23,67 @@ const Explore = () => {
           <h2 className="font-bold text-2xl">Explore</h2>
           <RiSettings3Line size={20} />
         </div>
-        <div className="h-full ">
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
-          <Tweet tweet={{ name: "Adejor", text: "lorem 10 " }} />
+        <div className="">
+          <Tweet tweet={{ name: "Adejor", text: "lorem 10 ", profileName:"Adejoro Peter",username:"@ade_joro" }} />
+          <Tweet tweet={{ name: "Adejor", text: "lorem 10 ", profileName:"Adejoro Peter",username:"@ade_joro" }} />
+          <Tweet tweet={{ name: "Adejor", text: "lorem 10 ", profileName:"Adejoro Peter",username:"@ade_joro" }} />
+          <Tweet tweet={{ name: "Adejor", text: "lorem 10 ", profileName:"Adejoro Peter",username:"@ade_joro" }} />
+          <Tweet tweet={{ name: "Adejor", text: "lorem 10 ", profileName:"Adejoro Peter",username:"@ade_joro" }} />
+          <Tweet tweet={{ name: "Adejor", text: "lorem 10 ", profileName:"Adejoro Peter",username:"@ade_joro" }} />
         </div>
       </div>
       {/* Side bar */}
-      {
-        localStorage.getItem("user")  ?(
-          
-      <div className=" w-[75%] px-10 py-4 h-fit sticky top-0">
-        <div className="w-5/6 rounded-2xl p-4 border border-[#16181c] gap-4 h-fit flex flex-col">
-          <div className="flex-col flex ">
-            <h2 className=" mb-4 text-xl font-bold text-white">
-              New to Twitter?
-            </h2>
-            <p className="text-[#918f8f] text-sm">
-              Sign up now to get your own personalized timeline!
-            </p>
-          </div>
-          <SignInWithGoogleButton onClick={signInWithGoogle} />
-          <CustomButton text="Create account" textColor="black" handleClickEvent={()=>navigate("/signup")}/>
-          <div>
-            <p className="text-sm text-[#918f8f]">
-              By signing up, you agree to the{" "}
-              <a
-                href="https://twitter.com/tos"
-                target="_blank"
-                className="text-[#1D9BF0] hover:underline"
-              >
-                Terms of Service
-              </a>{" "}
-              and {"  "}
-              <a
-                className="text-[#1D9BF0] hover:underline"
-                href="https://twitter.com/privacy"
-                target="_blank"
-              >
-                Privacy Policy
-              </a>
-              , including{" "}
-              <a
-                href="https://help.twitter.com/rules-and-policies/twitter-cookies"
-                target="_blank"
-                className="text-[#1D9BF0] hover:underline"
-              >
-                Cookie Use
-              </a>{" "}
-              .
-            </p>
+      {localStorage.getItem("user") ? (
+        <div className=" w-[75%] px-10 py-4 h-fit sticky top-0">
+          <div className="w-5/6 rounded-2xl p-4 border border-[#16181c] gap-4 h-fit flex flex-col">
+            <div className="flex-col flex ">
+              <h2 className=" mb-4 text-xl font-bold text-white">
+                New to Twitter?
+              </h2>
+              <p className="text-[#918f8f] text-sm">
+                Sign up now to get your own personalized timeline!
+              </p>
+            </div>
+            <SignInWithGoogleButton onClick={signInWithGoogle} />
+            <CustomButton
+              text="Create account"
+              textColor="black"
+              handleClickEvent={() => navigate("/signup")}
+            />
+            <div>
+              <p className="text-sm text-[#918f8f]">
+                By signing up, you agree to the{" "}
+                <a
+                  href="https://twitter.com/tos"
+                  target="_blank"
+                  className="text-[#1D9BF0] hover:underline"
+                >
+                  Terms of Service
+                </a>{" "}
+                and {"  "}
+                <a
+                  className="text-[#1D9BF0] hover:underline"
+                  href="https://twitter.com/privacy"
+                  target="_blank"
+                >
+                  Privacy Policy
+                </a>
+                , including{" "}
+                <a
+                  href="https://help.twitter.com/rules-and-policies/twitter-cookies"
+                  target="_blank"
+                  className="text-[#1D9BF0] hover:underline"
+                >
+                  Cookie Use
+                </a>{" "}
+                .
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-        ):<HomeRightBar/>
-      }
+      ) : (
+        <HomeRightBar />
+      )}
     </div>
   );
 };

@@ -155,10 +155,9 @@ const QuoteTweet = () => {
         <Button
           //     text={compose.length > 1 ? "Tweet All" : "Tweet"}
           text={"Reply"}
+          bg={text ? "#00BA7C" : "#005D3E"}
           onClickFn={handleAddTweet}
-          //     color={
-          //       inputTextWithEmptyValue?.inputText === "" ? "#808080" : "#ffffff"
-          //     }
+          color={text === "" ? "#808080" : "#ffffff"}
           //     disabled={inputTextWithEmptyValue?.inputText === "" ? true : false}
         />
       </div>

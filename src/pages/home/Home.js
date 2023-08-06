@@ -24,44 +24,34 @@ const Home = () => {
   const [stat, setStat] = useState(false);
   const dispatch = useDispatch();
   const inputVal = state?.value?.join("");
-  const a = "ssj";
-  const text = inputVal
-    ?.split("")
-    ?.filter((_, i) => i < 35)
-    ?.map((a) => a);
-  const field = (a) => {
-    const b = a.split("/\s+/").map((a) => {
-      return a.startsWith("@") ? (
-        <span className="text-blue-400">{a}</span>
-      ) : (
-        <span className="text-white">{a}</span>
-      );
+  const renderColoredText = () => {
+    // Use regular expression to find words starting with "@"
+    const regex = /(?:^|\s)(@\w+)/g;
+    const coloredText = inputVal?.replace(regex, (match, word) => {
+      return ` ${match} `;
     });
-    return b;
+    return coloredText
+      .split(" ")
+      ?.filter((_, i) => i < 35)
+      .map((word, index) => {
+        if (word.startsWith("@")) {
+          return (
+            <span className="text-blue-400" key={index}>
+              {word}
+            </span>
+          );
+        } else {
+          return (
+            <span className="text-white" key={index}>
+              {word}{" "}
+            </span>
+          );
+        }
+      });
   };
   const handleAddTweet = async () => {
-    // dispatch(
-    //   addToTweetArr({
-    //     text: text?.join("") || "Nothing here",
-    //     profileName: "Adejoro Peter",
-    //     username: "@ade_peter",
-    //     comment: [],
-    //     likes: 1,
-    //     id: tweet[tweet.length - 1].id + 1,
-    //     retweeted: false,
-    //   })
-    // );
-    // console.log(copyOfNewTweets);
-    // console.log(tweet);
-    // const idd = copyOfNewTweets.map((copy) => {
-    //   console.log(copy)
-    //   return copy?.id +1;
-    // });
-    // console.log(idd)
-
-    // console.log(b.substring(1,6))
     const newArr = {
-      text: text,
+      text: renderColoredText(),
       profileName: "Adejoro Peter",
       username: "@ade_peter",
       comment: [],
@@ -133,7 +123,6 @@ const Home = () => {
                   }`}
                 >
                   Following
-                  {field("peter @sam sam")}
                 </h2>
                 <p
                   className={`${

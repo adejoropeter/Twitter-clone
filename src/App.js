@@ -43,7 +43,8 @@ const App = () => {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.login.currentUser);
   const curr = useSelector((state) => state.login.currentUser);
-  const user = useSelector((state) => state.user.user_details);
+  const user = localStorage.getItem("user");
+
   const id = curr?.user?.uid;
   const [urlName, setUrlName] = useState("");
   // console.log(user);
@@ -117,17 +118,35 @@ const App = () => {
               <Route path="/messages" element={<Message />}></Route>
               <Route path="/comment/:name" element={<Comment />}></Route>
               {/* <Route path="/comment/:name" element={<Comment />}></Route> */}
-              <Route path="/compose" element={pathname==="/compose"&&<Compose />}></Route>
-              <Route path="/compose/tweet" element={pathname==="/compose/tweet"&&<Quote />}></Route>
+              <Route
+                path="/compose"
+                element={pathname === "/compose" && <Compose />}
+              ></Route>
+              <Route
+                path="/compose/tweet"
+                element={pathname === "/compose/tweet" && <Quote />}
+              ></Route>
             </Route>
             <Route path="/explore" element={<Explore />}></Route>
             <Route
               path="/login"
-              element={auth ? <Navigate to="/foryou" /> : <Login />}
+              element={
+                localStorage.getItem("user") === null ? (
+                  <Navigate to="/foryou" />
+                ) : (
+                  <Login />
+                )
+              }
             ></Route>
             <Route
               path="/signup"
-              element={auth ? <Navigate to="/foryou" /> : <Signup />}
+              element={
+                localStorage.getItem("user") === null ? (
+                  <Navigate to="/foryou" />
+                ) : (
+                  <Signup />
+                )
+              }
             />
             <Route path="/settings" element={<Settings />}></Route>
             <Route

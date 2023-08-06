@@ -129,7 +129,7 @@ const ComposeTweet = () => {
     navigate("/foryou");
   };
 
-  const idx = compose.length ;
+  const idx = compose.length;
   const id = idx + 1;
   //   const navigate = useNavigate();
   const [img, setImg] = useState("");
@@ -138,7 +138,7 @@ const ComposeTweet = () => {
   //     ?.split("")
   //     ?.filter((_, i) => i < 35)
   //     ?.map((a) => a);
-  const addComposeTweet = ({eachTweet}) => {
+  const addComposeTweet = ({ eachTweet }) => {
     console.log(copy);
     if (compose.length - 1 !== 3) {
       dispatch(
@@ -151,11 +151,11 @@ const ComposeTweet = () => {
         })
       );
       dispatch(backGroundColor());
-      console.log(compose.length)
+      console.log(compose.length);
     } else {
       dispatch(setGroupTweetTo4());
       dispatch(setCurrIdx(compose.length - 1));
-      dispatch(backGroundColor( ));
+      dispatch(backGroundColor());
     }
   };
   return (
@@ -234,12 +234,15 @@ const ComposeTweet = () => {
         {/* </div>
         ) : null} */}
         <Button
+          bg={!inputTextWithEmptyValue ? "#00BA7C" : "#005D3E"}
+          // disCol={"#005D3E"}
           text={compose.length > 1 ? "Tweet All" : "Tweet"}
           onClickFn={handleAddTweet}
           color={
             inputTextWithEmptyValue?.inputText === "" ? "#808080" : "#ffffff"
           }
           disabled={inputTextWithEmptyValue?.inputText === "" ? true : false}
+          // disabled={true}
         />
       </div>
     </div>

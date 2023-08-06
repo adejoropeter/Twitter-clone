@@ -25,14 +25,36 @@ const CommentSectionReplyTweet = () => {
   const name = useSelector((state) => state.user.user_details);
   const [img, setImg] = useState("");
   const inputVal = state?.value?.join("");
-  const text = inputVal
-    ?.split("")
-    ?.filter((_, i) => i < 35)
-    ?.map((a) => a);
+
+  const renderColoredText = () => {
+    // Use regular expression to find words starting with "@"
+    const regex = /(?:^|\s)(@\w+)/g;
+    const coloredText = inputVal?.replace(regex, (match, word) => {
+      return ` ${match} `;
+    });
+    return coloredText
+      .split(" ")
+      ?.filter((_, i) => i < 35)
+      ?.map((word, index) => {
+        if (word.startsWith("@")) {
+          return (
+            <span className="text-blue-400" key={index}>
+              {word}
+            </span>
+          );
+        } else {
+          return (
+            <span className="text-white" key={index}>
+              {word}{" "}
+            </span>
+          );
+        }
+      });
+  };
   const handleAddTweet = async () => {
     console.log(tweets);
     dispatch(
-      setAddComment({ id: tweet.id, profileName: "Ade", text: text, cmtId: id })
+      setAddComment({ id: tweet.id, profileName: "Ade", text: renderColoredText(), cmtId: id })
     );
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),

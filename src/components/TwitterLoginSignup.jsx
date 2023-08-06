@@ -5,7 +5,11 @@ import { clearLoginInputField } from "../redux/LoginSlice";
 import { clearSignupInputField } from "../redux/signupSlice";
 import Button from "./button/Button";
 
-const TwitterLoginSignup = ({}) => {
+const TwitterLoginSignup = ({ }) => {
+  const handleClick = () => {
+       navigate("/login");
+            // dispatch(clearLoginInputField());
+  }
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -23,10 +27,11 @@ const TwitterLoginSignup = ({}) => {
           bg="transparent"
           text="Log in"
           border="1px solid white"
-          onClickFn={() => {
-            navigate("/login");
-            dispatch(clearLoginInputField());
-          }}
+          onClickFn={handleClick}
+          // onClickFn={() => {
+          //   navigate("/login");
+          //   dispatch(clearLoginInputField());
+          // }}
         />
         <Button
           color="black"
