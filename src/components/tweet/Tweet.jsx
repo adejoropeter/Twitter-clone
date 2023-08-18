@@ -8,30 +8,35 @@ import {
   deleteTweet,
   setAddToRetweetArr,
   setRetweet,
+  setShowMsg,
   setShowTweetDlt,
   setUserUrlName,
+  showMsg,
   viewTweet,
 } from "../../redux/tweetSlice";
 import { auth } from "../../firebase";
 import { motion } from "framer-motion";
 
 const Tweet = ({ tweet }) => {
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate("");
+  const currentUser = useSelector((state) => state.login.currentUser);
+  const showMsg = useSelector((state) => state.post.showMsg);
   // console.log(auth.currentUser);
   useEffect(() => {
     dispatch(setAddToRetweetArr());
   }, [tweet.retweeted]);
-  const handleClick = (e) => {
-    dispatch(viewTweet(tweet));
-    dispatch(setUserUrlName(tweet?.profileName));
-    navigate(`/comment/${tweet.profileName}`);
-    document.documentElement.scrollTop = 0;
+  const handleClick = () => {
+    if (currentUser) {
+      dispatch(viewTweet(tweet));
+      dispatch(setUserUrlName(tweet?.profileName));
+      navigate(`/comment/${tweet.profileName}`);
+      document.documentElement.scrollTop = 0;
+    } else {
+      dispatch(setShowMsg(true));
+    }
   };
   const handleMouseEnter = () => {
-    console.log(tweet?.name);
     console.log("Mouse Enter");
   };
 
@@ -40,7 +45,7 @@ const Tweet = ({ tweet }) => {
     dispatch(setShowTweetDlt({ id: tweet.id }));
   };
   return (
-    <motion.div
+    <div
       className="px-5 py-2 w-full  hover:bg-[#080808] cursor-pointer tweet-border overflow-hidden "
       onClick={handleClick}
     >
@@ -92,7 +97,7 @@ const Tweet = ({ tweet }) => {
                   <p
                     onClick={(e) => {
                       e.stopPropagation();
-                      
+
                       dispatch(deleteTweet({ id: tweet.id }));
                     }}
                     className="absolute top-4 bg-black w-fit p-2 right-5 shadow-sm shadow-orange-50 cursor-pointer"
@@ -178,7 +183,7 @@ const Tweet = ({ tweet }) => {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

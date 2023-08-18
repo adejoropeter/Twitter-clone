@@ -52,9 +52,13 @@ const CommentSectionReplyTweet = () => {
       });
   };
   const handleAddTweet = async () => {
-    console.log(tweets);
     dispatch(
-      setAddComment({ id: tweet.id, profileName: "Ade", text: renderColoredText(), cmtId: id })
+      setAddComment({
+        id: tweet.id,
+        profileName: "Ade",
+        text: renderColoredText(),
+        cmtId: id,
+      })
     );
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),

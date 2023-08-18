@@ -50,8 +50,6 @@ const AddTweet = ({ handleAddTweet }) => {
     // id: tweet[tweet.length - 1].id + 1,
     // retweeted: false,
     dispatch(addToTweetArr(...[copyOfNewTweets]));
-    console.log(tweet);
-    console.log(copyOfNewTweets);
   };
   return (
     <div className="flex sm:items-center gap-2 justify-between flex-col sm:flex-row">
@@ -142,7 +140,6 @@ const AddTweet = ({ handleAddTweet }) => {
 
                 // dispatch(setCurrIdx({id}))
                 navigate("/compose");
-                console.log(compose);
               }}
             >
               <BiPlus className="text-[#00BA7C]" size={"20"} />

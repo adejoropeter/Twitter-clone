@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 import "./index.css";
 
 import {
@@ -19,7 +19,7 @@ import {
   Notification,
   Home,
 } from "./components";
-
+import { motion } from "framer-motion";
 import TwitterLoginSignup from "./components/TwitterLoginSignup";
 import Signup from "./pages/signup/Signup";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -36,6 +36,7 @@ import Comment from "./pages/comment/Comment";
 import Compose from "./components/compose/Compose";
 import QuoteTweet from "./quote/QuoteTweet";
 import Quote from "./quote/Quote";
+import { getAllTweet } from "./redux/tweetSlice";
 // import { logout } from "./redux/LoginSlice";
 const App = () => {
   const { pathname } = useLocation();
@@ -65,13 +66,6 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
-  const [state, setState] = useState([1, 2, 3, 4]);
-  const dlt = (b) => {
-    const d = state.filter((a) => {
-      return a !== b;
-    });
-    setState(d);
-  };
 
   if (pathname === "/signup") {
     dispatch(resetCurr());
@@ -87,6 +81,9 @@ const App = () => {
   return (
     <>
       <div className="bg-black w-full min-h-screen  flex relative select-none">
+        
+        
+        {/* place here */}
         <Suspense
           fallback={
             <div className="w-screen relative h-screen flex items-center">
@@ -107,17 +104,14 @@ const App = () => {
           }
         >
           <Navbar />
+
           {/* Navbar needs to be placed inside each pages routes incase of an incorrect route */}
           <Routes>
-            <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Home />}>
                 <Route path="/following" element={<Following />}></Route>
                 <Route path="/foryou" element={<ForYou />}></Route>
               </Route>
-              <Route path="/notifications" element={<Notification />}></Route>
-              <Route path="/messages" element={<Message />}></Route>
-              <Route path="/comment/:name" element={<Comment />}></Route>
-              {/* <Route path="/comment/:name" element={<Comment />}></Route> */}
+            <Route element={<ProtectedRoute />}>
               <Route
                 path="/compose"
                 element={pathname === "/compose" && <Compose />}
@@ -126,6 +120,10 @@ const App = () => {
                 path="/compose/tweet"
                 element={pathname === "/compose/tweet" && <Quote />}
               ></Route>
+              <Route path="/notifications" element={<Notification />}></Route>
+              <Route path="/messages" element={<Message />}></Route>
+              <Route path="/comment/:name" element={<Comment />}></Route>
+              {/* <Route path="/comment/:name" element={<Comment />}></Route> */}
             </Route>
             <Route path="/explore" element={<Explore />}></Route>
             <Route
@@ -156,6 +154,7 @@ const App = () => {
           </Routes>
         </Suspense>
       </div>
+     
       {currentUser ? null : <TwitterLoginSignup />}
     </>
   );

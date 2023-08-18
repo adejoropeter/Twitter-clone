@@ -4,17 +4,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { clearLoginInputField } from "../redux/LoginSlice";
 import { clearSignupInputField } from "../redux/signupSlice";
 import Button from "./button/Button";
+import { useState } from "react";
 
-const TwitterLoginSignup = ({ }) => {
+const TwitterLoginSignup = ({}) => {
   const handleClick = () => {
-       navigate("/login");
-            // dispatch(clearLoginInputField());
-  }
+    navigate("/login");
+    // dispatch(clearLoginInputField());
+  };
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
+
   return (
-    <div className="w-full h-fit py-3 bg-[#358AC4] sticky bottom-0 flex justify-around  items-center select-none gap-10">
+    <div className="w-full h-fit py-3 bg-[#358AC4] sticky bottom-0 hidden sm:flex justify-around  items-center select-none z-50 gap-10">
+     
       <div className="text-white ">
         <p className="text-2xl font-bold ">Don’t miss what’s happening</p>
         <span className="text-sm font-normal">
@@ -42,8 +45,9 @@ const TwitterLoginSignup = ({ }) => {
             navigate("/signup");
             dispatch(clearSignupInputField());
           }}
-        />
+        /> 
       </div>
+       
     </div>
   );
 };

@@ -70,10 +70,10 @@ const Home = () => {
     // console.log(auth);
     dispatch(clearInputField());
   };
-
+  // w-full sm:w-[80%] sm:translate-x-[25%]   h-screen bg-[#000000] flex   text-white
   return (
-    <div className="flex w-screen  sm:w-fit md:w-[70%] lg:w-full min-h-full   xsm:border-l-2  border-l-[#16181c]">
-      <main className=" w-full min-h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
+    <div className=" xsm:border-l-2 border-l-[#16181c] w-screen  lg:translate-x-[21.3%] sm:translate-x-[25%]  min-h-screen bg-[#000000] flex sm:w-[80%]  text-white">
+      <main className=" w-full sm:w-[150%] min-h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
         <header className="border-b sticky w-full top-0 backdrop-blur-md border-[#16181c]   sm:h-[115px] blur-0 flex flex-col justify-between z-10">
           <div className="pl-4 py-4 relative xsm:hidden block">
             <div className="absolute">
@@ -137,11 +137,17 @@ const Home = () => {
         </header>
 
         <motion.div
-          initial={{ position: "fixed", top: "144px", opacity: 0 }}
+          initial={{ top: "144px", opacity: 0 }}
           animate={
             copyOfNewTweets?.length
-              ? { y: "30%", translateX: "-50%", opacity: 1 }
-              : { top: 0 }
+              ? {
+                  y: "30%",
+                  position: "sticky",
+                  left: "50%",
+                  translateX: "-50%",
+                  opacity: 1,
+                }
+              : { y: 0, x: 50 }
           }
           onClick={() => {
             setStat(false);
@@ -151,7 +157,7 @@ const Home = () => {
               document.documentElement.scrollTop = 100;
             }, 200);
           }}
-          className="fixed top-[10%] opacity-0 z-10 left-[50%] md:left-[52%] sm:left-[40%] lg:left-[40%] -translate-x-[50%] "
+          className="   opacity-0 z-10  w-fit md:mx-[100px]   "
         >
           <div className="cursor-pointer bg-green-400 flex items-center gap-1 fit rounded-full py-1 px-3">
             <h1 className=""> New Tweet </h1>
@@ -162,6 +168,7 @@ const Home = () => {
 
         <Outlet />
       </main>
+      {/* SIDE BAR */}
       <HomeRightBar />
     </div>
   );

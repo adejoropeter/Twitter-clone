@@ -138,8 +138,7 @@ const ComposeTweet = () => {
   //     ?.split("")
   //     ?.filter((_, i) => i < 35)
   //     ?.map((a) => a);
-  const addComposeTweet = ({ eachTweet }) => {
-    console.log(copy);
+  const addComposeTweet = () => {
     if (compose.length - 1 !== 3) {
       dispatch(
         addToGrpTweet({
@@ -151,7 +150,6 @@ const ComposeTweet = () => {
         })
       );
       dispatch(backGroundColor());
-      console.log(compose.length);
     } else {
       dispatch(setGroupTweetTo4());
       dispatch(setCurrIdx(compose.length - 1));

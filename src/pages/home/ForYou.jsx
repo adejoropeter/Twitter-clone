@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Tweet from "../../components/tweet/Tweet";
 import { db } from "../../firebase";
-import { addToTweetArr } from "../../redux/tweetSlice";
+import { addToTweetArr, getAllTweet } from "../../redux/tweetSlice";
 import { BiDotsHorizontal } from "react-icons/bi";
 import { FaComment, FaRetweet } from "react-icons/fa";
 import { TbChartAreaLine } from "react-icons/tb";
@@ -44,11 +44,16 @@ const ForYou = () => {
   // console.log(a());
   return (
     <>
-      {/* <div className="border-b" >hjj</div> */}
+      {/* <div className="border-b" >hjj</div>
+      <p className="text-white">Hello</p> */}
 
-      {tweet.map((tweet, i) => {
-        return <Tweet tweet={tweet} key={tweet?.id} />;
-      })}
+      {tweet ? (
+        tweet.map((tweet, i) => {
+          return <Tweet tweet={tweet} key={tweet?.id} />;
+        })
+      ) : (
+        <p className="text-white">Nothing Here</p>
+      )}
     </>
   );
 };

@@ -23,6 +23,7 @@ import LoginButton from "../login/LoginButton";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import SignupSteps from "./SignupSteps";
 import { add_user_img } from "../../redux/userSlice";
+import { setShowMsg } from "../../redux/tweetSlice";
 const Signup = () => {
   const inputDetail = useSelector((state) => state.signup.signupDetails);
   const currIdx = useSelector((state) => state.signup.currIdx);
@@ -128,7 +129,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-[#242d34b3] fixed z-50 overflow-y-hidden">
+    <div className="w-full h-screen bg-[#242d34b3] fixed z-[200] overflow-y-hidden">
       <div className="bg-black  w-[600px]  h-fit  top-[50%] left-[50%]  -translate-x-[50%] -translate-y-[50%] flex flex-col rounded-2xl overflow-hidden relative ">
         <div className="flex items-center py-2 px-4">
           <div className="flex-1 flex items-center ">
@@ -149,6 +150,7 @@ const Signup = () => {
                   onClick={() => {
                     navigate("/foryou");
                     dispatch(resetCurr());
+                    dispatch(setShowMsg(true))
                     document.body.style.overflow = "visible";
                   }}
                 />

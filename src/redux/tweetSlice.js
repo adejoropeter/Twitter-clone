@@ -6,6 +6,7 @@ export const tweetSlice = createSlice({
     //   loading state goes here
     userUrlName: "",
     quote: null,
+    showMsg:false,
     tweet: [
       {
         id: 2,
@@ -59,6 +60,9 @@ export const tweetSlice = createSlice({
     copyOfNewTweets: [],
   },
   reducers: {
+    getAllTweet: (state) => {
+    state.tweet=state.tweet;
+    },
     addToTweetArr: (state, action) => {
       state.tweet = [...action.payload, ...state.tweet];
     },
@@ -204,11 +208,16 @@ export const tweetSlice = createSlice({
         (twt) => twt.retweeted !== false
       );
     },
+    setShowMsg: (state,action) => {
+      state.showMsg = action.payload;
+    }
+
   },
 });
 export const {
   addToTweetArr,
   setRetweet,
+  setShowMsg,
   viewTweet,
   setUserUrlName,
   setAddComment,
@@ -221,6 +230,7 @@ export const {
   reverseTweetArr,
   deleteComment,
   setAddComposedComment2,
+  getAllTweet,
   setAddComposedComment3,
 } = tweetSlice.actions;
 export default tweetSlice.reducer;

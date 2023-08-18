@@ -17,6 +17,7 @@ import {
   resetCurr,
 } from "../../redux/LoginSlice";
 import LoginButton from "./LoginButton";
+import { setShowMsg } from "../../redux/tweetSlice";
 const Login = () => {
   const [error, setError] = useState(false);
   const inputDetails = useSelector((state) => state.login.loginDetails);
@@ -51,10 +52,15 @@ const Login = () => {
     const password = inputDetails[1]?.value;
     setLoading(true);
     try {
-      const res = await signInWithEmailAndPassword(auth, email.trim(), password);
+      const res = await signInWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password
+      );
       dispatch(login(res));
       navigate("/foryou");
       setLoading(false);
+      // localStorage.setItem("user", JSON.stringify(res));
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -62,7 +68,7 @@ const Login = () => {
     console.log(currentUser);
   };
   return (
-    <div className="w-full h-screen bg-[#242d34b3] fixed  z-50 overflow-y-hidden ">
+    <div className="w-full h-screen bg-[#242d34b3] fixed  z-[200] overflow-y-hidden ">
       <div className="bg-black  w-[600px]  h-fit  top-[50%] left-[50%]  -translate-x-[50%] -translate-y-[50%] flex flex-col rounded-2xl overflow-hidden relative ">
         <div className="flex items-center py-2 px-4">
           <div className="flex-1 flex items-center ">
@@ -77,6 +83,7 @@ const Login = () => {
                   navigate("/explore");
                   dispatch(clearLoginInputField());
                   dispatch(resetCurr());
+                   dispatch(setShowMsg(true));
                   document.body.style.overflow = "visible";
                 }}
               />

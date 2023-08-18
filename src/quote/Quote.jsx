@@ -15,7 +15,7 @@ const Quote = () => {
 
  
   return (
-    <div className="w-full h-screen bg-[#242d34b3] fixed  z-50 overflow-y-hidden ">
+    <div className="w-full h-screen bg-[#242d34b3] fixed  z-[200]  overflow-y-hidden ">
       {/* <div className="bg-black      h-screen   w-full    "> */}
       <div className="bg-black h-full overflow-x-hidden flex flex-col sm:top-[35%] -translate-x-[50%]  sm:rounded-2xl   left-[50%] sm:h-[300px] sm:-translate-y-[50%] overflow-scroll sm:w-[600px] relative">
         <div className="flex items-center py-2 px-4">

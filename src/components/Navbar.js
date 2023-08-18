@@ -35,7 +35,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="bg-black   h-screen sticky -left-28  top-0  w-[20%] sm:w-[17%]  sm:flex flex-col items-end pr-2 py-4 overflow-scroll text-[#D6D9DB] gap-4  hidden  overflow-x-hidden">
+      <div className="bg-black   h-screen fixed -left-0  top-0  z-50 w-[20%] lg:w-[17%]  sm:flex flex-col items-end pr-2 py-4 overflow-scroll text-[#D6D9DB] gap-4  hidden  overflow-x-hidden">
         {/* <div className="fixed h-full overflow-scroll"> */}
         {/* <div className="ml- w-2/5"> */}
 

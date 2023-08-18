@@ -21,7 +21,8 @@ const QuoteTweet = () => {
   const navigate = useNavigate();
   const tweet = useSelector((state) => state.post.tweet);
   const view = useSelector((state) => state.post.viewTweet);
-  const text = useSelector((state) => state.quote.inputVal);
+      const text = useSelector((state) => state.quote.inputVal);
+      
   //   console.log(compose);
 
   //   const text = compose[0]?.inputText;
@@ -156,7 +157,7 @@ const QuoteTweet = () => {
           //     text={compose.length > 1 ? "Tweet All" : "Tweet"}
           text={"Reply"}
           bg={text ? "#00BA7C" : "#005D3E"}
-          onClickFn={handleAddTweet}
+                          onClickFn={handleAddTweet}
           color={text === "" ? "#808080" : "#ffffff"}
           //     disabled={inputTextWithEmptyValue?.inputText === "" ? true : false}
         />

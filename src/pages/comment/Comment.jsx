@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import HomeRightBar from "../home/HomeRightBar";
-import {  deleteComment, setShowCommentDlt } from "../../redux/tweetSlice";
+import { deleteComment, setShowCommentDlt } from "../../redux/tweetSlice";
 import { useNavigate } from "react-router-dom";
 import AddTweet from "../../components/tweet/AddTweet";
 import { UploadTweet } from "../../components";
@@ -16,7 +16,7 @@ const Comment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
-    <div className="flex w-full  sm:w-fit md:w-[60%] lg:w-full min-h-full text-white relative xsm:border-l-2  border-l-[#16181c] border-r-[#16181c] ">
+    <div className="relative xsm:border-l-2  border-l-[#16181c] border-r-[#16181c] w-full sm:w-[80%] sm:translate-x-[21.3%]   h-screen bg-[#000000] flex   text-white">
       <main className=" w-[100%] min-h-full flex flex-col text-white border-[#16181c] sm:border-r ">
         <header className=" sticky w-full top-0 backdrop-blur-md h-fit blur-0 flex flex-col justify-between z-10 ">
           <div className="pl-4 py-4 relative   flex items-center gap-10">

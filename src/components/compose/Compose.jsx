@@ -29,7 +29,7 @@ const Compose = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
-    <div className="w-full h-screen bg-[#242d34b3] fixed  z-50 overflow-y-hidden ">
+    <div className="w-full h-screen bg-[#242d34b3] fixed z-[200]  overflow-y-hidden ">
       <div className="bg-black overflow-scroll sm:w-[600px] sm:min-h-0 min-h-screen sm:h-fit  top-[50%] left-[50%]  -translate-x-[50%] -translate-y-[80%] flex flex-col sm:rounded-2xl overflow-x-hidden relative ">
         <div className="flex items-center py-2 px-4">
           <div className="flex-1 flex items-center ">
