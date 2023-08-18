@@ -81,8 +81,6 @@ const App = () => {
   return (
     <>
       <div className="bg-black w-full min-h-screen  flex relative select-none">
-        
-        
         {/* place here */}
         <Suspense
           fallback={
@@ -107,11 +105,11 @@ const App = () => {
 
           {/* Navbar needs to be placed inside each pages routes incase of an incorrect route */}
           <Routes>
+            <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Home />}>
                 <Route path="/following" element={<Following />}></Route>
                 <Route path="/foryou" element={<ForYou />}></Route>
               </Route>
-            <Route element={<ProtectedRoute />}>
               <Route
                 path="/compose"
                 element={pathname === "/compose" && <Compose />}
@@ -154,7 +152,7 @@ const App = () => {
           </Routes>
         </Suspense>
       </div>
-     
+
       {currentUser ? null : <TwitterLoginSignup />}
     </>
   );
