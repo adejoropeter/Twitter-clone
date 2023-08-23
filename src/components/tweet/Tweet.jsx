@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { BiDotsHorizontal, BiDownload } from "react-icons/bi";
+import React, { useEffect, useRef, useState } from "react";
+import { BiDotsHorizontal, BiDownload, BiTrash } from "react-icons/bi";
 import { FaComment, FaRetweet } from "react-icons/fa";
 import { TbChartAreaLine } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import {
+  PinTweet,
   deleteTweet,
+  pinTweet,
   setAddToRetweetArr,
   setRetweet,
   setShowMsg,
   setShowTweetDlt,
   setUserUrlName,
   showMsg,
+  unPinTweet,
   viewTweet,
 } from "../../redux/tweetSlice";
 import { auth } from "../../firebase";
@@ -22,19 +25,21 @@ const Tweet = ({ tweet }) => {
   const navigate = useNavigate("");
   const currentUser = useSelector((state) => state.login.currentUser);
   const showMsg = useSelector((state) => state.post.showMsg);
+  const tweets = useSelector((state) => state.post.tweet);
+  const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
   // console.log(auth.currentUser);
   useEffect(() => {
     dispatch(setAddToRetweetArr());
   }, [tweet.retweeted]);
   const handleClick = () => {
-    if (currentUser) {
-      dispatch(viewTweet(tweet));
-      dispatch(setUserUrlName(tweet?.profileName));
-      navigate(`/comment/${tweet.profileName}`);
-      document.documentElement.scrollTop = 0;
-    } else {
-      dispatch(setShowMsg(true));
-    }
+    // if (currentUser) {
+    dispatch(viewTweet(tweet));
+    dispatch(setUserUrlName(tweet?.profileName));
+    navigate(`/comment/${tweet.profileName}`);
+    document.documentElement.scrollTop = 0;
+    // } else {
+    // dispatch(setShowMsg(true));
+    // }
   };
   const handleMouseEnter = () => {
     console.log("Mouse Enter");
@@ -44,9 +49,13 @@ const Tweet = ({ tweet }) => {
     e.stopPropagation();
     dispatch(setShowTweetDlt({ id: tweet.id }));
   };
+  const handlePin = (e) => {
+    e.stopPropagation();
+  };
+  const divRef = useRef(null);
   return (
     <div
-      className="px-5 py-2 w-full  hover:bg-[#080808] cursor-pointer tweet-border overflow-hidden "
+      className="xxs:pr-8 xxs:pl-6 px-2 lg:pr-5 lg:pl-5 py-2 w-full  hover:bg-[#080808] cursor-pointer tweet-border overflow-hidden "
       onClick={handleClick}
     >
       <div className="flex gap-4 w-full hover:bg-[#080808] relative">
@@ -82,7 +91,7 @@ const Tweet = ({ tweet }) => {
               <p className="w-20  sm:w-fit md:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
                 {tweet?.profileName}
               </p>
-              <div className="text-[#6A6F74]  flex gap-1  ">
+              <div className="text-[#6A6F74]  hidden xxs:flex gap-1  ">
                 <p className="w-20  sm:w-fit md:w-fit lg:w-full font-bold whitespace-nowrap overflow-hidden text-ellipsis">
                   {tweet?.username}
                 </p>
@@ -94,25 +103,61 @@ const Tweet = ({ tweet }) => {
             <div>
               <div className="relative">
                 {tweet.showTweetDlt && (
-                  <p
-                    onClick={(e) => {
-                      e.stopPropagation();
-
-                      dispatch(deleteTweet({ id: tweet.id }));
-                    }}
-                    className="absolute top-4 bg-black w-fit p-2 right-5 shadow-sm shadow-orange-50 cursor-pointer"
-                  >
-                    Delete
-                  </p>
+                  <div className="absolute top-4 w-fit flex flex- right-5 gap-3 z-50">
+                    <p
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // if (currentUser) {
+                        dispatch(deleteTweet({ id: tweet.id }));
+                        // } else {
+                        // dispatch(setShowMsg(true));
+                        // }
+                      }}
+                      className=" bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer"
+                    >
+                      Delete
+                    </p>
+                    <p
+                      ref={divRef}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // if (currentUser) {
+                        if (divRef.current?.textContent === "Pin") {
+                          dispatch(pinTweet({ id: tweet.id }));
+                        } else {
+                          dispatch(unPinTweet({ id: tweet.id }));
+                        }
+                        dispatch(setShowTweetDlt({ id: tweet.id }));
+                        dispatch(setShowMsg(true));
+                        // } else {
+                        // }
+                      }}
+                      className="bg-black w-fit p-2  shadow-sm shadow-orange-50 cursor-pointer"
+                    >
+                      {tweet.isPinned ? "UnPin" : "Pin"}
+                    </p>
+                  </div>
                 )}
-                <BiDotsHorizontal
-                  color="#6A6F74"
-                  size="20px"
-                  fontWeight="400"
-                  cursor={"pointer"}
-                  className=""
-                  onClick={(e) => handleShowDelete(e)}
-                />
+                <div className="flex">
+                  {tweet.isPinned && (
+                    <BiTrash
+                      color="#6A6F74"
+                      size="20px"
+                      fontWeight="400"
+                      cursor={"pointer"}
+                      className=""
+                      onClick={(e) => handlePin(e)}
+                    />
+                  )}
+                  <BiDotsHorizontal
+                    color="#6A6F74"
+                    size="20px"
+                    fontWeight="400"
+                    cursor={"pointer"}
+                    className=""
+                    onClick={(e) => handleShowDelete(e)}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -125,7 +170,15 @@ const Tweet = ({ tweet }) => {
                   e.stopPropagation();
                   navigate(`/comment/${tweet.profileName}`);
                   document.documentElement.scrollTop = 0;
-                  dispatch(viewTweet(tweet.quoteTweet));
+                  const findTweetIndex = tweets?.find(
+                    (x) => tweet.id=== x.id 
+                  );
+                  const chk = tweets.find(x => x.id === findTweetIndex.quoteTweet.id)
+                  if(chk){
+                    dispatch(viewTweet(tweet.quoteTweet));
+                  } else {
+                    navigate("/404")
+                  }
                 }}
                 className="border border-[#5b5c5da3] p-3 rounded-xl w-full"
               >

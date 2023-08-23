@@ -38,7 +38,7 @@ const CommentSectionReplyTweet = () => {
       ?.map((word, index) => {
         if (word.startsWith("@")) {
           return (
-            <span className="text-blue-400" key={index}>
+            <span className="text-[#00BA7C]" key={index}>
               {word}
             </span>
           );

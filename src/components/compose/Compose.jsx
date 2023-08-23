@@ -43,7 +43,7 @@ const Compose = () => {
                 onClick={() => {
                   navigate(-1);
                   dispatch(resetGroupTweet());
-                  document.body.style.overflow = "visible";
+                  document.body.style.overflowY = "visible";
                 }}
               />
             </abbr>
@@ -54,8 +54,8 @@ const Compose = () => {
         </div>
         <div className=" w-full h-fit py-4 ">
           <div className="w-full  flex flex-col px-4 gap-4 ">
-            {compose.map((cmpTweet) => (
-              <div className="w-full flex flex-col gap-2">
+            {compose.map((cmpTweet,idx) => (
+              <div key={idx} className="w-full flex flex-col gap-2">
                 <div className="w-full flex gap-4 items-center">
                   <img
                     src={"/assets/image.png"}

@@ -57,10 +57,13 @@ const Home = () => {
       comment: [],
       likes: 1,
       // id: copyOfNewTweets.length - 1 + 1 || 0,
-      id: tweet[0]?.id + 1 || Math.random(),
+      id: copyOfNewTweets.length
+        ? copyOfNewTweets[copyOfNewTweets.length-1].id + 1
+        : tweet[0].id + 1 || Math.random(),
       retweeted: false,
     };
     dispatch(addToCopyTweetArr([newArr]));
+    console.log(copyOfNewTweets)
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),
     //   profileName: profileName?.name,
@@ -72,8 +75,8 @@ const Home = () => {
   };
   // w-full sm:w-[80%] sm:translate-x-[25%]   h-screen bg-[#000000] flex   text-white
   return (
-    <div className=" xsm:border-l-2 border-l-[#16181c] w-screen  lg:translate-x-[21.3%] sm:translate-x-[25%]  min-h-screen bg-[#000000] flex sm:w-[80%]  text-white">
-      <main className=" w-full sm:w-[150%] min-h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
+    <div className=" xsm:border-l-2 border-l-[#16181c] w-full  lg:translate-x-[21.3%] sm:translate-x-[25%]  min-h-screen bg-[#000000] flex sm:w-[80%]  text-white lg:max-w-full overflow-hidden">
+      <main className=" w-full sm:w-[150%] lg:w-[180%] min-h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
         <header className="border-b sticky w-full top-0 backdrop-blur-md border-[#16181c]   sm:h-[115px] blur-0 flex flex-col justify-between z-10">
           <div className="pl-4 py-4 relative xsm:hidden block">
             <div className="absolute">

@@ -7,9 +7,9 @@ import { auth } from "../../firebase";
 
 const HomeRightBar = () => {
   return (
-    <div className="lg:flex hidden h-fit sticky top-0  w-[120%]  overflow-hidden flex-col gap-6  p-4">
-      <div className="w-full h-fit bg-black pl- shadow-xl">
-        <div className=" rounded-full flex items-center gap-2 px-2 sticky top-0 w-[350px] h-[53px] bg-[#202327] justify-between pl-6">
+    <div className="lg:flex hidden h-fit sticky top-0  w-[120%] lg:w-full overflow-hidden flex-col gap-6  p-4">
+      <div className="w-full h-fit bg-black  shadow-xl">
+        <div className=" rounded-full flex items-center gap-2 px-2 sticky top-0 max-w-[350px] h-[53px] bg-[#202327] justify-between pl-6">
           <BiSearch  className="text-[#00BA7C] w-[10%] h-10 mt-1" size={""} />
           <input
             placeholder="Search Twitter"
@@ -21,7 +21,7 @@ const HomeRightBar = () => {
           </div>
         </div>
       </div>
-      <div className="ml-1 p-4  rounded-xl w-[350px] h-fit bg-[#1D1F23]">
+      <div className="ml-1 p-4  rounded-xl max-w-[350px] h-fit bg-[#1D1F23]">
         <h1 className="text-[rgb(231,233,234)]  text-xl font-bold">
           Trends for you
         </h1>

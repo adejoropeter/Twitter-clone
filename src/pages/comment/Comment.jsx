@@ -16,8 +16,11 @@ const Comment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
-    <div className="relative xsm:border-l-2  border-l-[#16181c] border-r-[#16181c] w-full sm:w-[80%] sm:translate-x-[21.3%]   h-screen bg-[#000000] flex   text-white">
-      <main className=" w-[100%] min-h-full flex flex-col text-white border-[#16181c] sm:border-r ">
+    <div
+      className="xsm:border-l-2 border-l-[#16181c] w-full  lg:translate-x-[21.3%] sm:translate-x-[25%]  min-h-screen bg-[#000000] flex sm:w-[80%]  text-white lg:max-w-full
+    "
+    >
+      <main className="    w-full sm:w-[150%] lg:w-[180%] min-h-full flex flex-col text-white border-[#16181c] sm:border-r relative ">
         <header className=" sticky w-full top-0 backdrop-blur-md h-fit blur-0 flex flex-col justify-between z-10 ">
           <div className="pl-4 py-4 relative   flex items-center gap-10">
             <div
@@ -50,13 +53,14 @@ const Comment = () => {
               ?.filter((a) => {
                 return a?.id === tweet?.id;
               })
-              .map((a) => {
+              .map((a, idx) => {
                 return (
-                  <div>
+                  <div key={idx}>
                     {a?.comment.length ? (
-                      a?.comment?.map((a) => (
+                      a?.comment?.map((a, idx) => (
                         <div
-                          className="p-5 w-full  hover:bg-[#080808]  tweet-border overflow-hidden "
+                          key={idx}
+                          className="p-5 w-screen xxs:w-full  hover:bg-[#080808]  tweet-border overflow-hidden "
                           // onClick={handleClick}
                         >
                           <div className="flex gap-4 w-full hover:bg-[#080808] relative">
@@ -67,7 +71,7 @@ const Comment = () => {
                               <img
                                 src={"/assets/image.png"}
                                 alt=""
-                                className="w-10 h-10 rounded-full min-w-full"
+                                className="xxs:w-10 w-8 h-8 xxs:h-10 rounded-full min-w-full"
                               />
                             </div>
 
@@ -77,7 +81,7 @@ const Comment = () => {
                                   <p className="w-20 sm:w-40 lg:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
                                     {a?.profileName}
                                   </p>
-                                  <div className="text-[#6A6F74]  flex gap-1  ">
+                                  <div className="text-[#6A6F74]  hidden xxs:flex gap-1  ">
                                     <p>@piro</p>
                                     <p className="font-bold">.</p>
 
@@ -117,9 +121,9 @@ const Comment = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="text-[#1D9BF0]">
+                              <div className="text-[#1D9BF0]  w-fit">
                                 @{tweet?.profileName}
-                                <span className="text-white"> {a?.text}</span>
+                                <p className="text-white "> {a?.text}</p>
                               </div>
                             </div>
                           </div>

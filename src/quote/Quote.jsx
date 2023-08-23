@@ -31,7 +31,7 @@ const Quote = () => {
                   navigate(-1);
                   // dispatch(resetGroupTweet());
                   // dispatch(resetCurr());
-                  document.body.style.overflow = "visible";
+                  document.body.style.overflowY = "visible";
                 }}
               />
             </abbr>

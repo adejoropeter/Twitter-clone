@@ -7,7 +7,7 @@ import { TbCalendarTime } from "react-icons/tb";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCopyTweetArr, addToTweetArr } from "../../redux/tweetSlice";
+import { addToCopyTweetArr, addToTweetArr, setShowMsg } from "../../redux/tweetSlice";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import Button from "../button/Button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -27,6 +27,7 @@ const AddTweet = ({ handleAddTweet }) => {
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
   const tweet = useSelector((state) => state.post.tweet);
+   const currentUser = useSelector((state) => state.login.currentUser);
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
   const idx = compose.length+1;
   // const id = idx + 1;
@@ -101,7 +102,7 @@ const AddTweet = ({ handleAddTweet }) => {
           <HiOutlineLocationMarker size={"16px"} className="text-[#005D3E] " />
         </abbr>
       </div>
-      <div className="flex gap-3 items-center">
+      <div className="flex gap-3 pr-4 items-center">
         {state?.value?.length ? (
           <div className={`items-center  flex justify-center`}>
             <div className="flex items-end justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full relative">
@@ -127,14 +128,18 @@ const AddTweet = ({ handleAddTweet }) => {
             <div
               className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer"
               onClick={() => {
-                dispatch(
-                  
-                  addToGrpTweetjks({
-                    firstTweet: { inputText: text.join(""), isDisabled: true, id:idx},
-                    secondTweet: { inputText: "",  isFade: true,isDisabled: false, id: idx2 },
-                  })
-
-                );
+                // if (currentUser) {
+                  dispatch(
+                    
+                    addToGrpTweetjks({
+                      firstTweet: { inputText: text.join(""), isDisabled: true, id:idx},
+                      secondTweet: { inputText: "",  isFade: true,isDisabled: false, id: idx2 },
+                    })
+  
+                  );
+                // } else {
+                  // dispatch(setShowMsg(true));
+                // }
                 // dispatch(setCurrIdx(1));
 
 

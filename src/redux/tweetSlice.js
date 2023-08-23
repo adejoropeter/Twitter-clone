@@ -1,17 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "@testing-library/react";
 export const tweetSlice = createSlice({
   name: "tweet",
   initialState: {
     //   loading state goes here
     userUrlName: "",
     quote: null,
-    showMsg:false,
+    showMsg: false,
     tweet: [
       {
         id: 2,
         profileName: "Ade Peter ",
         text: "lorem ipsum",
+        isPinned: true,
+
         showTweetDlt: false,
         username: "@ade_peter",
         comment: [
@@ -30,6 +31,8 @@ export const tweetSlice = createSlice({
         retweeted: true,
         showTweetDlt: false,
         username: "@peter_sam",
+        isPinned: false,
+
         comment: [
           {
             showDlt: false,
@@ -41,6 +44,7 @@ export const tweetSlice = createSlice({
       {
         id: 0,
         retweeted: false,
+        isPinned: false,
         profileName: "Adejoro Joshua",
         text: "Peter",
         showTweetDlt: false,
@@ -61,7 +65,7 @@ export const tweetSlice = createSlice({
   },
   reducers: {
     getAllTweet: (state) => {
-    state.tweet=state.tweet;
+      state.tweet = state.tweet;
     },
     addToTweetArr: (state, action) => {
       state.tweet = [...action.payload, ...state.tweet];
@@ -83,25 +87,25 @@ export const tweetSlice = createSlice({
     },
 
     setAddComment: (state, action) => {
-      state.tweet = state.tweet.map((twt) => {
+      state.tweet = state.tweet?.map((twt) => {
         return twt.id === action.payload.id
           ? {
               ...twt,
               comment: [
-                ...twt.comment,
                 {
                   profileName: action.payload.profileName,
                   text: action.payload.text,
                   showDlt: false,
                   id: action.payload.cmtId,
                 },
+                ...twt.comment,
               ],
             }
           : twt;
       });
     },
     setAddComposedComment2: (state, action) => {
-      state.tweet = state.tweet.map((twt) => {
+      state.tweet = state.tweet?.map((twt) => {
         return twt.id === action.payload.id
           ? {
               ...twt,
@@ -125,7 +129,7 @@ export const tweetSlice = createSlice({
       });
     },
     setAddComposedComment3: (state, action) => {
-      state.tweet = state.tweet.map((twt) => {
+      state.tweet = state.tweet?.map((twt) => {
         return twt.id === action.payload.id
           ? {
               ...twt,
@@ -155,7 +159,7 @@ export const tweetSlice = createSlice({
       });
     },
     setShowCommentDlt: (state, action) => {
-      state.tweet = state.tweet.map((twt) => {
+      state.tweet = state.tweet?.map((twt) => {
         return twt.id === action.payload.id
           ? {
               ...twt,
@@ -169,15 +173,15 @@ export const tweetSlice = createSlice({
       });
     },
     setShowTweetDlt: (state, action) => {
-      state.tweet = state.tweet.map((twt) => {
+      state.tweet = state.tweet?.map((twt) => {
         return twt.id === action.payload.id
           ? { ...twt, showTweetDlt: !twt.showTweetDlt }
-          : twt;
+          : { ...twt, showTweetDlt: false };
       });
     },
 
     deleteComment: (state, action) => {
-      state.tweet = state.tweet.map((twt) => {
+      state.tweet = state.tweet?.map((twt) => {
         return twt.id === action.payload.id
           ? {
               ...twt,
@@ -194,7 +198,7 @@ export const tweetSlice = createSlice({
     },
 
     setRetweet: (state, action) => {
-      state.tweet = state.tweet.map((twt, id) => {
+      state.tweet = state.tweet?.map((twt, id) => {
         return twt.id === action.payload.id
           ? {
               ...twt,
@@ -208,10 +212,41 @@ export const tweetSlice = createSlice({
         (twt) => twt.retweeted !== false
       );
     },
-    setShowMsg: (state,action) => {
+    setShowMsg: (state, action) => {
       state.showMsg = action.payload;
-    }
+    },
+    pinTweet: (state, action) => {
+      const findIndex = state.tweet.findIndex(
+        (x) => x.id === action.payload.id
+      );
+      console.log(findIndex);
 
+      if (findIndex === 0) {
+        state.tweet = state.tweet.map((twt) => {
+          return twt.id === action.payload.id
+            ? { ...twt, isPinned: true }
+            : { ...twt, isPinned: false };
+        });
+      } else {
+        state.tweet.splice(findIndex, 1);
+      }
+    },
+    unPinTweet: (state, action) => {
+      const findIndex = state.tweet.findIndex(
+        (x) => x.id === action.payload.id
+      );
+      console.log(findIndex);
+
+      if (findIndex === 0) {
+        state.tweet = state.tweet.map((twt) => {
+          return twt.id === action.payload.id
+            ? { ...twt, isPinned: false }
+            : twt;
+        });
+      } else {
+        state.tweet.splice(findIndex, 1);
+      }
+    },
   },
 });
 export const {
@@ -223,6 +258,8 @@ export const {
   setAddComment,
   setAddToRetweetArr,
   setShowCommentDlt,
+  pinTweet,
+  unPinTweet,
   setShowTweetDlt,
   deleteTweet,
   addToCopyTweetArr,

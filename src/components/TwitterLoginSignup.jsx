@@ -16,7 +16,7 @@ const TwitterLoginSignup = ({}) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="w-full h-fit py-3 bg-[#358AC4] sticky bottom-0 hidden sm:flex justify-around  items-center select-none z-50 gap-10">
+    <div className="w-screen h-fit py-3 bg-[#358AC4] sticky bottom-0 hidden sm:flex justify-around  items-center select-none z-50 gap-10">
      
       <div className="text-white ">
         <p className="text-2xl font-bold ">Don’t miss what’s happening</p>

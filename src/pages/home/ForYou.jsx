@@ -44,13 +44,12 @@ const ForYou = () => {
   // console.log(a());
   return (
     <>
-      {/* <div className="border-b" >hjj</div>
-      <p className="text-white">Hello</p> */}
-
-      {tweet ? (
-        tweet.map((tweet, i) => {
-          return <Tweet tweet={tweet} key={tweet?.id} />;
-        })
+      {tweet?.length ? (
+        tweet
+          // ?.sort((a) => a.isPinned === true)
+          .map((tweet) => {
+            return <Tweet tweet={tweet} key={tweet?.id} />;
+          })
       ) : (
         <p className="text-white">Nothing Here</p>
       )}

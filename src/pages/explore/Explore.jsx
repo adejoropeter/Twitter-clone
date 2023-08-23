@@ -25,6 +25,15 @@ const Explore = () => {
     }
   };
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      dispatch(setShowMsg(false))
+    }, 3000);
+    return () => {
+      clearInterval(timeout);
+    };
+  },[showMsg]);
+
   return (
     <div className="w-full sm:w-[80%] lg:translate-x-[21.3%] sm:translate-x-[25%]  min-h-screen bg-[#000000] flex   text-white ">
       <div className="w-[100%] border-l border-[#16181c] border-r flex text-[#D6D9DB] flex-col relative">
