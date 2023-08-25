@@ -150,10 +150,10 @@ const Navbar = () => {
             <div className="w-full flex items-end flex-col relative">
               {/* <div className="bg-green-400 w-10 cursor-pointer absolute">Hello</div> */}
               {toggleButton ? (
-                <div className="w-fit h-fit p-2  bg-[#000000] rounded-lg shadow-[0px_0px_10px_3px] shadow-white">
+                <div className="w-[100px] -top-6  sm:-left-10 -left-16 h-fit p-2  sm:bg-[#000000] rounded-lg shadow-[0px_0px_10px_3px] shadow-white absolute">
                   <h3
                     onClick={handleLogout}
-                    className="text-white hover:bg-[#16181C] cursor-pointer flex justify-center bg-black w-full "
+                    className="text-white hover:bg-[#16181C] cursor-pointer flex justify-center bg-black w-fit "
                   >
                     Log out {"kkks"}
                   </h3>
