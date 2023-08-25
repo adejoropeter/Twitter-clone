@@ -44,7 +44,34 @@ const Tweet = ({ tweet }) => {
   const handleMouseEnter = () => {
     console.log("Mouse Enter");
   };
+  // console.log(tweet.text)
+  const inputVal = useSelector((state) => state.quote.inputVal);
 
+  const renderColoredText = (value) => {
+    // Use regular expression to find words starting with "@"
+    const regex = /(?:^|\s)(@\w+)/g;
+    const coloredText = value?.replace(regex, (match, word) => {
+      return ` ${match} `;
+    });
+    return coloredText
+      .split(" ")
+      ?.filter((_, i) => i < 35)
+      .map((word, index) => {
+        if (word.startsWith("@")) {
+          return (
+            <span className="text-blue-400" key={index}>
+              {word}
+            </span>
+          );
+        } else {
+          return (
+            <span className="text-white" key={index}>
+              {word}{" "}
+            </span>
+          );
+        }
+      });
+  };
   const handleShowDelete = (e) => {
     e.stopPropagation();
     dispatch(setShowTweetDlt({ id: tweet.id }));
@@ -163,27 +190,28 @@ const Tweet = ({ tweet }) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <p>{tweet?.text}</p>
+            <p>{(tweet?.text)}</p>
+            {/* <p>{ inp}</p> */}
             {tweet.isQuote && (
               <div
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(`/comment/${tweet.profileName}`);
                   document.documentElement.scrollTop = 0;
-                  const findTweetIndex = tweets?.find(
-                    (x) => tweet.id=== x.id 
+                  const findTweetIndex = tweets?.find((x) => tweet.id === x.id);
+                  const chk = tweets.find(
+                    (x) => x.id === findTweetIndex.quoteTweet.id
                   );
-                  const chk = tweets.find(x => x.id === findTweetIndex.quoteTweet.id)
-                  if(chk){
+                  if (chk) {
                     dispatch(viewTweet(tweet.quoteTweet));
                   } else {
-                    navigate("/404")
+                    navigate("/404");
                   }
                 }}
                 className="border border-[#5b5c5da3] p-3 rounded-xl w-full"
               >
                 <h3>{tweet?.quoteTweet?.profileName}</h3>
-                <p>{tweet?.quoteTweet?.text}</p>
+                <p>{(tweet?.quoteTweet?.text)}</p>
                 {tweet?.quoteTweet?.isThread && (
                   <div className="w-fit mt-2 flex items-center ">
                     <h2 className="text-[#00BA7C] font-normal">

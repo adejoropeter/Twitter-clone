@@ -37,7 +37,6 @@ const Login = () => {
       setError(false);
     }
     dispatch(changeVal(event.target.value));
-    console.log(inputDetails);
   };
   useEffect(() => {
     // document.body.style.overflowY = "hidden";

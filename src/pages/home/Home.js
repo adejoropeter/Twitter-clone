@@ -58,12 +58,11 @@ const Home = () => {
       likes: 1,
       // id: copyOfNewTweets.length - 1 + 1 || 0,
       id: copyOfNewTweets.length
-        ? copyOfNewTweets[copyOfNewTweets.length-1].id + 1
+        ? copyOfNewTweets[copyOfNewTweets.length - 1].id + 1
         : tweet[0].id + 1 || Math.random(),
       retweeted: false,
     };
     dispatch(addToCopyTweetArr([newArr]));
-    console.log(copyOfNewTweets)
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),
     //   profileName: profileName?.name,
@@ -75,8 +74,9 @@ const Home = () => {
   };
   // w-full sm:w-[80%] sm:translate-x-[25%]   h-screen bg-[#000000] flex   text-white
   return (
-    <div className=" xsm:border-l-2 border-l-[#16181c] w-full  lg:translate-x-[21.3%] sm:translate-x-[25%]  min-h-screen bg-[#000000] flex sm:w-[80%]  text-white lg:max-w-full overflow-hidden">
-      <main className=" w-full sm:w-[150%] lg:w-[180%] min-h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
+    <div className=" sm:w-[80%]  flex sm:translate-x-[25%] lg:translate-x-[21.3%]  xsm:border-l-2 border-l-[#16181c] w-full     min-h-screen bg-[#000000]   text-white lg:max-w-full">
+      <main className=" w-full sm:w-[150%] lg:w-[180%] h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
+        {/* <main className="relative w-[200px]   h-fit"> */}
         <header className="border-b sticky w-full top-0 backdrop-blur-md border-[#16181c]   sm:h-[115px] blur-0 flex flex-col justify-between z-10">
           <div className="pl-4 py-4 relative xsm:hidden block">
             <div className="absolute">
@@ -138,19 +138,15 @@ const Home = () => {
             </NavLink>
           </div>
         </header>
-
         <motion.div
-          initial={{ top: "144px", opacity: 0 }}
+          // initial={{ top: "144px", opacity: 0, display: "hidden" }}
           animate={
-            copyOfNewTweets?.length
-              ? {
-                  y: "30%",
-                  position: "sticky",
-                  left: "50%",
-                  translateX: "-50%",
-                  opacity: 1,
-                }
-              : { y: 0, x: 50 }
+            copyOfNewTweets?.length && {
+              // y: "30%",
+              position: "sticky",
+              display:"block",
+              opacity: 1,
+            }
           }
           onClick={() => {
             setStat(false);
@@ -160,7 +156,7 @@ const Home = () => {
               document.documentElement.scrollTop = 100;
             }, 200);
           }}
-          className="   opacity-0 z-10  w-fit md:mx-[100px]   "
+          className=" top-[25%] opacity-0 hidden  z-10 left-[50%] -translate-x-[50%] sm:-translate-x-[100%] lg:-translate-x-[200%]    w-fit md:mx-[0px] sticky  "
         >
           <div className="cursor-pointer bg-green-400 flex items-center gap-1 fit rounded-full py-1 px-3">
             <h1 className=""> New Tweet </h1>

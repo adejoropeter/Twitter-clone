@@ -27,7 +27,6 @@ const SignupSteps = ({user}) => {
   const [message, setMessage] = useState("");
   const currIdx = useSelector((state) => state.signup.currIdx);
   const dispatch = useDispatch();
-  console.log(user)
   const handleInputChange = (event) => {
     if (
       !inputDetail[0]?.name ||
@@ -82,7 +81,6 @@ const SignupSteps = ({user}) => {
       console.log(err);
     }
   };
-  console.log(inputDetail);
   return (
     <>
       {currIdx === 0 && (

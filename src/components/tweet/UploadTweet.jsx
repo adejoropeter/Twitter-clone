@@ -29,7 +29,7 @@ const UploadTweet = ({ handleAddTweet }) => {
   }, []);
 
   return (
-    <div className="flex h-fit p-5 gap-5  w-full border-b border-[#16181c]">
+    <div className="flex h-fit px-5 py-2 gap-5  w-full border-b border-[#16181c]">
       <div className="bg-blue-400 w-fit"></div>
 
       <div className="w-10 absolute">

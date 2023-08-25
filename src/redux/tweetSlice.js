@@ -219,8 +219,6 @@ export const tweetSlice = createSlice({
       const findIndex = state.tweet.findIndex(
         (x) => x.id === action.payload.id
       );
-      console.log(findIndex);
-
       if (findIndex === 0) {
         state.tweet = state.tweet.map((twt) => {
           return twt.id === action.payload.id
@@ -235,8 +233,6 @@ export const tweetSlice = createSlice({
       const findIndex = state.tweet.findIndex(
         (x) => x.id === action.payload.id
       );
-      console.log(findIndex);
-
       if (findIndex === 0) {
         state.tweet = state.tweet.map((twt) => {
           return twt.id === action.payload.id

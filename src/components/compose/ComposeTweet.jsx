@@ -36,8 +36,32 @@ const ComposeTweet = () => {
   const compose = useSelector((state) => state.composeTweet.groupTweet);
   const copy = useSelector((state) => state.composeTweet.copyOfGroupTweet);
   //   console.log(compose);
-
   const text = compose[0]?.inputText;
+  const renderColoredText = (value) => {
+    // Use regular expression to find words starting with "@"
+    const regex = /(?:^|\s)(@\w+)/g;
+    const coloredText = value?.replace(regex, (match, word) => {
+      return ` ${match} `;
+    });
+    return coloredText
+      .split(" ")
+      ?.filter((_, i) => i < 35)
+      .map((word, index) => {
+        if (word.startsWith("@")) {
+          return (
+            <span className="text-blue-400" key={index}>
+              {word}
+            </span>
+          );
+        } else {
+          return (
+            <span className="text-white" key={index}>
+              {word}{" "}
+            </span>
+          );
+        }
+      });
+  };
   const inputTextWithEmptyValue = compose.find((a) => {
     return a.inputText === "";
   });
@@ -53,7 +77,7 @@ const ComposeTweet = () => {
             likes: 1,
             id: tweet[0]?.id + 1 || 0,
             retweeted: false,
-            text,
+            text: renderColoredText(text),
             isThread: true,
           },
         ])
@@ -69,7 +93,7 @@ const ComposeTweet = () => {
             likes: 1,
             id: tweet[0]?.id + 1 || 0,
             retweeted: false,
-            text,
+            text: renderColoredText(text),
             isThread: false,
           },
         ])
@@ -80,7 +104,7 @@ const ComposeTweet = () => {
         setAddComment({
           id: tweet[0]?.id + 1 || 0,
           profileName: "Ade",
-          text: compose[1]?.inputText,
+          text: renderColoredText(compose[1]?.inputText),
           cmtId: Math.random(),
         })
       );
@@ -91,12 +115,12 @@ const ComposeTweet = () => {
           // first comment
           firstComment: compose[1],
           firstCommentProfileName: "Ade",
-          firstCommentText: compose[1]?.inputText,
+          firstCommentText: renderColoredText(compose[1]?.inputText),
           firstCommentCmtId: Math.random(),
           //second comment
           secondComment: compose[2],
           secondCommentProfileName: "Ade",
-          secondCommentText: compose[2]?.inputText,
+          secondCommentText: renderColoredText(compose[2]?.inputText),
           secondCommentCmtId: Math.random(),
         })
       );
@@ -107,17 +131,17 @@ const ComposeTweet = () => {
           // first comment
           firstComment: compose[1],
           firstCommentProfileName: "Ade",
-          firstCommentText: compose[1]?.inputText,
+          firstCommentText: renderColoredText(compose[1]?.inputText),
           firstCommentCmtId: Math.random(),
           //second comment
           secondComment: compose[2],
           secondCommentProfileName: "Ade",
-          secondCommentText: compose[2]?.inputText,
+          secondCommentText: renderColoredText(compose[2]?.inputText),
           secondCommentCmtId: Math.random(),
           //third comment
           thirdComment: compose[3],
           thirdCommentProfileName: "Ade",
-          thirdCommentText: compose[3]?.inputText,
+          thirdCommentText: renderColoredText(compose[3]?.inputText),
           thirdCommentCmtId: Math.random(),
         })
       );

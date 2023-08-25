@@ -13,7 +13,6 @@ const Quote = () => {
   const quote = useSelector((state) => state.post.quote);
   const dispatch = useDispatch();
 
- 
   return (
     <div className="w-full h-screen bg-[#242d34b3] fixed  z-[200]  overflow-y-hidden ">
       {/* <div className="bg-black      h-screen   w-full    "> */}
@@ -72,9 +71,9 @@ const Quote = () => {
             placeholder="Tweet your Reply!"
             type="text"
             value={inputVal}
-            onChange={(e) =>
-              dispatch(addToTweetArray({ value: e.target.value }))
-            }
+            onChange={(e) => {
+              dispatch(addToTweetArray({ value: e.target.value }));
+            }}
             className="w-full border-none bg-transparent outline-none text-white px-3 text-2xl placeholder:text-[#6A6F74]"
           />
         </div>

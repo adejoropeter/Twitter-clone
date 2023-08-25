@@ -23,17 +23,36 @@ const QuoteTweet = () => {
   const view = useSelector((state) => state.post.viewTweet);
       const text = useSelector((state) => state.quote.inputVal);
       
-  //   console.log(compose);
-
-  //   const text = compose[0]?.inputText;
-  //   const inputTextWithEmptyValue = compose.find((a) => {
-  //     return a.inputText === "";
-  //   });
+ const renderColoredText = (value) => {
+   // Use regular expression to find words starting with "@"
+   const regex = /(?:^|\s)(@\w+)/g;
+   const coloredText = value?.replace(regex, (match, word) => {
+     return ` ${match} `;
+   });
+   return coloredText
+     .split(" ")
+     ?.filter((_, i) => i < 35)
+     .map((word, index) => {
+       if (word.startsWith("@")) {
+         return (
+           <span className="text-blue-400" key={index}>
+             {word}
+           </span>
+         );
+       } else {
+         return (
+           <span className="text-white" key={index}>
+             {word}{" "}
+           </span>
+         );
+       }
+     });
+ };
   const handleAddTweet = () => {
     dispatch(
       addToTweetArr([
         {
-          text: text || "Nothing here",
+          text: renderColoredText(text) || "Nothing here",
           profileName: "Adejoro Peter",
           username: "@ade_peter",
           comment: [],
