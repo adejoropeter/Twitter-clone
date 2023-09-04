@@ -7,7 +7,11 @@ import { TbCalendarTime } from "react-icons/tb";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCopyTweetArr, addToTweetArr, setShowMsg } from "../../redux/tweetSlice";
+import {
+  addToCopyTweetArr,
+  addToTweetArr,
+  setShowMsg,
+} from "../../redux/tweetSlice";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import Button from "../button/Button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -24,12 +28,13 @@ const AddTweet = ({ handleAddTweet }) => {
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
   const state = useSelector((state) => state.input.value);
+  console.log();
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
   const tweet = useSelector((state) => state.post.tweet);
-   const currentUser = useSelector((state) => state.login.currentUser);
+  const currentUser = useSelector((state) => state.login.currentUser);
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
-  const idx = compose.length+1;
+  const idx = compose.length + 1;
   // const id = idx + 1;
   const idx2 = idx + 1;
 
@@ -129,19 +134,25 @@ const AddTweet = ({ handleAddTweet }) => {
               className="flex items-center justify-center w-8 h-8 overflow-hidden bg-[#1D1F23] rounded-full cursor-pointer"
               onClick={() => {
                 // if (currentUser) {
-                  dispatch(
-                    
-                    addToGrpTweetjks({
-                      firstTweet: { inputText: text.join(""), isDisabled: true, id:idx},
-                      secondTweet: { inputText: "",  isFade: true,isDisabled: false, id: idx2 },
-                    })
-  
-                  );
+                dispatch(
+                  addToGrpTweetjks({
+                    firstTweet: {
+                      inputText: text.join(""),
+                      isDisabled: true,
+                      id: idx,
+                    },
+                    secondTweet: {
+                      inputText: "",
+                      isFade: true,
+                      isDisabled: false,
+                      id: idx2,
+                    },
+                  })
+                );
                 // } else {
-                  // dispatch(setShowMsg(true));
+                // dispatch(setShowMsg(true));
                 // }
                 // dispatch(setCurrIdx(1));
-
 
                 // dispatch(setCurrIdx({id}))
                 navigate("/compose");
@@ -154,11 +165,18 @@ const AddTweet = ({ handleAddTweet }) => {
         <Button
           text="Tweet"
           onClickFn={handleAddTweet}
-          color={!state?.value?.length ? "#808080" : "#ffffff"}
-          bg={!state?.value?.length ? "#005D3E" : "#00BA7C"}
-          disabled={!state?.value?.length}
+          color={
+            !state?.value?.length || !state.value.join("").trim() 
+              ? "#808080"
+              : "#ffffff"
+          }
+          bg={
+            !state?.value?.length || !state.value.join("").trim() 
+              ? "#005D3E"
+              : "#00BA7C"
+          }
+          disabled={!state?.value?.length || !state.value.join("").trim() }
         />
-      
       </div>
     </div>
   );

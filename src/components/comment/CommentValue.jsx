@@ -13,7 +13,7 @@ const CommentValue = () => {
             key={i}
             className={`${i + 1 > 35 ? "bg-red-600" : "text-white"}`}
           >
-            {a === "" ? "" : a.replaceAll(" ", "  __")}
+            {a === "" ? "" : a.replaceAll(" ", "__")}
           </div>
         );
       })}

@@ -53,9 +53,7 @@ const Home = () => {
   };
   const handleAddTweet = async () => {
     dispatch(changeIDIndex());
-    console.log(id);
-    console.log(tweet);
-    console.log(copyOfNewTweets);
+    console.log(state.value.join("").length)
     const newArr = {
       text: renderColoredText(),
       profileName: "Adejoro Peter",

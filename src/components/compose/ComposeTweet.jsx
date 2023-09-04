@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToTweetArr,
+  changeIDIndex,
   setAddComment,
   setAddComposedComment,
   setAddComposedComment2,
@@ -35,6 +36,7 @@ const ComposeTweet = () => {
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
   const copy = useSelector((state) => state.composeTweet.copyOfGroupTweet);
+  const ind = useSelector((state) => state.post.idIndex);
   //   console.log(compose);
   const text = compose[0]?.inputText;
   const renderColoredText = (value) => {
@@ -44,6 +46,7 @@ const ComposeTweet = () => {
       return ` ${match} `;
     });
     return coloredText
+      
       .split(" ")
       ?.filter((_, i) => i < 35)
       .map((word, index) => {
@@ -66,6 +69,7 @@ const ComposeTweet = () => {
     return a.inputText === "";
   });
   const handleAddTweet = () => {
+    dispatch(changeIDIndex());
     compose.length > 1 &&
       dispatch(
         addToTweetArr([
@@ -75,7 +79,7 @@ const ComposeTweet = () => {
             username: "@ade_peter",
             comment: [],
             likes: 1,
-            id: tweet[0]?.id + 1 || 0,
+            id: ind+1,
             retweeted: false,
             text: renderColoredText(text),
             isThread: true,

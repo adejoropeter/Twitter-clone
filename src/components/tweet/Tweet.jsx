@@ -138,7 +138,7 @@ const Tweet = ({ tweet }) => {
                     <p
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (currentUser) {
+                          if (currentUser) {
                           dispatch(deleteTweet({ id: tweet.id }));
                         } else {
                           dispatch(setShowMsg(true));
