@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addToCopyTweetArr,
   addToTweetArr,
+  changeIDIndex,
   clearCopyTweetArr,
   reverseTweetArr,
 } from "../../redux/tweetSlice";
@@ -18,6 +19,7 @@ import { BiArrowFromTop } from "react-icons/bi";
 const Home = () => {
   const [nav, setNav] = useState("for you");
   const tweet = useSelector((state) => state.post.tweet);
+  const id = useSelector((state) => state.post.idIndex);
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
   const state = useSelector((state) => state.input.value);
   const profileName = useSelector((state) => state.user.user_details);
@@ -50,6 +52,10 @@ const Home = () => {
       });
   };
   const handleAddTweet = async () => {
+    dispatch(changeIDIndex());
+    console.log(id);
+    console.log(tweet);
+    console.log(copyOfNewTweets);
     const newArr = {
       text: renderColoredText(),
       profileName: "Adejoro Peter",
@@ -57,9 +63,10 @@ const Home = () => {
       comment: [],
       likes: 1,
       // id: copyOfNewTweets.length - 1 + 1 || 0,
-      id: copyOfNewTweets.length
-        ? copyOfNewTweets[copyOfNewTweets.length - 1].id + 1
-        : tweet[0].id + 1 || Math.random(),
+      id:  id + 1,
+      // id: copyOfNewTweets.length
+      //   ? copyOfNewTweets[copyOfNewTweets.length - 1].id + 1
+      //   : tweet[0].id + 1 || Math.random(),
       retweeted: false,
     };
     dispatch(addToCopyTweetArr([newArr]));
@@ -86,7 +93,9 @@ const Home = () => {
               <AiOutlineTwitter className="text-[#00BA7C] " size={30} />
             </div>
           </div>
-          <h1 className="text-xl font-bold pl-4 pt-4 xsm:block hidden">Home</h1>
+          <h1 className="text-xl font-bold pl-4 pt-4 xsm:block hidden">
+            Home {id}
+          </h1>
           <div className="flex w-full">
             <NavLink
               to="/foryou"
@@ -144,13 +153,14 @@ const Home = () => {
             copyOfNewTweets?.length && {
               // y: "30%",
               position: "sticky",
-              display:"block",
+              display: "block",
               opacity: 1,
             }
           }
           onClick={() => {
             setStat(false);
             dispatch(addToTweetArr(...[copyOfNewTweets]));
+            console.log(copyOfNewTweets)
             dispatch(clearCopyTweetArr());
             setTimeout(() => {
               document.documentElement.scrollTop = 100;

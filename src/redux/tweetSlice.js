@@ -6,6 +6,8 @@ export const tweetSlice = createSlice({
     userUrlName: "",
     quote: null,
     showMsg: false,
+    idIndex: 2,
+    currIdx: 0,
     tweet: [
       {
         id: 2,
@@ -69,9 +71,10 @@ export const tweetSlice = createSlice({
     },
     addToTweetArr: (state, action) => {
       state.tweet = [...action.payload, ...state.tweet];
+      // state.idIndex++;
     },
     addToCopyTweetArr: (state, action) => {
-      state.copyOfNewTweets = [...state.copyOfNewTweets, ...action.payload];
+      state.copyOfNewTweets = [...action.payload,...state.copyOfNewTweets ];
     },
     clearCopyTweetArr: (state) => {
       state.copyOfNewTweets = [];
@@ -195,6 +198,10 @@ export const tweetSlice = createSlice({
 
     deleteTweet: (state, action) => {
       state.tweet = state.tweet.filter((twt) => twt.id !== action.payload.id);
+      // SORT the objects up side down
+      // state.tweet = state.tweet.map((a, i) => {
+      //   return { ...a, id: i  };
+      // });
     },
 
     setRetweet: (state, action) => {
@@ -219,6 +226,7 @@ export const tweetSlice = createSlice({
       const findIndex = state.tweet.findIndex(
         (x) => x.id === action.payload.id
       );
+      const findValue = state.tweet.find((x) => x.id === action.payload.id);
       if (findIndex === 0) {
         state.tweet = state.tweet.map((twt) => {
           return twt.id === action.payload.id
@@ -227,7 +235,20 @@ export const tweetSlice = createSlice({
         });
       } else {
         state.tweet.splice(findIndex, 1);
+        // localStorage.setItem("pinned-tweet", JSON.stringify(findValue));
+        state.tweet.unshift({ ...findValue, isPinned: true });
+        state.tweet = state.tweet.map((twt) => {
+          return twt.id === action.payload.id
+            ? { ...twt, isPinned: true }
+            : { ...twt, isPinned: false };
+        });
       }
+    },
+    changeIDIndex: (state) => {
+      state.idIndex++;
+    },
+    changeIDIndexMinusOne: (state) => {
+      state.idIndex--;
     },
     unPinTweet: (state, action) => {
       const findIndex = state.tweet.findIndex(
@@ -265,5 +286,7 @@ export const {
   setAddComposedComment2,
   getAllTweet,
   setAddComposedComment3,
+  changeIDIndexMinusOne,
+  changeIDIndex,
 } = tweetSlice.actions;
 export default tweetSlice.reducer;

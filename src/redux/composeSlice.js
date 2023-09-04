@@ -68,7 +68,7 @@ export const composeSlice = createSlice({
         return cmp.id !== action.payload.id;
       });
       state.groupTweet = state.groupTweet.map((a, i) => {
-        return ({ ...a, id:i+1 });
+        return { ...a, id: i + 1 };
       });
     },
   },

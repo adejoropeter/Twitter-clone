@@ -11,7 +11,7 @@ import { addDoc, collection, serverTimestamp } from "../firebase";
 // import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/button/Button";
-import { addToTweetArr } from "../redux/tweetSlice";
+import { addToTweetArr, changeIDIndex } from "../redux/tweetSlice";
 import { clearInputVal } from "../redux/quoteSlice";
 
 const QuoteTweet = () => {
@@ -20,35 +20,39 @@ const QuoteTweet = () => {
   //   const [bool, setBool] = useState(false);
   const navigate = useNavigate();
   const tweet = useSelector((state) => state.post.tweet);
+  const id = useSelector((state) => state.post.idIndex);
+
   const view = useSelector((state) => state.post.viewTweet);
-      const text = useSelector((state) => state.quote.inputVal);
-      
- const renderColoredText = (value) => {
-   // Use regular expression to find words starting with "@"
-   const regex = /(?:^|\s)(@\w+)/g;
-   const coloredText = value?.replace(regex, (match, word) => {
-     return ` ${match} `;
-   });
-   return coloredText
-     .split(" ")
-     ?.filter((_, i) => i < 35)
-     .map((word, index) => {
-       if (word.startsWith("@")) {
-         return (
-           <span className="text-blue-400" key={index}>
-             {word}
-           </span>
-         );
-       } else {
-         return (
-           <span className="text-white" key={index}>
-             {word}{" "}
-           </span>
-         );
-       }
-     });
- };
+  const text = useSelector((state) => state.quote.inputVal);
+
+  const renderColoredText = (value) => {
+    // Use regular expression to find words starting with "@"
+    const regex = /(?:^|\s)(@\w+)/g;
+    const coloredText = value?.replace(regex, (match, word) => {
+      return ` ${match} `;
+    });
+    return coloredText
+      .split(" ")
+      ?.filter((_, i) => i < 35)
+      .map((word, index) => {
+        if (word.startsWith("@")) {
+          return (
+            <span className="text-blue-400" key={index}>
+              {word}
+            </span>
+          );
+        } else {
+          return (
+            <span className="text-white" key={index}>
+              {word}{" "}
+            </span>
+          );
+        }
+      });
+  };
   const handleAddTweet = () => {
+    console.log(id)
+    dispatch(changeIDIndex());
     dispatch(
       addToTweetArr([
         {
@@ -57,7 +61,8 @@ const QuoteTweet = () => {
           username: "@ade_peter",
           comment: [],
           likes: 1,
-          id: tweet[0].id + 1,
+          // id: tweet[0].id + 1,
+          id: id + 1,
           retweeted: false,
           isQuote: true,
           quoteTweet: view,
@@ -176,7 +181,7 @@ const QuoteTweet = () => {
           //     text={compose.length > 1 ? "Tweet All" : "Tweet"}
           text={"Reply"}
           bg={text ? "#00BA7C" : "#005D3E"}
-                          onClickFn={handleAddTweet}
+          onClickFn={handleAddTweet}
           color={text === "" ? "#808080" : "#ffffff"}
           //     disabled={inputTextWithEmptyValue?.inputText === "" ? true : false}
         />

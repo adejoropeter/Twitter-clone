@@ -27,12 +27,12 @@ const Explore = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      dispatch(setShowMsg(false))
+      dispatch(setShowMsg(false));
     }, 3000);
     return () => {
       clearInterval(timeout);
     };
-  },[showMsg]);
+  }, [showMsg]);
 
   return (
     <div className="w-full sm:w-[80%] lg:translate-x-[21.3%] sm:translate-x-[25%]  min-h-screen bg-[#000000] flex   text-white ">
@@ -44,15 +44,17 @@ const Explore = () => {
         <motion.div
           initial={{ top: "110px", opacity: 0 }}
           animate={
-            showMsg
-              ? { y: "30%", position: "sticky", translateX: "-50%", opacity: 1 }
-              : { top: 0 }
+            showMsg ? { y: "30%", position: "sticky", opacity: 1 } : { y: 0 }
+            // showMsg
+            //   ? { y: "30%", position: "sticky", translateX: "-50%", opacity: 1 }
+            //   : { opacity:0}
           }
           onClick={() => {
             dispatch(setShowMsg(false));
             navigate("/login");
           }}
-          className=" opacity-0 z-10 left-[25%] w-fit  -translate-x-[25%] "
+          className=" opacity- z-10  w-fit sticky left-[45%] -translate-x-[50%] sm:left-[20%] sm:-translate-x-[50%]"
+          // className=" opacity- z-10 left-[25%] w-fit sticky  -translate-x-[50%] "
         >
           <div className="cursor-pointer bg-green-400 flex items-center gap-1 fit rounded-full py-1 px-3">
             <h1 className=""> Login </h1>

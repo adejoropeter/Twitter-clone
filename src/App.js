@@ -46,7 +46,7 @@ const App = () => {
   const currentUser = useSelector((state) => state.login.currentUser);
   const curr = useSelector((state) => state.login.currentUser);
   const user = localStorage.getItem("user");
-
+ 
   const id = curr?.user?.uid;
   const [urlName, setUrlName] = useState("");
   // console.log(user);
@@ -106,11 +106,12 @@ const App = () => {
 
           {/* Navbar needs to be placed inside each pages routes incase of an incorrect route */}
           <Routes>
-            <Route path="/" element={<Home />}>
-              <Route path="/following" element={<Following />}></Route>
-              <Route path="/foryou" element={<ForYou />}></Route>
-            </Route>
+              <Route path="/" element={<Home />}>
+                <Route path="/following" element={<Following />}></Route>
+                <Route path="/foryou" element={<ForYou />}></Route>
+              </Route>
               <Route path="/comment/:name" element={<Comment />}></Route>
+            <Route element={<ProtectedRoute />}>
               <Route
                 path="/compose"
                 element={pathname === "/compose" && <Compose />}
@@ -119,9 +120,8 @@ const App = () => {
                 path="/compose/tweet"
                 element={pathname === "/compose/tweet" && <Quote />}
               ></Route>
-              <Route path="/404" element={<TweetNotFound />}></Route>
-            <Route element={<ProtectedRoute />}>
               <Route path="/notifications" element={<Notification />}></Route>
+              <Route path="/404" element={<TweetNotFound />}></Route>
               <Route path="/messages" element={<Message />}></Route>
               {/* <Route path="/comment/:name" element={<Comment />}></Route> */}
             </Route>

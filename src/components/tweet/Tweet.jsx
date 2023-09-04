@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import {
   PinTweet,
+  
+  changeIDIndexMinusOne,
+  
   deleteTweet,
   pinTweet,
   setAddToRetweetArr,
@@ -27,6 +30,7 @@ const Tweet = ({ tweet }) => {
   const showMsg = useSelector((state) => state.post.showMsg);
   const tweets = useSelector((state) => state.post.tweet);
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
+  const id = useSelector((state) => state.post.idIndex);
   // console.log(auth.currentUser);
   useEffect(() => {
     dispatch(setAddToRetweetArr());
@@ -134,11 +138,12 @@ const Tweet = ({ tweet }) => {
                     <p
                       onClick={(e) => {
                         e.stopPropagation();
-                        // if (currentUser) {
-                        dispatch(deleteTweet({ id: tweet.id }));
-                        // } else {
-                        // dispatch(setShowMsg(true));
-                        // }
+                        if (currentUser) {
+                          dispatch(deleteTweet({ id: tweet.id }));
+                        } else {
+                          dispatch(setShowMsg(true));
+                        }
+                        dispatch(setShowTweetDlt({ id: tweet.id }));
                       }}
                       className=" bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer"
                     >
@@ -149,14 +154,16 @@ const Tweet = ({ tweet }) => {
                       onClick={(e) => {
                         e.stopPropagation();
                         // if (currentUser) {
+                        dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (divRef.current?.textContent === "Pin") {
                           dispatch(pinTweet({ id: tweet.id }));
+                          // dispatch(setShowTweetDlt({ id: tweet.id }));
                         } else {
                           dispatch(unPinTweet({ id: tweet.id }));
                         }
-                        dispatch(setShowTweetDlt({ id: tweet.id }));
                         dispatch(setShowMsg(true));
                         // } else {
+                        //   dispatch(setShowMsg(true));
                         // }
                       }}
                       className="bg-black w-fit p-2  shadow-sm shadow-orange-50 cursor-pointer"
@@ -190,19 +197,17 @@ const Tweet = ({ tweet }) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <p>{(tweet?.text)}</p>
-            {/* <p>{ inp}</p> */}
+            <p>{tweet?.text}</p>
             {tweet.isQuote && (
               <div
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(`/comment/${tweet.profileName}`);
                   document.documentElement.scrollTop = 0;
-                  const findTweetIndex = tweets?.find((x) => tweet.id === x.id);
-                  const chk = tweets.find(
-                    (x) => x.id === findTweetIndex.quoteTweet.id
+                  const findTweetIndex = tweets?.find(
+                    (x) => tweet.quoteTweet.id === x.id
                   );
-                  if (chk) {
+                  if (findTweetIndex) {
                     dispatch(viewTweet(tweet.quoteTweet));
                   } else {
                     navigate("/404");
@@ -211,7 +216,7 @@ const Tweet = ({ tweet }) => {
                 className="border border-[#5b5c5da3] p-3 rounded-xl w-full"
               >
                 <h3>{tweet?.quoteTweet?.profileName}</h3>
-                <p>{(tweet?.quoteTweet?.text)}</p>
+                <p>{tweet?.quoteTweet?.text}</p>
                 {tweet?.quoteTweet?.isThread && (
                   <div className="w-fit mt-2 flex items-center ">
                     <h2 className="text-[#00BA7C] font-normal">
