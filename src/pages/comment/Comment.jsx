@@ -121,9 +121,9 @@ const Comment = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="text-[#1D9BF0]  w-fit">
-                                @{tweet?.profileName}
-                                <p className="text-white "> {a?.text}</p>
+                              <div className="  w-fit">
+                                
+                                <p className="text-white "> <span className="text-[#1D9BF0]">@{tweet?.profileName}</span> {a?.text}</p>
                               </div>
                             </div>
                           </div>

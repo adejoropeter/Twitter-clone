@@ -11,6 +11,7 @@ import {
   changeIDIndex,
   clearCopyTweetArr,
   reverseTweetArr,
+  
 } from "../../redux/tweetSlice";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { clearInputField } from "../../redux/inputFieldSlice";
@@ -53,15 +54,16 @@ const Home = () => {
   };
   const handleAddTweet = async () => {
     dispatch(changeIDIndex());
-    console.log(state.value.join("").length)
+    console.log(state.value.join("").length);
     const newArr = {
       text: renderColoredText(),
       profileName: "Adejoro Peter",
       username: "@ade_peter",
       comment: [],
       likes: 1,
+      isPinned:false,
       // id: copyOfNewTweets.length - 1 + 1 || 0,
-      id:  id + 1,
+      id: id + 1,
       // id: copyOfNewTweets.length
       //   ? copyOfNewTweets[copyOfNewTweets.length - 1].id + 1
       //   : tweet[0].id + 1 || Math.random(),
@@ -91,8 +93,11 @@ const Home = () => {
               <AiOutlineTwitter className="text-[#00BA7C] " size={30} />
             </div>
           </div>
-          <h1 className="text-xl font-bold pl-4 pt-4 xsm:block hidden">
-            Home {id}
+          <h1
+           
+            className="text-xl font-bold pl-4 pt-4 xsm:block hidden"
+          >
+            Home 
           </h1>
           <div className="flex w-full">
             <NavLink
@@ -158,9 +163,10 @@ const Home = () => {
           onClick={() => {
             setStat(false);
             dispatch(addToTweetArr(...[copyOfNewTweets]));
-            console.log(copyOfNewTweets)
+            console.log(copyOfNewTweets);
             dispatch(clearCopyTweetArr());
             setTimeout(() => {
+              // dispatch(sortArr());
               document.documentElement.scrollTop = 100;
             }, 200);
           }}

@@ -13,8 +13,7 @@ export const tweetSlice = createSlice({
         id: 2,
         profileName: "Ade Peter ",
         text: "lorem ipsum",
-        isPinned: true,
-
+        isPinned: false,
         showTweetDlt: false,
         username: "@ade_peter",
         comment: [
@@ -46,7 +45,7 @@ export const tweetSlice = createSlice({
       {
         id: 0,
         retweeted: false,
-        isPinned: false,
+        isPinned: true,
         profileName: "Adejoro Joshua",
         text: "Peter",
         showTweetDlt: false,
@@ -70,11 +69,16 @@ export const tweetSlice = createSlice({
       state.tweet = state.tweet;
     },
     addToTweetArr: (state, action) => {
-      state.tweet = [...action.payload, ...state.tweet];
-      // state.idIndex++;
+      state.tweet = [...action.payload, ...state.tweet].sort((a, b) => b.isPinned - a.isPinned);
     },
     addToCopyTweetArr: (state, action) => {
-      state.copyOfNewTweets = [...action.payload,...state.copyOfNewTweets ];
+      state.copyOfNewTweets = [
+        ...action.payload,
+        ...state.copyOfNewTweets,
+      ]
+    },
+    sortArr: (state) => {
+      state.tweet = state.tweet.sort((a, b) => b.isPinned - a.isPinned);
     },
     clearCopyTweetArr: (state) => {
       state.copyOfNewTweets = [];
@@ -227,22 +231,22 @@ export const tweetSlice = createSlice({
         (x) => x.id === action.payload.id
       );
       const findValue = state.tweet.find((x) => x.id === action.payload.id);
-      if (findIndex === 0) {
+      // if (findIndex === 0) {
         state.tweet = state.tweet.map((twt) => {
           return twt.id === action.payload.id
             ? { ...twt, isPinned: true }
             : { ...twt, isPinned: false };
         });
-      } else {
-        state.tweet.splice(findIndex, 1);
-        // localStorage.setItem("pinned-tweet", JSON.stringify(findValue));
-        state.tweet.unshift({ ...findValue, isPinned: true });
-        state.tweet = state.tweet.map((twt) => {
-          return twt.id === action.payload.id
-            ? { ...twt, isPinned: true }
-            : { ...twt, isPinned: false };
-        });
-      }
+      // } else {
+      //   state.tweet.splice(findIndex, 1);
+      //   // localStorage.setItem("pinned-tweet", JSON.stringify(findValue));
+      //   state.tweet.unshift({ ...findValue, isPinned: true });
+      //   state.tweet = state.tweet.map((twt) => {
+      //     return twt.id === action.payload.id
+      //       ? { ...twt, isPinned: true }
+      //       : { ...twt, isPinned: false };
+      //   });
+      // }
     },
     changeIDIndex: (state) => {
       state.idIndex++;
@@ -288,5 +292,6 @@ export const {
   setAddComposedComment3,
   changeIDIndexMinusOne,
   changeIDIndex,
+  sortArr
 } = tweetSlice.actions;
 export default tweetSlice.reducer;

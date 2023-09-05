@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Tweet from "../../components/tweet/Tweet";
 import { db } from "../../firebase";
-import { addToTweetArr, getAllTweet } from "../../redux/tweetSlice";
+import { addToTweetArr, getAllTweet, sortArr } from "../../redux/tweetSlice";
 import { BiDotsHorizontal } from "react-icons/bi";
 import { FaComment, FaRetweet } from "react-icons/fa";
 import { TbChartAreaLine } from "react-icons/tb";
@@ -12,10 +12,6 @@ const ForYou = () => {
   const dispatch = useDispatch();
   const tweet = useSelector((state) => state.post.tweet);
   const name = useSelector((state) => state.user.user_details);
-  // const [tweet, setTweet] = useState([
-  //   { name: "Adejoro Peter", text: "lorem ipsum" },
-  // ]);
-  const [loading, setLoading] = useState(false);
   // useEffect(() => {
   //   const fetchTweet = async () => {
   //     let list = [];
@@ -34,24 +30,18 @@ const ForYou = () => {
   //   };
   //   fetchTweet();
   // }, []);
-  const quote = useSelector((state) => state.post.quote);
+  useEffect(() => {
+    dispatch(sortArr());
+  }, [tweet]);
 
-  // const a = () => {
-  //   return tweet?.map((a, i) => {
-  //     return i;
-  //   });
-  // };
-  // console.log(a());
   return (
     <>
       {tweet?.length ? (
-        tweet
-          // ?.sort((a) => a.isPinned === true)
-          .map((tweet) => {
-            return <Tweet tweet={tweet} key={tweet?.id} />;
-          })
+        tweet.map((tweet) => {
+          return <Tweet tweet={tweet} key={tweet?.id} />;
+        })
       ) : (
-        <p className="text-white">Nothing Here</p>
+        <p className="text-white text-center">Nothing Here</p>
       )}
     </>
   );
