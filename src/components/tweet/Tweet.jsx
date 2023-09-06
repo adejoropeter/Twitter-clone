@@ -6,9 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import {
   PinTweet,
-  
   changeIDIndexMinusOne,
-  
+  clearTotalNumberOfTweetAddedAfterPinnedTweet,
   deleteTweet,
   pinTweet,
   setAddToRetweetArr,
@@ -29,6 +28,7 @@ const Tweet = ({ tweet }) => {
   const currentUser = useSelector((state) => state.login.currentUser);
   const showMsg = useSelector((state) => state.post.showMsg);
   const tweets = useSelector((state) => state.post.tweet);
+  const total = useSelector((state) => state.post.total);
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
   const id = useSelector((state) => state.post.idIndex);
   // console.log(auth.currentUser);
@@ -138,7 +138,7 @@ const Tweet = ({ tweet }) => {
                     <p
                       onClick={(e) => {
                         e.stopPropagation();
-                          if (currentUser) {
+                        if (currentUser) {
                           dispatch(deleteTweet({ id: tweet.id }));
                         } else {
                           dispatch(setShowMsg(true));
@@ -153,13 +153,22 @@ const Tweet = ({ tweet }) => {
                       ref={divRef}
                       onClick={(e) => {
                         e.stopPropagation();
+                        const findIndex = tweets.findIndex(
+                          (x) => x.id === tweet.id
+                        );
                         // if (currentUser) {
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (divRef.current?.textContent === "Pin") {
                           dispatch(pinTweet({ id: tweet.id }));
-                          // dispatch(setShowTweetDlt({ id: tweet.id }));
+                          // localStorage.setItem(
+                          //   "pinned-prev-index",
+                          //   findIndex + total
+                          // );
                         } else {
                           dispatch(unPinTweet({ id: tweet.id }));
+                          dispatch(
+                            clearTotalNumberOfTweetAddedAfterPinnedTweet()
+                          );
                         }
                         dispatch(setShowMsg(true));
                         // } else {

@@ -10,8 +10,9 @@ import {
   addToTweetArr,
   changeIDIndex,
   clearCopyTweetArr,
+  clearTotalNumberOfTweetAddedAfterPinnedTweet,
   reverseTweetArr,
-  
+  totalNumberOfTweetAddedAfterPinnedTweet,
 } from "../../redux/tweetSlice";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { clearInputField } from "../../redux/inputFieldSlice";
@@ -20,6 +21,7 @@ import { BiArrowFromTop } from "react-icons/bi";
 const Home = () => {
   const [nav, setNav] = useState("for you");
   const tweet = useSelector((state) => state.post.tweet);
+  const total = useSelector((state) => state.post.total);
   const id = useSelector((state) => state.post.idIndex);
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
   const state = useSelector((state) => state.input.value);
@@ -54,14 +56,14 @@ const Home = () => {
   };
   const handleAddTweet = async () => {
     dispatch(changeIDIndex());
-    console.log(state.value.join("").length);
+    dispatch(totalNumberOfTweetAddedAfterPinnedTweet());
     const newArr = {
       text: renderColoredText(),
       profileName: "Adejoro Peter",
       username: "@ade_peter",
       comment: [],
       likes: 1,
-      isPinned:false,
+      isPinned: false,
       // id: copyOfNewTweets.length - 1 + 1 || 0,
       id: id + 1,
       // id: copyOfNewTweets.length
@@ -93,11 +95,8 @@ const Home = () => {
               <AiOutlineTwitter className="text-[#00BA7C] " size={30} />
             </div>
           </div>
-          <h1
-           
-            className="text-xl font-bold pl-4 pt-4 xsm:block hidden"
-          >
-            Home 
+          <h1 className="text-xl font-bold pl-4 pt-4 xsm:block hidden">
+            Home {total}
           </h1>
           <div className="flex w-full">
             <NavLink
@@ -163,6 +162,10 @@ const Home = () => {
           onClick={() => {
             setStat(false);
             dispatch(addToTweetArr(...[copyOfNewTweets]));
+            localStorage.setItem(
+              "pinned-new-index",
+              Number(localStorage.getItem("pinned-prev-index")) + total
+            );
             console.log(copyOfNewTweets);
             dispatch(clearCopyTweetArr());
             setTimeout(() => {
