@@ -270,12 +270,12 @@ export const tweetSlice = createSlice({
       });
       state.tweet.splice(findIndex, 1);
       state.tweet.splice(
-        state.copyOfNewTweets
-          ? Number(localStorage.getItem("pinned-new-index")) 
+        localStorage.getItem("pinned-new-index") >
+          localStorage.getItem("pinned-prev-index")
+          ? Number(localStorage.getItem("pinned-new-index"))
           : Number(localStorage.getItem("pinned-prev-index")),
         0,
         gt
-        // {profileName:"Sks"}
       );
     },
   },

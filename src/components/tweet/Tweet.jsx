@@ -138,11 +138,11 @@ const Tweet = ({ tweet }) => {
                     <p
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (currentUser) {
+                        // if (currentUser) {
                           dispatch(deleteTweet({ id: tweet.id }));
-                        } else {
-                          dispatch(setShowMsg(true));
-                        }
+                        // } else {
+                        //   dispatch(setShowMsg(true));
+                        // }
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                       }}
                       className=" bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer"
@@ -153,25 +153,24 @@ const Tweet = ({ tweet }) => {
                       ref={divRef}
                       onClick={(e) => {
                         e.stopPropagation();
-                        const findIndex = tweets.findIndex(
-                          (x) => x.id === tweet.id
-                        );
                         // if (currentUser) {
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (divRef.current?.textContent === "Pin") {
                           dispatch(pinTweet({ id: tweet.id }));
-                          // localStorage.setItem(
-                          //   "pinned-prev-index",
-                          //   findIndex + total
-                          // );
+                          localStorage.removeItem("pinned-new-index");
                         } else {
                           dispatch(unPinTweet({ id: tweet.id }));
-                          dispatch(
-                            clearTotalNumberOfTweetAddedAfterPinnedTweet()
-                          );
+                          if (copyOfNewTweets.length) {
+                            return;
+                          } else {
+                            dispatch(
+                              clearTotalNumberOfTweetAddedAfterPinnedTweet()
+                            );
+                          }
                         }
                         dispatch(setShowMsg(true));
-                        // } else {
+                        // }
+                        //  else {
                         //   dispatch(setShowMsg(true));
                         // }
                       }}

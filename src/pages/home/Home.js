@@ -81,6 +81,9 @@ const Home = () => {
     // console.log(auth);
     dispatch(clearInputField());
   };
+  let idd =
+    Number(localStorage.getItem("pinned-prev-index")) +
+    Number(copyOfNewTweets.length);
   // w-full sm:w-[80%] sm:translate-x-[25%]   h-screen bg-[#000000] flex   text-white
   return (
     <div className=" sm:w-[80%]  flex sm:translate-x-[25%] lg:translate-x-[21.3%]  xsm:border-l-2 border-l-[#16181c] w-full     min-h-screen bg-[#000000]   text-white lg:max-w-full">
@@ -166,7 +169,8 @@ const Home = () => {
               "pinned-new-index",
               Number(localStorage.getItem("pinned-prev-index")) + total
             );
-            console.log(copyOfNewTweets);
+           
+            console.log(idd);
             dispatch(clearCopyTweetArr());
             setTimeout(() => {
               // dispatch(sortArr());
