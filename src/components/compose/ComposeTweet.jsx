@@ -34,6 +34,7 @@ const ComposeTweet = () => {
   const navigate = useNavigate();
   const tweet = useSelector((state) => state.post.tweet);
   const bool = useSelector((state) => state.input.bool);
+  const inx = useSelector((state) => state.post.idIndex);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
   const copy = useSelector((state) => state.composeTweet.copyOfGroupTweet);
   const ind = useSelector((state) => state.post.idIndex);
@@ -46,7 +47,7 @@ const ComposeTweet = () => {
       return ` ${match} `;
     });
     return coloredText
-      
+
       .split(" ")
       ?.filter((_, i) => i < 35)
       .map((word, index) => {
@@ -69,6 +70,7 @@ const ComposeTweet = () => {
     return a.inputText === "";
   });
   const handleAddTweet = () => {
+    console.log(tweet);
     dispatch(changeIDIndex());
     compose.length > 1 &&
       dispatch(
@@ -79,10 +81,11 @@ const ComposeTweet = () => {
             username: "@ade_peter",
             comment: [],
             likes: 1,
-            id: ind+1,
+            id: inx + 1,
             retweeted: false,
             text: renderColoredText(text),
             isThread: true,
+            isPinned: false,
           },
         ])
       );
@@ -95,10 +98,12 @@ const ComposeTweet = () => {
             username: "@ade_peter",
             comment: [],
             likes: 1,
-            id: tweet[0]?.id + 1 || 0,
+            // id: tweet[0]?.id + 1 || 0,
+            id:inx+1,
             retweeted: false,
             text: renderColoredText(text),
             isThread: false,
+            isPinned: false,
           },
         ])
       );
@@ -106,7 +111,8 @@ const ComposeTweet = () => {
     compose.length - 1 === 1 &&
       dispatch(
         setAddComment({
-          id: tweet[0]?.id + 1 || 0,
+          // id: tweet[0]?.id + 1 || 0,
+          id: inx+1|| 0,
           profileName: "Ade",
           text: renderColoredText(compose[1]?.inputText),
           cmtId: Math.random(),
@@ -115,7 +121,8 @@ const ComposeTweet = () => {
     compose.length - 1 === 2 &&
       dispatch(
         setAddComposedComment2({
-          id: tweet[0]?.id + 1 || 0,
+          // id: tweet[0]?.id + 1 || 0,
+          id:inx+1,
           // first comment
           firstComment: compose[1],
           firstCommentProfileName: "Ade",
@@ -131,7 +138,8 @@ const ComposeTweet = () => {
     compose.length - 1 === 3 &&
       dispatch(
         setAddComposedComment3({
-          id: tweet[0]?.id + 1 || 0,
+          // id: tweet[0]?.id + 1 || 0,
+          id:inx+1,
           // first comment
           firstComment: compose[1],
           firstCommentProfileName: "Ade",
@@ -159,13 +167,8 @@ const ComposeTweet = () => {
 
   const idx = compose.length;
   const id = idx + 1;
-  //   const navigate = useNavigate();
   const [img, setImg] = useState("");
-  //   const inputVal = state?.value?.join("");
-  //   const text = inputVal
-  //     ?.split("")
-  //     ?.filter((_, i) => i < 35)
-  //     ?.map((a) => a);
+ 
   const addComposeTweet = () => {
     if (compose.length - 1 !== 3) {
       dispatch(

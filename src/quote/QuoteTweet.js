@@ -24,7 +24,6 @@ const QuoteTweet = () => {
 
   const view = useSelector((state) => state.post.viewTweet);
   const text = useSelector((state) => state.quote.inputVal);
-
   const renderColoredText = (value) => {
     // Use regular expression to find words starting with "@"
     const regex = /(?:^|\s)(@\w+)/g;
@@ -51,7 +50,7 @@ const QuoteTweet = () => {
       });
   };
   const handleAddTweet = () => {
-    console.log(id)
+ 
     dispatch(changeIDIndex());
     dispatch(
       addToTweetArr([
@@ -66,6 +65,7 @@ const QuoteTweet = () => {
           retweeted: false,
           isQuote: true,
           quoteTweet: view,
+          isPinned:false
         },
       ])
     );
@@ -114,6 +114,7 @@ const QuoteTweet = () => {
             onChange={(e) => setImg(e.target.value)}
             name=""
             id="file"
+            // placeholder="sk"
             className="hidden"
           />
           <label htmlFor="file">

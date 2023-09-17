@@ -32,6 +32,8 @@ const AddTweet = ({ handleAddTweet }) => {
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
   const tweet = useSelector((state) => state.post.tweet);
+  const showEdit = useSelector((state) => state.post.showEdit);
+
   const currentUser = useSelector((state) => state.login.currentUser);
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
   const idx = compose.length + 1;
@@ -163,7 +165,7 @@ const AddTweet = ({ handleAddTweet }) => {
           </div>
         ) : null}
         <Button
-          text="Tweet"
+          text={showEdit?"Edit Tweet":"Tweet"}
           onClickFn={handleAddTweet}
           color={
             !state?.value?.length || !state.value.join("").trim() 

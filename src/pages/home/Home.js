@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import UploadTweet from "../../components/tweet/UploadTweet";
 import HomeRightBar from "./HomeRightBar";
@@ -11,16 +11,20 @@ import {
   changeIDIndex,
   clearCopyTweetArr,
   clearTotalNumberOfTweetAddedAfterPinnedTweet,
+  editTweet,
   reverseTweetArr,
+  setShowEdit,
   totalNumberOfTweetAddedAfterPinnedTweet,
 } from "../../redux/tweetSlice";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import { auth, db } from "../../firebase";
 import { BiArrowFromTop } from "react-icons/bi";
-const Home = () => {
+const Home = ({refrrr}) => {
   const [nav, setNav] = useState("for you");
   const tweet = useSelector((state) => state.post.tweet);
+
+  const showEdit = useSelector((state) => state.post.showEdit);
   const total = useSelector((state) => state.post.total);
   const id = useSelector((state) => state.post.idIndex);
   const copyOfNewTweets = useSelector((state) => state.post.copyOfNewTweets);
@@ -71,7 +75,26 @@ const Home = () => {
       //   : tweet[0].id + 1 || Math.random(),
       retweeted: false,
     };
-    dispatch(addToCopyTweetArr([newArr]));
+    if (showEdit) {
+     dispatch(
+       editTweet({
+         text: "loading..." ,
+         id: Number(localStorage.getItem("editID")),
+       })
+     ); 
+      setTimeout(() => {
+        dispatch(
+          editTweet({
+            text:renderColoredText(),
+            id: Number(localStorage.getItem("editID")),
+          })
+        );
+      }, 1200);
+      dispatch(setShowEdit(false));
+    } else {
+      dispatch(addToCopyTweetArr([newArr]));
+    }
+    console.log(showEdit);
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),
     //   profileName: profileName?.name,
@@ -87,6 +110,12 @@ const Home = () => {
   // w-full sm:w-[80%] sm:translate-x-[25%]   h-screen bg-[#000000] flex   text-white
   return (
     <div className=" sm:w-[80%]  flex sm:translate-x-[25%] lg:translate-x-[21.3%]  xsm:border-l-2 border-l-[#16181c] w-full     min-h-screen bg-[#000000]   text-white lg:max-w-full">
+      {showEdit && (
+        <div
+          onClick={() => dispatch(setShowEdit(false))}
+          className="absolute overflow-hidden h-full w-full  z-[1000] backdrop-blur-lg blur-0"
+        ></div>
+      )}
       <main className=" w-full sm:w-[150%] lg:w-[180%] h-full flex flex-col text-white border-[#16181c] sm:border-r relative">
         {/* <main className="relative w-[200px]   h-fit"> */}
         <header className="border-b sticky w-full top-0 backdrop-blur-md border-[#16181c]   sm:h-[115px] blur-0 flex flex-col justify-between z-10">
@@ -98,9 +127,7 @@ const Home = () => {
               <AiOutlineTwitter className="text-[#00BA7C] " size={30} />
             </div>
           </div>
-          <h1 className="text-xl font-bold pl-4 pt-4 xsm:block hidden">
-            Home {total}
-          </h1>
+          <h1 className="text-xl font-bold pl-4 pt-4 xsm:block hidden">Home</h1>
           <div className="flex w-full">
             <NavLink
               to="/foryou"
@@ -169,7 +196,7 @@ const Home = () => {
               "pinned-new-index",
               Number(localStorage.getItem("pinned-prev-index")) + total
             );
-           
+
             console.log(idd);
             dispatch(clearCopyTweetArr());
             setTimeout(() => {
@@ -184,7 +211,7 @@ const Home = () => {
             <AiOutlineArrowDown />
           </div>
         </motion.div>
-        <UploadTweet handleAddTweet={handleAddTweet} />
+        <UploadTweet handleAddTweet={handleAddTweet} refrr={refrrr}/>
 
         <Outlet />
       </main>

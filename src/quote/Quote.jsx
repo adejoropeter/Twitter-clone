@@ -67,15 +67,23 @@ const Quote = () => {
               className={`h-10 w-10 rounded-full `}
             />
           </div>
-          <input
-            placeholder="Tweet your Reply!"
-            type="text"
+          <textarea
+            name=""
+            id=""
+            draggable={false}
+            cols="10"
+            rows="10"
             value={inputVal}
+            placeholder="Tweet your Reply!"
+            className="w-full border-none bg-transparent outline-none text-white px-3 text-2xl placeholder:text-[#6A6F74] resize-none"
             onChange={(e) => {
               dispatch(addToTweetArray({ value: e.target.value }));
             }}
+          ></textarea>
+          {/* <input
+            type="text"
             className="w-full border-none bg-transparent outline-none text-white px-3 text-2xl placeholder:text-[#6A6F74]"
-          />
+          /> */}
         </div>
         <div className="px-6 mb-4 absolute bottom-0 w-full">
           <QuoteTweet />

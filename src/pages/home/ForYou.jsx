@@ -8,7 +8,7 @@ import { BiDotsHorizontal } from "react-icons/bi";
 import { FaComment, FaRetweet } from "react-icons/fa";
 import { TbChartAreaLine } from "react-icons/tb";
 
-const ForYou = () => {
+const ForYou = ({reff}) => {
   const dispatch = useDispatch();
   const tweet = useSelector((state) => state.post.tweet);
   const name = useSelector((state) => state.user.user_details);
@@ -38,7 +38,7 @@ const ForYou = () => {
     <>
       {tweet?.length ? (
         tweet.map((tweet) => {
-          return <Tweet tweet={tweet} key={tweet?.id} />;
+          return <Tweet tweet={tweet} key={tweet?.id} reffs={ reff} />;
         })
       ) : (
         <p className="text-white text-center">Nothing Here</p>

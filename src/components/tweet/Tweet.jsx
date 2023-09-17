@@ -9,9 +9,11 @@ import {
   changeIDIndexMinusOne,
   clearTotalNumberOfTweetAddedAfterPinnedTweet,
   deleteTweet,
+  editTweet,
   pinTweet,
   setAddToRetweetArr,
   setRetweet,
+  setShowEdit,
   setShowMsg,
   setShowTweetDlt,
   setUserUrlName,
@@ -21,8 +23,9 @@ import {
 } from "../../redux/tweetSlice";
 import { auth } from "../../firebase";
 import { motion } from "framer-motion";
+import { ref } from "firebase/storage";
 
-const Tweet = ({ tweet }) => {
+const Tweet = ({ tweet, reffs }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate("");
   const currentUser = useSelector((state) => state.login.currentUser);
@@ -36,14 +39,14 @@ const Tweet = ({ tweet }) => {
     dispatch(setAddToRetweetArr());
   }, [tweet.retweeted]);
   const handleClick = () => {
-    // if (currentUser) {
-    dispatch(viewTweet(tweet));
-    dispatch(setUserUrlName(tweet?.profileName));
-    navigate(`/comment/${tweet.profileName}`);
-    document.documentElement.scrollTop = 0;
-    // } else {
-    // dispatch(setShowMsg(true));
-    // }
+    if (currentUser) {
+      dispatch(viewTweet(tweet));
+      dispatch(setUserUrlName(tweet?.profileName));
+      navigate(`/comment/${tweet.profileName}`);
+      document.documentElement.scrollTop = 0;
+    } else {
+      dispatch(setShowMsg(true));
+    }
   };
   const handleMouseEnter = () => {
     console.log("Mouse Enter");
@@ -138,41 +141,57 @@ const Tweet = ({ tweet }) => {
                     <p
                       onClick={(e) => {
                         e.stopPropagation();
-                        // if (currentUser) {
-                          dispatch(deleteTweet({ id: tweet.id }));
-                        // } else {
-                        //   dispatch(setShowMsg(true));
-                        // }
                         dispatch(setShowTweetDlt({ id: tweet.id }));
+                        if (currentUser) {
+                          dispatch(deleteTweet({ id: tweet.id }));
+                        } else {
+                          dispatch(setShowMsg(true));
+                        }
                       }}
                       className=" bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer"
                     >
                       Delete
                     </p>
                     <p
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(setShowTweetDlt({ id: tweet.id }));
+                        if (currentUser) {
+                          reffs.current.focus();
+                          document.documentElement.scrollTop = 0;
+                          localStorage.setItem("editID", tweet.id);
+                          dispatch(setShowEdit(true));
+                        } else {
+                          dispatch(setShowMsg(true));
+                        }
+                      }}
+                      className=" bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer"
+                    >
+                      Edit
+                    </p>
+                    <p
                       ref={divRef}
                       onClick={(e) => {
                         e.stopPropagation();
-                        // if (currentUser) {
                         dispatch(setShowTweetDlt({ id: tweet.id }));
-                        if (divRef.current?.textContent === "Pin") {
-                          dispatch(pinTweet({ id: tweet.id }));
-                          localStorage.removeItem("pinned-new-index");
-                        } else {
-                          dispatch(unPinTweet({ id: tweet.id }));
-                          if (copyOfNewTweets.length) {
-                            return;
+                        if (currentUser) {
+                          if (divRef.current?.textContent === "Pin") {
+                            dispatch(pinTweet({ id: tweet.id }));
+                            localStorage.removeItem("pinned-new-index");
                           } else {
-                            dispatch(
-                              clearTotalNumberOfTweetAddedAfterPinnedTweet()
-                            );
+                            dispatch(unPinTweet({ id: tweet.id }));
+                            if (copyOfNewTweets.length) {
+                              return;
+                            } else {
+                              dispatch(
+                                clearTotalNumberOfTweetAddedAfterPinnedTweet()
+                              );
+                            }
                           }
+                          dispatch(setShowMsg(true));
+                        } else {
+                          dispatch(setShowMsg(true));
                         }
-                        dispatch(setShowMsg(true));
-                        // }
-                        //  else {
-                        //   dispatch(setShowMsg(true));
-                        // }
                       }}
                       className="bg-black w-fit p-2  shadow-sm shadow-orange-50 cursor-pointer"
                     >
@@ -210,15 +229,19 @@ const Tweet = ({ tweet }) => {
               <div
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`/comment/${tweet.profileName}`);
-                  document.documentElement.scrollTop = 0;
-                  const findTweetIndex = tweets?.find(
-                    (x) => tweet.quoteTweet.id === x.id
-                  );
-                  if (findTweetIndex) {
-                    dispatch(viewTweet(tweet.quoteTweet));
+                  if (currentUser) {
+                    navigate(`/comment/${tweet.profileName}`);
+                    document.documentElement.scrollTop = 0;
+                    const findTweetIndex = tweets?.find(
+                      (x) => tweet.quoteTweet.id === x.id
+                    );
+                    if (findTweetIndex) {
+                      dispatch(viewTweet(tweet.quoteTweet));
+                    } else {
+                      navigate("/404");
+                    }
                   } else {
-                    navigate("/404");
+                    dispatch(setShowMsg(true));
                   }
                 }}
                 className="border border-[#5b5c5da3] p-3 rounded-xl w-full"

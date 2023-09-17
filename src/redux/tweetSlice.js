@@ -9,6 +9,7 @@ export const tweetSlice = createSlice({
     idIndex: 2,
     currIdx: 0,
     total: 0,
+    showEdit: false,
     tweet: [
       {
         id: 2,
@@ -110,6 +111,9 @@ export const tweetSlice = createSlice({
             }
           : twt;
       });
+    },
+    setShowEdit: (state, action) => {
+      state.showEdit = action.payload;
     },
     setAddComposedComment2: (state, action) => {
       state.tweet = state.tweet?.map((twt) => {
@@ -261,7 +265,7 @@ export const tweetSlice = createSlice({
     },
     unPinTweet: (state, action) => {
       const findIndex = state.tweet.find((x) => x.id === action.payload.id);
-      const find = state.tweet.find((x) => x.isPinned === true);
+      // const find = state.tweet.find((x) => x.isPinned === true);
       const value = JSON.parse(localStorage.getItem("pinned-tweet"));
       const got = Object.entries(value);
       const gt = got[0][1];
@@ -278,10 +282,18 @@ export const tweetSlice = createSlice({
         gt
       );
     },
+    editTweet: (state, action) => {
+      state.tweet = state.tweet.map((a) => {
+        return a.id === action.payload.id
+          ? { ...a, text: action.payload.text }
+          : a;
+      });
+    },
   },
 });
 export const {
   addToTweetArr,
+  editTweet,
   setRetweet,
   setShowMsg,
   viewTweet,
@@ -304,6 +316,7 @@ export const {
   changeIDIndex,
   sortArr,
   clearTotalNumberOfTweetAddedAfterPinnedTweet,
+  setShowEdit,
   totalNumberOfTweetAddedAfterPinnedTweet,
 } = tweetSlice.actions;
 export default tweetSlice.reducer;

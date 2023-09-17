@@ -22,9 +22,7 @@ const Compose = () => {
     dispatch(setCurrIdx(id));
     dispatch(backGroundColor());
   };
-  const inputTextWithEmptyValue = compose.find((a) => {
-    return a.inputText === "";
-  });
+ 
   let idv = 0;
   const dispatch = useDispatch();
   const navigate = useNavigate();

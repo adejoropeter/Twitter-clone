@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import DragDropInputComponent from "../DragDropInputComponent";
 import UploadTweetInput from "./UploadTweetInput";
@@ -7,10 +7,14 @@ import { db } from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { BiWorld } from "react-icons/bi";
-const UploadTweet = ({ handleAddTweet }) => {
+const UploadTweet = ({ handleAddTweet, refrr }) => {
   const curr = useSelector((state) => state.login.currentUser);
+  const showEdit = useSelector((state) => state.post.showEdit);
+  const ref = useRef(null);
+
   const [img, setImg] = useState("");
   const id = curr?.user?.uid;
+
   useEffect(() => {
     const fetchData = async () => {
       const docRef = doc(db, "users", id);
@@ -27,9 +31,12 @@ const UploadTweet = ({ handleAddTweet }) => {
     // console.log(img);
     fetchData();
   }, []);
-
   return (
-    <div className="flex h-fit px-5 py-2 gap-5  w-full border-b border-[#16181c]">
+    <div
+      className={`${
+        showEdit && "static z-[1001]"
+      }  flex h-fit px-5 py-2 gap-5  w-full border-b border-[#16181c]`}
+    >
       <div className="bg-blue-400 w-fit"></div>
 
       <div className="w-10 absolute">
@@ -46,7 +53,7 @@ const UploadTweet = ({ handleAddTweet }) => {
 
       <div className="w-full ml-10  flex flex-col h-fit mt-5 ">
         <div className="w-full relative h-fit mb-4 ">
-          <UploadTweetInput />
+          <UploadTweetInput   refr={refrr}/>
 
           <div className=" border-b border-[#16181c] pb-4">
             <div className="text-[rgb(0,186,124)] font-bold hover:bg-[#00130D] w-fit px-3 transition-colors delay-75  flex cursor-pointer rounded-full  items-center  justify-center gap-2  ">
@@ -56,7 +63,7 @@ const UploadTweet = ({ handleAddTweet }) => {
           </div>
         </div>
 
-        <AddTweet handleAddTweet={handleAddTweet} />
+        <AddTweet handleAddTweet={handleAddTweet}  />
       </div>
     </div>
   );
