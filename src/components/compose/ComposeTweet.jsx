@@ -83,9 +83,10 @@ const ComposeTweet = () => {
             likes: 1,
             id: inx + 1,
             retweeted: false,
-            text: renderColoredText(text),
+            text:  (text),
             isThread: true,
             isPinned: false,
+            isEdited: false,
           },
         ])
       );
@@ -99,11 +100,13 @@ const ComposeTweet = () => {
             comment: [],
             likes: 1,
             // id: tweet[0]?.id + 1 || 0,
-            id:inx+1,
+            id: inx + 1,
             retweeted: false,
-            text: renderColoredText(text),
+            // text: renderColoredText(text),
+            text: (text),
             isThread: false,
             isPinned: false,
+            isEdited:false
           },
         ])
       );
@@ -112,9 +115,10 @@ const ComposeTweet = () => {
       dispatch(
         setAddComment({
           // id: tweet[0]?.id + 1 || 0,
-          id: inx+1|| 0,
+          id: inx + 1 || 0,
           profileName: "Ade",
-          text: renderColoredText(compose[1]?.inputText),
+          // text: renderColoredText(compose[1]?.inputText),
+          text: (compose[1]?.inputText),
           cmtId: Math.random(),
         })
       );
@@ -122,16 +126,18 @@ const ComposeTweet = () => {
       dispatch(
         setAddComposedComment2({
           // id: tweet[0]?.id + 1 || 0,
-          id:inx+1,
+          id: inx + 1,
           // first comment
           firstComment: compose[1],
           firstCommentProfileName: "Ade",
-          firstCommentText: renderColoredText(compose[1]?.inputText),
+          // firstCommentText: renderColoredText(compose[1]?.inputText),
+          firstCommentText: (compose[1]?.inputText),
           firstCommentCmtId: Math.random(),
           //second comment
           secondComment: compose[2],
           secondCommentProfileName: "Ade",
-          secondCommentText: renderColoredText(compose[2]?.inputText),
+          // secondCommentText: renderColoredText(compose[2]?.inputText),
+          secondCommentText: (compose[2]?.inputText),
           secondCommentCmtId: Math.random(),
         })
       );
@@ -139,21 +145,24 @@ const ComposeTweet = () => {
       dispatch(
         setAddComposedComment3({
           // id: tweet[0]?.id + 1 || 0,
-          id:inx+1,
+          id: inx + 1,
           // first comment
           firstComment: compose[1],
           firstCommentProfileName: "Ade",
-          firstCommentText: renderColoredText(compose[1]?.inputText),
+          // firstCommentText: renderColoredText(compose[1]?.inputText),
+          firstCommentText: (compose[1]?.inputText),
           firstCommentCmtId: Math.random(),
           //second comment
           secondComment: compose[2],
           secondCommentProfileName: "Ade",
-          secondCommentText: renderColoredText(compose[2]?.inputText),
+          // secondCommentText: renderColoredText(compose[2]?.inputText),
+          secondCommentText: (compose[2]?.inputText),
           secondCommentCmtId: Math.random(),
           //third comment
           thirdComment: compose[3],
           thirdCommentProfileName: "Ade",
-          thirdCommentText: renderColoredText(compose[3]?.inputText),
+          // thirdCommentText: renderColoredText(compose[3]?.inputText),
+          thirdCommentText: (compose[3]?.inputText),
           thirdCommentCmtId: Math.random(),
         })
       );
@@ -168,7 +177,7 @@ const ComposeTweet = () => {
   const idx = compose.length;
   const id = idx + 1;
   const [img, setImg] = useState("");
- 
+
   const addComposeTweet = () => {
     if (compose.length - 1 !== 3) {
       dispatch(

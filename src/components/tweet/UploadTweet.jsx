@@ -15,26 +15,27 @@ const UploadTweet = ({ handleAddTweet, refrr }) => {
   const [img, setImg] = useState("");
   const id = curr?.user?.uid;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const docRef = doc(db, "users", id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        // console.log("Document data:", docSnap.data());
-        // console.log(docSnap.data());
-        setImg(docSnap.data().profileUrl);
-      } else {
-        // docSnap.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    };
-    // console.log(img);
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const docRef = doc(db, "users", id);
+  //     const docSnap = await getDoc(docRef);
+  //     if (docSnap.exists()) {
+  //       // console.log("Document data:", docSnap.data());
+  //       // console.log(docSnap.data());
+  //       setImg(docSnap.data().profileUrl);
+  //     } else {
+  //       // docSnap.data() will be undefined in this case
+  //       console.log("No such document!");
+  //     }
+  //   };
+  //   // console.log(img);
+  //   fetchData();
+  // }, []);
   return (
     <div
       className={`${
-        showEdit && "static z-[1001]"
+        // showEdit ? "static z-[1001] ":""
+        showEdit ? "absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] z-[1001] ":""
       }  flex h-fit px-5 py-2 gap-5  w-full border-b border-[#16181c]`}
     >
       <div className="bg-blue-400 w-fit"></div>

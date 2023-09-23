@@ -24,6 +24,7 @@ const QuoteTweet = () => {
 
   const view = useSelector((state) => state.post.viewTweet);
   const text = useSelector((state) => state.quote.inputVal);
+  // const inputVal = text?.value?.join("");
   const renderColoredText = (value) => {
     // Use regular expression to find words starting with "@"
     const regex = /(?:^|\s)(@\w+)/g;
@@ -52,10 +53,11 @@ const QuoteTweet = () => {
   const handleAddTweet = () => {
  
     dispatch(changeIDIndex());
+    console.log((text))
     dispatch(
       addToTweetArr([
         {
-          text: renderColoredText(text) || "Nothing here",
+          text: (text) || "Nothing here",
           profileName: "Adejoro Peter",
           username: "@ade_peter",
           comment: [],
@@ -65,7 +67,8 @@ const QuoteTweet = () => {
           retweeted: false,
           isQuote: true,
           quoteTweet: view,
-          isPinned:false
+          isPinned: false,
+          isEdited:false
         },
       ])
     );

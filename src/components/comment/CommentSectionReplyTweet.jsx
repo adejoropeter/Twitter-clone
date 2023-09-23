@@ -56,7 +56,8 @@ const CommentSectionReplyTweet = () => {
       setAddComment({
         id: tweet.id,
         profileName: "Ade",
-        text: renderColoredText(),
+        // text: renderColoredText(),
+        text:inputVal,
         cmtId: id,
       })
     );

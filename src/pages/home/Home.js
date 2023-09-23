@@ -11,6 +11,7 @@ import {
   changeIDIndex,
   clearCopyTweetArr,
   clearTotalNumberOfTweetAddedAfterPinnedTweet,
+  editOnce,
   editTweet,
   reverseTweetArr,
   setShowEdit,
@@ -20,7 +21,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import { auth, db } from "../../firebase";
 import { BiArrowFromTop } from "react-icons/bi";
-const Home = ({refrrr}) => {
+const Home = ({ refrrr }) => {
   const [nav, setNav] = useState("for you");
   const tweet = useSelector((state) => state.post.tweet);
 
@@ -33,7 +34,7 @@ const Home = ({refrrr}) => {
   const [stat, setStat] = useState(false);
   const dispatch = useDispatch();
   const inputVal = state?.value?.join("");
-  const renderColoredText = () => {
+  const renderColoredText = (value) => {
     // Use regular expression to find words starting with "@"
     const regex = /(?:^|\s)(@\w+)/g;
     const coloredText = inputVal?.replace(regex, (match, word) => {
@@ -59,15 +60,19 @@ const Home = ({refrrr}) => {
       });
   };
   const handleAddTweet = async () => {
+  
     dispatch(changeIDIndex());
     dispatch(totalNumberOfTweetAddedAfterPinnedTweet());
+    document.body.style.overflowY = "visible";
     const newArr = {
-      text: renderColoredText(),
+      // text: renderColoredText()||"Nothing here",
+      text:state.value,
       profileName: "Adejoro Peter",
       username: "@ade_peter",
       comment: [],
       likes: 1,
       isPinned: false,
+      isEdited: false,
       // id: copyOfNewTweets.length - 1 + 1 || 0,
       id: id + 1,
       // id: copyOfNewTweets.length
@@ -76,16 +81,20 @@ const Home = ({refrrr}) => {
       retweeted: false,
     };
     if (showEdit) {
-     dispatch(
-       editTweet({
-         text: "loading..." ,
-         id: Number(localStorage.getItem("editID")),
-       })
-     ); 
+      dispatch(
+        editTweet({
+          text: "loading...",
+          id: Number(localStorage.getItem("editID")),
+        })
+      );
+      console.log(tweet);
       setTimeout(() => {
+        dispatch(editOnce(Number(localStorage.getItem("editID"))));
         dispatch(
           editTweet({
-            text:renderColoredText(),
+            // text: renderColoredText(),
+            text: inputVal,
+
             id: Number(localStorage.getItem("editID")),
           })
         );
@@ -93,6 +102,8 @@ const Home = ({refrrr}) => {
       dispatch(setShowEdit(false));
     } else {
       dispatch(addToCopyTweetArr([newArr]));
+      
+      // dispatch(addToTweetArr([newArr]))
     }
     console.log(showEdit);
     // await addDoc(collection(db, "tweets"), {
@@ -112,7 +123,11 @@ const Home = ({refrrr}) => {
     <div className=" sm:w-[80%]  flex sm:translate-x-[25%] lg:translate-x-[21.3%]  xsm:border-l-2 border-l-[#16181c] w-full     min-h-screen bg-[#000000]   text-white lg:max-w-full">
       {showEdit && (
         <div
-          onClick={() => dispatch(setShowEdit(false))}
+          onClick={() => {
+            dispatch(setShowEdit(false));
+            dispatch(clearInputField())
+            document.body.style.overflowY = "visible";
+          }}
           className="absolute overflow-hidden h-full w-full  z-[1000] backdrop-blur-lg blur-0"
         ></div>
       )}
@@ -211,7 +226,7 @@ const Home = ({refrrr}) => {
             <AiOutlineArrowDown />
           </div>
         </motion.div>
-        <UploadTweet handleAddTweet={handleAddTweet} refrr={refrrr}/>
+        <UploadTweet handleAddTweet={handleAddTweet} refrr={refrrr} />
 
         <Outlet />
       </main>

@@ -11,7 +11,7 @@ import { BiSearch } from "react-icons/bi";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineArrowDown } from "react-icons/ai";
-import { setShowMsg } from "../../redux/tweetSlice";
+import { setShowMsg, sortArr } from "../../redux/tweetSlice";
 const Explore = () => {
   const navigate = useNavigate();
   const tweet = useSelector((state) => state.post.tweet);
@@ -33,7 +33,9 @@ const Explore = () => {
       clearInterval(timeout);
     };
   }, [showMsg]);
-
+ useEffect(() => {
+   dispatch(sortArr());
+ }, [tweet]);
   return (
     <div className="w-full sm:w-[80%] lg:translate-x-[21.3%] sm:translate-x-[25%]  min-h-screen bg-[#000000] flex   text-white ">
       <div className="w-[100%] border-l border-[#16181c] border-r flex text-[#D6D9DB] flex-col relative">
@@ -44,7 +46,9 @@ const Explore = () => {
         <motion.div
           initial={{ top: "110px", opacity: 0 }}
           animate={
-            showMsg ? { y: "30%", position: "sticky", opacity: 1 } : { y: 0 }
+            showMsg
+              ? { y: "10%", position: "absolute", display: "block", opacity: 1 }
+              : { y: 0, opacity: 0, display: "none" }
             // showMsg
             //   ? { y: "30%", position: "sticky", translateX: "-50%", opacity: 1 }
             //   : { opacity:0}
@@ -53,7 +57,8 @@ const Explore = () => {
             dispatch(setShowMsg(false));
             navigate("/login");
           }}
-          className=" opacity- z-10  w-fit sticky left-[45%] -translate-x-[50%] sm:left-[20%] sm:-translate-x-[50%]"
+          className="  z-10  w-fit absolute left-[45%] -translate-x-[50%] sm:left-[50%] sm:-translate-x-[50%]"
+          // className=" opacity- z-10  w-fit absolute left-[45%] -translate-x-[50%] sm:left-[20%] sm:-translate-x-[50%]"
           // className=" opacity- z-10 left-[25%] w-fit sticky  -translate-x-[50%] "
         >
           <div className="cursor-pointer bg-green-400 flex items-center gap-1 fit rounded-full py-1 px-3">
@@ -62,12 +67,12 @@ const Explore = () => {
           </div>
         </motion.div>
         <div className="">
-          {tweet ? (
-            tweet.map((tweet, i) => {
-              return <Tweet tweet={tweet} key={tweet?.id} />;
+          {tweet?.length ? (
+            tweet.map((tweet) => {
+              return <Tweet tweet={tweet} key={tweet?.id}  />;
             })
           ) : (
-            <p className="text-white">Nothing Here</p>
+            <p className="text-white text-center">Nothing Here</p>
           )}
         </div>
       </div>

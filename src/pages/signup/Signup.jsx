@@ -130,7 +130,7 @@ const Signup = () => {
 
   return (
     <div className="w-full h-screen bg-[#242d34b3] fixed z-[200] overflow-y-hidden">
-      <div className="bg-black  w-[600px]  h-fit  top-[50%] left-[50%]  -translate-x-[50%] -translate-y-[50%] flex flex-col rounded-2xl overflow-hidden relative ">
+      <div className="bg-black  sm:w-[600px] h-screen  sm:h-fit  sm:top-[50%] sm:left-[50%]  sm:-translate-x-[50%] sm:-translate-y-[50%] flex flex-col sm:rounded-2xl overflow-hidden relative ">
         <div className="flex items-center py-2 px-4">
           <div className="flex-1 flex items-center ">
             <abbr
@@ -164,8 +164,8 @@ const Signup = () => {
             <AiOutlineTwitter size={"45px"} className="flex-1 text-white" />
           </div>
         </div>
-        <div className="overflow-scroll overflow-x-hidden w-full h-[450px] py-10">
-          <div className="w-[400px] flex flex-col items-center justify-center m-[0_auto] gap-8">
+        <div className="overflow-scroll px-2 overflow-x-hidden w-full h-[450px] py-10">
+          <div className="xsm:w-[400px] sm:w-[400px] flex flex-col items-center justify-center m-[0_auto] gap-8">
             <h1 className="text-3xl font-bold text-white">
               Create your account
             </h1>
@@ -219,9 +219,9 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      <p className="bg-[#1D9BF0]  absolute top-[%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-white rounded-full w-fit h-10 flex justify-center items-center px-3">
+      {/* <p className="bg-[#1D9BF0]  absolute top-[%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-white rounded-full w-fit h-10 flex justify-center items-center px-3">
         Must contain space,and a value and not include the word twitter
-      </p>
+      </p> */}
     </div>
   );
 };

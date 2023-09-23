@@ -10,6 +10,10 @@ export const inputFieldSlice = createSlice({
     stateValue: (state, action) => {
       state.value = action.payload;
     },
+
+    copyPrevTextToInput: (state, action) => {
+      state.value = action.payload;
+    },
     showIcons: (state, action) => {
       state.bool = action.payload;
     },
@@ -19,5 +23,6 @@ export const inputFieldSlice = createSlice({
   },
 });
 
-export const { stateValue, showIcons ,clearInputField} = inputFieldSlice.actions;
+export const { stateValue, copyPrevTextToInput, showIcons, clearInputField } =
+  inputFieldSlice.actions;
 export default inputFieldSlice.reducer;

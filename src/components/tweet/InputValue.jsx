@@ -13,7 +13,8 @@ const InputValue = () => {
             key={i}
             className={`${i + 1 > 35 ? "bg-red-600" : "text-white"}`}
           >
-            {a === "" ? "" : a.replaceAll(" ", "_")}
+            {a === "" ? " " :a.replaceAll(" ", "_") }
+            {/* {a.includes("")?" ":a} */}
           </div>
         );
       })}

@@ -24,6 +24,7 @@ import {
 import { auth } from "../../firebase";
 import { motion } from "framer-motion";
 import { ref } from "firebase/storage";
+import { copyPrevTextToInput } from "../../redux/inputFieldSlice";
 
 const Tweet = ({ tweet, reffs }) => {
   const dispatch = useDispatch();
@@ -82,6 +83,7 @@ const Tweet = ({ tweet, reffs }) => {
   const handleShowDelete = (e) => {
     e.stopPropagation();
     dispatch(setShowTweetDlt({ id: tweet.id }));
+    // dispatch(viewTweet(tweet))
   };
   const handlePin = (e) => {
     e.stopPropagation();
@@ -152,20 +154,41 @@ const Tweet = ({ tweet, reffs }) => {
                     >
                       Delete
                     </p>
+
                     <p
                       onClick={(e) => {
                         e.stopPropagation();
+                        document.documentElement.scrollTop = 0;
+                        document.body.style.overflow="hidden"
+                        console.log(tweet.text);
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (currentUser) {
+                          if (tweet.isEdit) {
+                            return;
+                          } else {
+                            if (tweet.isQuote||tweet.isThread) {
+                              console.log(...tweet.text);
+                              dispatch(
+                                copyPrevTextToInput({
+                                  value: [...tweet.text],
+                                })
+                              );
+                            } else {
+                              dispatch(
+                                copyPrevTextToInput({ value: tweet.text })
+                              );
+                            }
+                          }
                           reffs.current.focus();
-                          document.documentElement.scrollTop = 0;
                           localStorage.setItem("editID", tweet.id);
                           dispatch(setShowEdit(true));
                         } else {
                           dispatch(setShowMsg(true));
                         }
                       }}
-                      className=" bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer"
+                      className={`${
+                        tweet.isEdit && "cursor-default bg-[#4d4c4cb6]"
+                      } bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer`}
                     >
                       Edit
                     </p>
@@ -175,11 +198,16 @@ const Tweet = ({ tweet, reffs }) => {
                         e.stopPropagation();
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (currentUser) {
+                          
                           if (divRef.current?.textContent === "Pin") {
-                            dispatch(pinTweet({ id: tweet.id }));
+                            dispatch(pinTweet({ id: tweet.id ,text:tweet.text}));
                             localStorage.removeItem("pinned-new-index");
+                            console.log(tweet)
                           } else {
                             dispatch(unPinTweet({ id: tweet.id }));
+                            console.log(
+                              JSON.parse(localStorage.getItem("pinned-tweet")));
+                            console.log(tweet.id)
                             if (copyOfNewTweets.length) {
                               return;
                             } else {
@@ -200,6 +228,7 @@ const Tweet = ({ tweet, reffs }) => {
                   </div>
                 )}
                 <div className="flex">
+                  {tweet.isEdit && <div className="text-[#6A6F74]">edited</div>}
                   {tweet.isPinned && (
                     <BiTrash
                       color="#6A6F74"
@@ -224,7 +253,8 @@ const Tweet = ({ tweet, reffs }) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <p>{tweet?.text}</p>
+            {/* <p>{renderColoredText(tweet?.text)}</p> */}
+            <p>{(tweet?.text)}</p>
             {tweet.isQuote && (
               <div
                 onClick={(e) => {

@@ -106,7 +106,6 @@ const App = () => {
 
           {/* Navbar needs to be placed inside each pages routes incase of an incorrect route */}
           <Routes>
-            <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Home refrrr={ref} />}>
                 <Route path="/following" element={<Following />}></Route>
                 <Route path="/foryou" element={<ForYou reff={ref} />}></Route>
@@ -121,6 +120,7 @@ const App = () => {
                 element={pathname === "/compose/tweet" && <Quote />}
               ></Route>
               <Route path="/404" element={<TweetNotFound />}></Route>
+            <Route element={<ProtectedRoute />}>
               <Route path="/notifications" element={<Notification />}></Route>
               <Route path="/messages" element={<Message />}></Route>
               {/* <Route path="/comment/:name" element={<Comment />}></Route> */}

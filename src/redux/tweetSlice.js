@@ -14,7 +14,7 @@ export const tweetSlice = createSlice({
       {
         id: 2,
         profileName: "Ade Peter ",
-        text: "lorem ipsum",
+        text: ["lorem ipsum"],
         isPinned: false,
         showTweetDlt: false,
         username: "@ade_peter",
@@ -27,39 +27,39 @@ export const tweetSlice = createSlice({
         ],
         retweeted: false,
       },
-      {
-        id: 1,
-        profileName: "Peter Samson",
-        text: "Drop a comment on what u're currently learning",
-        retweeted: true,
-        showTweetDlt: false,
-        username: "@peter_sam",
-        isPinned: false,
+      // {
+      //   id: 1,
+      //   profileName: "Peter Samson",
+      //   text: "Drop a comment on what u're currently learning",
+      //   retweeted: true,
+      //   showTweetDlt: false,
+      //   username: "@peter_sam",
+      //   isPinned: false,
 
-        comment: [
-          {
-            showDlt: false,
-            profileName: "Peter Samson",
-            text: "I love you",
-          },
-        ],
-      },
-      {
-        id: 0,
-        retweeted: false,
-        isPinned: true,
-        profileName: "Adejoro Joshua",
-        text: "Peter",
-        showTweetDlt: false,
-        username: "@josh_ade",
-        comment: [
-          {
-            showDlt: false,
-            profileName: "Adejoro Joshua",
-            text: "I Dislike you",
-          },
-        ],
-      },
+      //   comment: [
+      //     {
+      //       showDlt: false,
+      //       profileName: "Peter Samson",
+      //       text: "I love you",
+      //     },
+      //   ],
+      // },
+      // {
+      //   id: 0,
+      //   retweeted: false,
+      //   isPinned: true,
+      //   profileName: "Adejoro Joshua",
+      //   text: "Peter",
+      //   showTweetDlt: false,
+      //   username: "@josh_ade",
+      //   comment: [
+      //     {
+      //       showDlt: false,
+      //       profileName: "Adejoro Joshua",
+      //       text: "I Dislike you",
+      //     },
+      //   ],
+      // },
     ],
     retweetedTweet: [],
     viewTweet: null,
@@ -235,8 +235,52 @@ export const tweetSlice = createSlice({
         (x) => x.id === action.payload.id
       );
       const findValue = state.tweet.find((x) => x.id === action.payload.id);
-      // localStorage.setItem("pinned-tweet", JSON.stringify(findValue));
-      localStorage.setItem("pinned-tweet", JSON.stringify([findValue]));
+      // localStorage.setItem(
+      //   "tweet-name",
+      //   JSON.stringify(findValue?.text[0]?.props?.children)
+      // );
+      console.log(findValue);
+      localStorage.setItem(
+        "pinned-tweet",
+        // findValue.isQuote
+        //   ? JSON.stringify([
+        //       {
+        //         comment: findValue.comment,
+        //         profileName: findValue.profileName,
+        //         // text: JSON.parse(localStorage.getItem("tweet-name")),
+        //         text: action.payload?.text[0]?.props?.children,
+        //         quoteTweet: findValue.quoteTweet,
+        //         isQuote: findValue.isQuote,
+        //         quote: findValue.quote,
+        //         id: findValue.id,
+        //         isEdited: findValue.isEdited,
+        //         username: findValue.username,
+        //         isPinned: findValue.isPinned,
+        //         showTweetDlt: findValue.showTweetDlt,
+        //       },
+        //     // findValue
+        //     ])
+        //   : findValue.isThread
+        //   ? JSON.stringify([
+        //       {
+        //         comment: findValue.comment,
+        //         id: findValue.id,
+        //         profileName: findValue.profileName,
+        //         inputText: findValue.inputText,
+        //         text: findValue.text[0].props.children,
+
+        //         quote: findValue.quote,
+        //         // isEdited: findValue.isEdited,
+        //         // username: findValue.username,
+        //         // isPinned: findValue.isPinned,
+        //         // showTweetDlt: findValue.showTweetDlt,
+        //         // isThread: findValue.isThread,
+        //       },
+        //     ])
+        // :
+        JSON.stringify([findValue])
+      );
+      // localStorage.setItem("pinned-tweet", JSON.stringify());
       localStorage.setItem("pinned-prev-index", findIndex);
       // if (findIndex === 0) {
       state.tweet = state.tweet.map((twt) => {
@@ -268,10 +312,16 @@ export const tweetSlice = createSlice({
       // const find = state.tweet.find((x) => x.isPinned === true);
       const value = JSON.parse(localStorage.getItem("pinned-tweet"));
       const got = Object.entries(value);
+      console.log(got);
+      console.log(value);
       const gt = got[0][1];
+      
+      // localStorage.removeItem("tweet-name")
+      console.log(value);
       state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id ? { ...twt, isPinned: false } : twt;
       });
+
       state.tweet.splice(findIndex, 1);
       state.tweet.splice(
         localStorage.getItem("pinned-new-index") >
@@ -279,7 +329,13 @@ export const tweetSlice = createSlice({
           ? Number(localStorage.getItem("pinned-new-index"))
           : Number(localStorage.getItem("pinned-prev-index")),
         0,
-        gt
+        // {
+        //   text: "sjs",
+        //   profileName: "Adp",
+        //   comment: [{ text: "kkd" }],
+        //   isThread: true,
+        // }
+        value[0]
       );
     },
     editTweet: (state, action) => {
@@ -289,10 +345,17 @@ export const tweetSlice = createSlice({
           : a;
       });
     },
+
+    editOnce: (state, action) => {
+      state.tweet = state.tweet.map((a) =>
+        a.id === action.payload ? { ...a, isEdit: true } : a
+      );
+    },
   },
 });
 export const {
   addToTweetArr,
+  editOnce,
   editTweet,
   setRetweet,
   setShowMsg,

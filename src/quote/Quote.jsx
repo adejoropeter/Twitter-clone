@@ -68,16 +68,13 @@ const Quote = () => {
             />
           </div>
           <textarea
-            name=""
-            id=""
-            draggable={false}
             cols="10"
             rows="10"
-            value={inputVal}
             placeholder="Tweet your Reply!"
             className="w-full border-none bg-transparent outline-none text-white px-3 text-2xl placeholder:text-[#6A6F74] resize-none"
+            value={inputVal}
             onChange={(e) => {
-              dispatch(addToTweetArray({ value: e.target.value }));
+              dispatch(addToTweetArray( e.target.value ));
             }}
           ></textarea>
           {/* <input

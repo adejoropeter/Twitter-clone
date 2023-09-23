@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showIcons, stateValue } from "../../redux/inputFieldSlice";
 import InputValue from "./InputValue";
 
-const UploadTweetInput = ({refr}) => {
+const UploadTweetInput = ({ refr }) => {
   const [inputBool, setInputBool] = useState(false);
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
@@ -35,11 +35,13 @@ const UploadTweetInput = ({refr}) => {
         <input
           onMouseEnter={mouseEnter}
           onMouseLeave={mouseOut}
-          
           onChange={(e) => {
+            // console.log("k")
             //     setState([...e.target.value]);
             dispatch(stateValue({ value: [...e.target.value] }));
+
            
+
             if (state?.value?.length <= 35 || !state.value?.length) {
               dispatch(showIcons(false));
             } else {
@@ -50,6 +52,8 @@ const UploadTweetInput = ({refr}) => {
           }}
           type="text"
           value={state?.value?.join("") || ""}
+          // value={state.value}
+
           ref={refr}
           placeholder="What's happening?"
           className={`placeholder:text-[#6A6F74] placeholder:font-normal outline-none placeholder:text-lg sm:placeholder:text-2xl text-sm sm:text-lg w-full border-none bg-transparent h-fit mb-4  resize-none overflow-hidden

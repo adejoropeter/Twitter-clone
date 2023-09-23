@@ -84,7 +84,7 @@ const SignupSteps = ({user}) => {
   return (
     <>
       {currIdx === 0 && (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 w-full">
           <div className="relative ">
             <input
               type="text"
