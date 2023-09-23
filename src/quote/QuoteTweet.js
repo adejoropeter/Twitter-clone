@@ -51,13 +51,12 @@ const QuoteTweet = () => {
       });
   };
   const handleAddTweet = () => {
- 
     dispatch(changeIDIndex());
-    console.log((text))
+    console.log(text);
     dispatch(
       addToTweetArr([
         {
-          text: (text) || "Nothing here",
+          text: text || "Nothing here",
           profileName: "Adejoro Peter",
           username: "@ade_peter",
           comment: [],
@@ -68,7 +67,7 @@ const QuoteTweet = () => {
           isQuote: true,
           quoteTweet: view,
           isPinned: false,
-          isEdited:false
+          isEdited: false,
         },
       ])
     );
@@ -187,7 +186,7 @@ const QuoteTweet = () => {
           bg={text ? "#00BA7C" : "#005D3E"}
           onClickFn={handleAddTweet}
           color={text === "" ? "#808080" : "#ffffff"}
-          //     disabled={inputTextWithEmptyValue?.inputText === "" ? true : false}
+          disabled={text === "" ? true : false}
         />
       </div>
     </div>

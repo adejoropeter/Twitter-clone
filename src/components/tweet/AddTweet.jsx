@@ -177,7 +177,7 @@ const AddTweet = ({ handleAddTweet }) => {
               ? "#005D3E"
               : "#00BA7C"
           }
-          // disabled={!state?.value?.length || !state.value.join("").trim() }
+          disabled={!state?.value?.length || !state.value.join("").trim() }
         />
       </div>
     </div>

@@ -25,6 +25,7 @@ import { auth } from "../../firebase";
 import { motion } from "framer-motion";
 import { ref } from "firebase/storage";
 import { copyPrevTextToInput } from "../../redux/inputFieldSlice";
+import { useMemo } from "react";
 
 const Tweet = ({ tweet, reffs }) => {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const Tweet = ({ tweet, reffs }) => {
   const renderColoredText = (value) => {
     // Use regular expression to find words starting with "@"
     const regex = /(?:^|\s)(@\w+)/g;
-    const coloredText = value?.replace(regex, (match, word) => {
+    const coloredText = value?.join("").replace(regex, (match, word) => {
       return ` ${match} `;
     });
     return coloredText
@@ -80,6 +81,7 @@ const Tweet = ({ tweet, reffs }) => {
         }
       });
   };
+
   const handleShowDelete = (e) => {
     e.stopPropagation();
     dispatch(setShowTweetDlt({ id: tweet.id }));
@@ -88,12 +90,14 @@ const Tweet = ({ tweet, reffs }) => {
   const handlePin = (e) => {
     e.stopPropagation();
   };
+  console.log(tweet.text)
   const divRef = useRef(null);
   return (
     <div
       className="xxs:pr-8 xxs:pl-6 px-2 lg:pr-5 lg:pl-5 py-2 w-full  hover:bg-[#080808] cursor-pointer tweet-border overflow-hidden "
       onClick={handleClick}
     >
+      {/* {renderColoredText("@sam")} */}
       <div className="flex gap-4 w-full hover:bg-[#080808] relative">
         <div
           className={`${
@@ -160,14 +164,13 @@ const Tweet = ({ tweet, reffs }) => {
                         e.stopPropagation();
                         document.documentElement.scrollTop = 0;
                         document.body.style.overflow="hidden"
-                        console.log(tweet.text);
+                        
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (currentUser) {
                           if (tweet.isEdit) {
                             return;
                           } else {
                             if (tweet.isQuote||tweet.isThread) {
-                              console.log(...tweet.text);
                               dispatch(
                                 copyPrevTextToInput({
                                   value: [...tweet.text],
@@ -186,11 +189,9 @@ const Tweet = ({ tweet, reffs }) => {
                           dispatch(setShowMsg(true));
                         }
                       }}
-                      className={`${
-                        tweet.isEdit && "cursor-default bg-[#4d4c4cb6]"
-                      } bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer`}
+                      className={` ${tweet.isEdit&&"bg-slate-600 cursor-auto"}  bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer`}
                     >
-                      Edit
+                      Edit 
                     </p>
                     <p
                       ref={divRef}

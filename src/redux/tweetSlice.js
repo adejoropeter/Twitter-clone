@@ -315,7 +315,7 @@ export const tweetSlice = createSlice({
       console.log(got);
       console.log(value);
       const gt = got[0][1];
-      
+
       // localStorage.removeItem("tweet-name")
       console.log(value);
       state.tweet = state.tweet.map((twt) => {
@@ -345,10 +345,10 @@ export const tweetSlice = createSlice({
           : a;
       });
     },
-
     editOnce: (state, action) => {
       state.tweet = state.tweet.map((a) =>
-        a.id === action.payload ? { ...a, isEdit: true } : a
+        a.id === action.payload ?   { ...a, isEdit: true } : a
+        // a.id===action.payload ?  a.text===action.payload.text?{...a,isEdit:true}:a
       );
     },
   },

@@ -34,6 +34,7 @@ const Home = ({ refrrr }) => {
   const [stat, setStat] = useState(false);
   const dispatch = useDispatch();
   const inputVal = state?.value?.join("");
+
   const renderColoredText = (value) => {
     // Use regular expression to find words starting with "@"
     const regex = /(?:^|\s)(@\w+)/g;
@@ -59,6 +60,8 @@ const Home = ({ refrrr }) => {
         }
       });
   };
+  
+  
   const handleAddTweet = async () => {
   
     dispatch(changeIDIndex());
@@ -89,12 +92,11 @@ const Home = ({ refrrr }) => {
       );
       console.log(tweet);
       setTimeout(() => {
-        dispatch(editOnce(Number(localStorage.getItem("editID"))));
+        dispatch(editOnce({id:Number(localStorage.getItem("editID")),text:'kok'}));
         dispatch(
           editTweet({
             // text: renderColoredText(),
             text: inputVal,
-
             id: Number(localStorage.getItem("editID")),
           })
         );

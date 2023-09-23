@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const quoteSlice = createSlice({
   name: "input-field",
   initialState: {
-    inputVal: "kfk",
+    inputVal: [],
     quoteTweet: {},
   },
   reducers: {
