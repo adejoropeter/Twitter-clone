@@ -52,7 +52,7 @@ const QuoteTweet = () => {
   };
   const handleAddTweet = () => {
     dispatch(changeIDIndex());
-    console.log(text);
+   
     dispatch(
       addToTweetArr([
         {

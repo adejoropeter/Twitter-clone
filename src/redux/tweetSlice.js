@@ -239,7 +239,7 @@ export const tweetSlice = createSlice({
       //   "tweet-name",
       //   JSON.stringify(findValue?.text[0]?.props?.children)
       // );
-      console.log(findValue);
+
       localStorage.setItem(
         "pinned-tweet",
         // findValue.isQuote
@@ -312,12 +312,11 @@ export const tweetSlice = createSlice({
       // const find = state.tweet.find((x) => x.isPinned === true);
       const value = JSON.parse(localStorage.getItem("pinned-tweet"));
       const got = Object.entries(value);
-      console.log(got);
-      console.log(value);
+
       const gt = got[0][1];
 
       // localStorage.removeItem("tweet-name")
-      console.log(value);
+
       state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id ? { ...twt, isPinned: false } : twt;
       });
@@ -346,8 +345,8 @@ export const tweetSlice = createSlice({
       });
     },
     editOnce: (state, action) => {
-      state.tweet = state.tweet.map((a) =>
-        a.id === action.payload ?   { ...a, isEdit: true } : a
+      state.tweet = state.tweet.map(
+        (a) => (a.id === action.payload.id ? { ...a, isEdit: true } : a)
         // a.id===action.payload ?  a.text===action.payload.text?{...a,isEdit:true}:a
       );
     },

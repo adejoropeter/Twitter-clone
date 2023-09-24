@@ -89,8 +89,9 @@ const Tweet = ({ tweet, reffs }) => {
   };
   const handlePin = (e) => {
     e.stopPropagation();
+    dispatch(unPinTweet({ id: tweet.id }));
   };
-  console.log(tweet.text)
+
   const divRef = useRef(null);
   return (
     <div
@@ -163,14 +164,14 @@ const Tweet = ({ tweet, reffs }) => {
                       onClick={(e) => {
                         e.stopPropagation();
                         document.documentElement.scrollTop = 0;
-                        document.body.style.overflow="hidden"
-                        
+                        document.body.style.overflow = "hidden";
+
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (currentUser) {
                           if (tweet.isEdit) {
                             return;
                           } else {
-                            if (tweet.isQuote||tweet.isThread) {
+                            if (tweet.isQuote || tweet.isThread) {
                               dispatch(
                                 copyPrevTextToInput({
                                   value: [...tweet.text],
@@ -189,9 +190,11 @@ const Tweet = ({ tweet, reffs }) => {
                           dispatch(setShowMsg(true));
                         }
                       }}
-                      className={` ${tweet.isEdit&&"bg-slate-600 cursor-auto"}  bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer`}
+                      className={` ${
+                        tweet.isEdit && "bg-slate-600 cursor-auto"
+                      }  bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer`}
                     >
-                      Edit 
+                      Edit
                     </p>
                     <p
                       ref={divRef}
@@ -199,16 +202,26 @@ const Tweet = ({ tweet, reffs }) => {
                         e.stopPropagation();
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (currentUser) {
-                          
                           if (divRef.current?.textContent === "Pin") {
-                            dispatch(pinTweet({ id: tweet.id ,text:tweet.text}));
+                            const findIfPinnedTweetExist = tweets.find((a) => {
+                              return a.isPinned === true;
+                            });
+                            console.log(findIfPinnedTweetExist);
+                            if (findIfPinnedTweetExist) {
+                              dispatch(unPinTweet({ id: tweet.id }));
+                              dispatch(
+                                pinTweet({ id: tweet.id, text: tweet.text })
+                              );
+                            } else {
+                              dispatch(
+                                pinTweet({ id: tweet.id, text: tweet.text })
+                              );
+                            }
                             localStorage.removeItem("pinned-new-index");
-                            console.log(tweet)
                           } else {
                             dispatch(unPinTweet({ id: tweet.id }));
-                            console.log(
-                              JSON.parse(localStorage.getItem("pinned-tweet")));
-                            console.log(tweet.id)
+                          
+                            
                             if (copyOfNewTweets.length) {
                               return;
                             } else {
@@ -230,6 +243,7 @@ const Tweet = ({ tweet, reffs }) => {
                 )}
                 <div className="flex">
                   {tweet.isEdit && <div className="text-[#6A6F74]">edited</div>}
+
                   {tweet.isPinned && (
                     <BiTrash
                       color="#6A6F74"
@@ -255,7 +269,7 @@ const Tweet = ({ tweet, reffs }) => {
 
           <div className="flex flex-col gap-2">
             {/* <p>{renderColoredText(tweet?.text)}</p> */}
-            <p>{(tweet?.text)}</p>
+            <p>{tweet?.text}</p>
             {tweet.isQuote && (
               <div
                 onClick={(e) => {

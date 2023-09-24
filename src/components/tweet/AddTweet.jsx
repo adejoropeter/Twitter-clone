@@ -28,7 +28,7 @@ const AddTweet = ({ handleAddTweet }) => {
   //   const [state, setState] = useState([]);
   //   const [bool, setBool] = useState(false);
   const state = useSelector((state) => state.input.value);
-  console.log();
+  
   const bool = useSelector((state) => state.input.bool);
   const compose = useSelector((state) => state.composeTweet.groupTweet);
   const tweet = useSelector((state) => state.post.tweet);

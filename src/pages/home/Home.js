@@ -90,9 +90,9 @@ const Home = ({ refrrr }) => {
           id: Number(localStorage.getItem("editID")),
         })
       );
-      console.log(tweet);
+      
       setTimeout(() => {
-        dispatch(editOnce({id:Number(localStorage.getItem("editID")),text:'kok'}));
+        dispatch(editOnce({id:Number(localStorage.getItem("editID"))}));
         dispatch(
           editTweet({
             // text: renderColoredText(),
@@ -107,7 +107,7 @@ const Home = ({ refrrr }) => {
       
       // dispatch(addToTweetArr([newArr]))
     }
-    console.log(showEdit);
+
     // await addDoc(collection(db, "tweets"), {
     //   text: text?.join(""),
     //   profileName: profileName?.name,
@@ -214,7 +214,7 @@ const Home = ({ refrrr }) => {
               Number(localStorage.getItem("pinned-prev-index")) + total
             );
 
-            console.log(idd);
+           
             dispatch(clearCopyTweetArr());
             setTimeout(() => {
               // dispatch(sortArr());
