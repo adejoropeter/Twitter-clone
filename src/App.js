@@ -47,6 +47,7 @@ const App = () => {
   const curr = useSelector((state) => state.login.currentUser);
   const user = localStorage.getItem("user");
   const ref = useRef(null);
+  const refs = useRef(null);
   const id = curr?.user?.uid;
   const [urlName, setUrlName] = useState("");
   // console.log(user);
@@ -106,7 +107,7 @@ const App = () => {
 
           {/* Navbar needs to be placed inside each pages routes incase of an incorrect route */}
           <Routes>
-              <Route path="/" element={<Home refrrr={ref} />}>
+              <Route path="/" element={<Home refrrr={refs} />}>
                 <Route path="/following" element={<Following />}></Route>
                 <Route path="/foryou" element={<ForYou reff={ref} />}></Route>
               </Route>

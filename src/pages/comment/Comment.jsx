@@ -2,19 +2,31 @@ import React, { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import HomeRightBar from "../home/HomeRightBar";
-import { deleteComment, setShowCommentDlt } from "../../redux/tweetSlice";
+import {
+  deleteComment,
+  quote,
+  setShowCommentDlt,
+} from "../../redux/tweetSlice";
 import { useNavigate } from "react-router-dom";
 import AddTweet from "../../components/tweet/AddTweet";
 import { UploadTweet } from "../../components";
 import CommentTweet from "../../components/comment/CommentTweet";
 import { BiDotsHorizontal } from "react-icons/bi";
+import { useEffect } from "react";
 
 const Comment = () => {
   const tweet = useSelector((state) => state.post.viewTweet);
   const comment = useSelector((state) => state.post.tweet);
+  // const tweets = useSelector((state) => state.post.tweet);
   // const [showDelete, setShowDelete] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // useEffect(() => {
+  //    const findIfPinnedTweetExist = comment.find((a) => {
+  //      return a?.quoteTweet?.id === tweet.id;
+  //    });
+  //   dispatch(quote({ id: tweet.id, obj: findIfPinnedTweetExist }));
+  // }, [comment]);
   return (
     <div
       className="xsm:border-l-2 border-l-[#16181c] w-full  lg:translate-x-[21.3%] sm:translate-x-[25%]  min-h-screen bg-[#000000] flex sm:w-[80%]  text-white lg:max-w-full
@@ -46,6 +58,13 @@ const Comment = () => {
             <span className="text-white">16</span>
             <span>Likes</span>
           </div>
+          {!tweet?.is && (
+            <div onClick={()=>console.log(tweet.quote)} className="text-[#71767B] py-4 flex gap-2 border-[#16181c] border-b px-4">
+              <span className="text-white">{tweet?.quote?.length}</span>
+
+              <span>Quote</span>
+            </div>
+          )}
           <div className="flex gap-3"></div>
           <CommentTweet />
           <div>
@@ -122,8 +141,13 @@ const Comment = () => {
                                 </div>
                               </div>
                               <div className="  w-fit">
-                                
-                                <p className="text-white "> <span className="text-[#1D9BF0]">@{tweet?.profileName}</span> {a?.text}</p>
+                                <p className="text-white ">
+                                  {" "}
+                                  <span className="text-[#1D9BF0]">
+                                    @{tweet?.profileName}
+                                  </span>{" "}
+                                  {a?.text}
+                                </p>
                               </div>
                             </div>
                           </div>

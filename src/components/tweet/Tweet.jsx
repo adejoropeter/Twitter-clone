@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { BiDotsHorizontal, BiDownload, BiTrash } from "react-icons/bi";
+import React, { useEffect, useRef } from "react";
+import { BiDotsHorizontal } from "react-icons/bi";
 import { FaComment, FaRetweet } from "react-icons/fa";
 import { TbChartAreaLine } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import {
   PinTweet,
   changeIDIndexMinusOne,
@@ -11,6 +11,7 @@ import {
   deleteTweet,
   editTweet,
   pinTweet,
+  quote,
   setAddToRetweetArr,
   setRetweet,
   setShowEdit,
@@ -22,10 +23,8 @@ import {
   viewTweet,
 } from "../../redux/tweetSlice";
 import { auth } from "../../firebase";
-import { motion } from "framer-motion";
-import { ref } from "firebase/storage";
 import { copyPrevTextToInput } from "../../redux/inputFieldSlice";
-import { useMemo } from "react";
+import { BsFillPinFill } from "react-icons/bs";
 
 const Tweet = ({ tweet, reffs }) => {
   const dispatch = useDispatch();
@@ -40,9 +39,13 @@ const Tweet = ({ tweet, reffs }) => {
   useEffect(() => {
     dispatch(setAddToRetweetArr());
   }, [tweet.retweeted]);
+
   const handleClick = () => {
     if (currentUser) {
+      // dispatch(quote({ id: tweet.id }));
+      console.log(tweet);
       dispatch(viewTweet(tweet));
+
       dispatch(setUserUrlName(tweet?.profileName));
       navigate(`/comment/${tweet.profileName}`);
       document.documentElement.scrollTop = 0;
@@ -85,7 +88,7 @@ const Tweet = ({ tweet, reffs }) => {
   const handleShowDelete = (e) => {
     e.stopPropagation();
     dispatch(setShowTweetDlt({ id: tweet.id }));
-    // dispatch(viewTweet(tweet))
+    dispatch(viewTweet(tweet))
   };
   const handlePin = (e) => {
     e.stopPropagation();
@@ -129,7 +132,10 @@ const Tweet = ({ tweet, reffs }) => {
         <div className="ml-14 w-full flex flex-col gap-">
           <div className="flex justify-between  h-full  ">
             <div className="flex gap-2 justify-start w-full">
-              <p className="w-20  sm:w-fit md:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis">
+              <p
+                onClick={() => console.log(tweet)}
+                className="w-20  sm:w-fit md:w-fit font-bold whitespace-nowrap overflow-hidden text-ellipsis"
+              >
                 {tweet?.profileName}
               </p>
               <div className="text-[#6A6F74]  hidden xxs:flex gap-1  ">
@@ -150,7 +156,12 @@ const Tweet = ({ tweet, reffs }) => {
                         e.stopPropagation();
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (currentUser) {
-                          dispatch(deleteTweet({ id: tweet.id }));
+                          dispatch(
+                            deleteTweet({
+                              id: tweet.id,
+                              // qutID: tweet?.quoteTweet.id,
+                            })
+                          );
                         } else {
                           dispatch(setShowMsg(true));
                         }
@@ -164,13 +175,13 @@ const Tweet = ({ tweet, reffs }) => {
                       onClick={(e) => {
                         e.stopPropagation();
                         document.documentElement.scrollTop = 0;
-                        document.body.style.overflow = "hidden";
 
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (currentUser) {
                           if (tweet.isEdit) {
                             return;
                           } else {
+                            document.body.style.overflow = "hidden";
                             if (tweet.isQuote || tweet.isThread) {
                               dispatch(
                                 copyPrevTextToInput({
@@ -191,7 +202,7 @@ const Tweet = ({ tweet, reffs }) => {
                         }
                       }}
                       className={` ${
-                        tweet.isEdit && "bg-slate-600 cursor-auto"
+                        tweet.isEdit && "bg-slate-600 cursor-default"
                       }  bg-black  p-2  shadow-sm shadow-orange-50 cursor-pointer`}
                     >
                       Edit
@@ -203,10 +214,13 @@ const Tweet = ({ tweet, reffs }) => {
                         dispatch(setShowTweetDlt({ id: tweet.id }));
                         if (currentUser) {
                           if (divRef.current?.textContent === "Pin") {
+                            // document.body.scrollTop=0
+                            document.documentElement.scrollTop = 0;
+
                             const findIfPinnedTweetExist = tweets.find((a) => {
                               return a.isPinned === true;
                             });
-                            console.log(findIfPinnedTweetExist);
+                             
                             if (findIfPinnedTweetExist) {
                               dispatch(unPinTweet({ id: tweet.id }));
                               dispatch(
@@ -220,8 +234,7 @@ const Tweet = ({ tweet, reffs }) => {
                             localStorage.removeItem("pinned-new-index");
                           } else {
                             dispatch(unPinTweet({ id: tweet.id }));
-                          
-                            
+
                             if (copyOfNewTweets.length) {
                               return;
                             } else {
@@ -245,7 +258,7 @@ const Tweet = ({ tweet, reffs }) => {
                   {tweet.isEdit && <div className="text-[#6A6F74]">edited</div>}
 
                   {tweet.isPinned && (
-                    <BiTrash
+                    <BsFillPinFill
                       color="#6A6F74"
                       size="20px"
                       fontWeight="400"
@@ -274,6 +287,7 @@ const Tweet = ({ tweet, reffs }) => {
               <div
                 onClick={(e) => {
                   e.stopPropagation();
+                  console.log(tweet.quoteTweet);
                   if (currentUser) {
                     navigate(`/comment/${tweet.profileName}`);
                     document.documentElement.scrollTop = 0;
@@ -310,6 +324,7 @@ const Tweet = ({ tweet, reffs }) => {
                 e.stopPropagation();
                 dispatch(viewTweet(tweet));
                 navigate("/compose/tweet");
+                localStorage.setItem("quoteId", tweet.id);
               }}
               className="flex items-center gap-2 text-[#6A6F74]"
             >

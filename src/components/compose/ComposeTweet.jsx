@@ -80,6 +80,7 @@ const ComposeTweet = () => {
             profileName: "Adejoro Peter",
             username: "@ade_peter",
             comment: [],
+            quote:[],
             likes: 1,
             id: inx + 1,
             retweeted: false,

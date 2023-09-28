@@ -18,6 +18,7 @@ export const tweetSlice = createSlice({
         isPinned: false,
         showTweetDlt: false,
         username: "@ade_peter",
+        quote: [],
         comment: [
           {
             profileName: "Adejoro Samson",
@@ -27,39 +28,23 @@ export const tweetSlice = createSlice({
         ],
         retweeted: false,
       },
-      // {
-      //   id: 1,
-      //   profileName: "Peter Samson",
-      //   text: "Drop a comment on what u're currently learning",
-      //   retweeted: true,
-      //   showTweetDlt: false,
-      //   username: "@peter_sam",
-      //   isPinned: false,
-
-      //   comment: [
-      //     {
-      //       showDlt: false,
-      //       profileName: "Peter Samson",
-      //       text: "I love you",
-      //     },
-      //   ],
-      // },
-      // {
-      //   id: 0,
-      //   retweeted: false,
-      //   isPinned: true,
-      //   profileName: "Adejoro Joshua",
-      //   text: "Peter",
-      //   showTweetDlt: false,
-      //   username: "@josh_ade",
-      //   comment: [
-      //     {
-      //       showDlt: false,
-      //       profileName: "Adejoro Joshua",
-      //       text: "I Dislike you",
-      //     },
-      //   ],
-      // },
+      {
+        id: 1,
+        profileName: "Peter Samson",
+        text: ["Drop a comment on what u're currently learning"],
+        retweeted: true,
+        showTweetDlt: false,
+        username: "@peter_sam",
+        isPinned: true,
+        quote: [],
+        comment: [
+          {
+            showDlt: false,
+            profileName: "Peter Samson",
+            text: "I love you",
+          },
+        ],
+      },
     ],
     retweetedTweet: [],
     viewTweet: null,
@@ -79,7 +64,7 @@ export const tweetSlice = createSlice({
       state.copyOfNewTweets = [...action.payload, ...state.copyOfNewTweets];
     },
     sortArr: (state) => {
-      state.tweet = state.tweet.sort((a, b) => b.isPinned - a.isPinned);
+      state.tweet = state.tweet?.sort((a, b) => b.isPinned - a.isPinned);
     },
     clearCopyTweetArr: (state) => {
       state.copyOfNewTweets = [];
@@ -203,15 +188,25 @@ export const tweetSlice = createSlice({
           : twt;
       });
     },
-
     deleteTweet: (state, action) => {
-      state.tweet = state.tweet.filter((twt) => twt.id !== action.payload.id);
-      // SORT the objects up side down
-      // state.tweet = state.tweet.map((a, i) => {
-      //   return { ...a, id: i  };
-      // });
-    },
+      const del = state.tweet.find((a) => {
+        return a?.id === state.viewTweet?.quoteTweet?.id;
+      });
+      if (del) {
+        const res = state.tweet[state.tweet.indexOf(del)]?.quote.filter((a) => {
+          return a.id !== action.payload.id;
+        });
+        state.tweet = state.tweet.filter((twt) => twt.id !== action.payload.id);
 
+        state.tweet = state.tweet.map((a) => {
+          return a.id === del.id ? { ...a, quote: res } : a;
+        });
+        console.log(res);
+        console.log(del);
+      } else {
+        state.tweet = state.tweet.filter((twt) => twt.id !== action.payload.id);
+      }
+    },
     setRetweet: (state, action) => {
       state.tweet = state.tweet?.map((twt, id) => {
         return twt.id === action.payload.id
@@ -235,65 +230,13 @@ export const tweetSlice = createSlice({
         (x) => x.id === action.payload.id
       );
       const findValue = state.tweet.find((x) => x.id === action.payload.id);
-      // localStorage.setItem(
-      //   "tweet-name",
-      //   JSON.stringify(findValue?.text[0]?.props?.children)
-      // );
-
-      localStorage.setItem(
-        "pinned-tweet",
-        // findValue.isQuote
-        //   ? JSON.stringify([
-        //       {
-        //         comment: findValue.comment,
-        //         profileName: findValue.profileName,
-        //         // text: JSON.parse(localStorage.getItem("tweet-name")),
-        //         text: action.payload?.text[0]?.props?.children,
-        //         quoteTweet: findValue.quoteTweet,
-        //         isQuote: findValue.isQuote,
-        //         quote: findValue.quote,
-        //         id: findValue.id,
-        //         isEdited: findValue.isEdited,
-        //         username: findValue.username,
-        //         isPinned: findValue.isPinned,
-        //         showTweetDlt: findValue.showTweetDlt,
-        //       },
-        //     // findValue
-        //     ])
-        //   : findValue.isThread
-        //   ? JSON.stringify([
-        //       {
-        //         comment: findValue.comment,
-        //         id: findValue.id,
-        //         profileName: findValue.profileName,
-        //         inputText: findValue.inputText,
-        //         text: findValue.text[0].props.children,
-
-        //         quote: findValue.quote,
-        //         // isEdited: findValue.isEdited,
-        //         // username: findValue.username,
-        //         // isPinned: findValue.isPinned,
-        //         // showTweetDlt: findValue.showTweetDlt,
-        //         // isThread: findValue.isThread,
-        //       },
-        //     ])
-        // :
-        JSON.stringify([findValue])
-      );
-      // localStorage.setItem("pinned-tweet", JSON.stringify());
+      localStorage.setItem("pinned-tweet", JSON.stringify([findValue]));
       localStorage.setItem("pinned-prev-index", findIndex);
-      // if (findIndex === 0) {
       state.tweet = state.tweet.map((twt) => {
         return twt.id === action.payload.id
           ? { ...twt, isPinned: true }
           : { ...twt, isPinned: false };
       });
-      // } else {
-      // state.tweet.splice(findIndex, 1);
-      // localStorage.setItem("pinned-tweet", JSON.stringify(findValue));
-      // state.tweet.unshift({ .zv..findValue, isPinned: true });
-
-      // }
     },
     totalNumberOfTweetAddedAfterPinnedTweet: (state) => {
       state.total++;
@@ -349,11 +292,59 @@ export const tweetSlice = createSlice({
         (a) => (a.id === action.payload.id ? { ...a, isEdit: true } : a)
         // a.id===action.payload ?  a.text===action.payload.text?{...a,isEdit:true}:a
       );
+      const find = state.tweet.find((a) => {
+        return a?.quoteTweet?.id === Number(localStorage.getItem("editID"));
+      });
+      if (find) {
+        state.tweet = state.tweet.map((a) => {
+          return a.id === find.id
+            ? {
+                ...a,
+                quoteTweet: { ...a.quoteTweet, text: action.payload.text },
+              }
+            : a;
+        });
+      }
+      console.log(find);
+    },
+    findQuoteTweet4Each: (state, action) => {
+      state.tweet = state.tweet?.map((twt) => {
+        return twt.id === action.payload.id
+          ? {
+              ...twt,
+              quote: [
+                {
+                  // id: action.payload.qutID,
+                  // text: action.payload.text,
+                  ...action.payload.tweet,
+                },
+                ...twt.quote,
+              ],
+            }
+          : twt;
+      });
+    },
+    quote: (state, action) => {
+      // const findAll = tweets?.find(a => a.quoteTweet.id === 2)
+      // const findIfPinnedTweetExist = state.tweet.find((a) => {
+      //   return a?.quoteTweet?.id === action.payload.id;
+      // });
+      // console.log(findIfPinnedTweetExist)
+      state.tweet = state.tweet?.map((twt) => {
+        return twt.id === action.payload?.id
+          ? {
+              ...twt,
+              quote: [{ ...action.payload.obj }, ...twt.quote],
+            }
+          : twt;
+      });
     },
   },
 });
 export const {
   addToTweetArr,
+  quote,
+  findQuoteTweet4Each,
   editOnce,
   editTweet,
   setRetweet,

@@ -13,6 +13,7 @@ import {
   clearTotalNumberOfTweetAddedAfterPinnedTweet,
   editOnce,
   editTweet,
+  quote,
   reverseTweetArr,
   setShowEdit,
   totalNumberOfTweetAddedAfterPinnedTweet,
@@ -60,19 +61,18 @@ const Home = ({ refrrr }) => {
         }
       });
   };
-  
-  
+
   const handleAddTweet = async () => {
-  
     dispatch(changeIDIndex());
     dispatch(totalNumberOfTweetAddedAfterPinnedTweet());
     document.body.style.overflowY = "visible";
     const newArr = {
       // text: renderColoredText()||"Nothing here",
-      text:state.value,
+      text: state.value,
       profileName: "Adejoro Peter",
       username: "@ade_peter",
       comment: [],
+      quote: [],
       likes: 1,
       isPinned: false,
       isEdited: false,
@@ -88,23 +88,25 @@ const Home = ({ refrrr }) => {
         editTweet({
           text: "loading...",
           id: Number(localStorage.getItem("editID")),
+          // quoteId:
         })
       );
-      
+
       setTimeout(() => {
-        dispatch(editOnce({id:Number(localStorage.getItem("editID"))}));
+        dispatch(editOnce({ id: Number(localStorage.getItem("editID")),text:inputVal }));
         dispatch(
           editTweet({
             // text: renderColoredText(),
             text: inputVal,
             id: Number(localStorage.getItem("editID")),
+            // quoteId:1
           })
         );
       }, 1200);
       dispatch(setShowEdit(false));
     } else {
       dispatch(addToCopyTweetArr([newArr]));
-      
+
       // dispatch(addToTweetArr([newArr]))
     }
 
@@ -117,6 +119,7 @@ const Home = ({ refrrr }) => {
     // console.log(auth);
     dispatch(clearInputField());
   };
+ 
   let idd =
     Number(localStorage.getItem("pinned-prev-index")) +
     Number(copyOfNewTweets.length);
@@ -127,7 +130,7 @@ const Home = ({ refrrr }) => {
         <div
           onClick={() => {
             dispatch(setShowEdit(false));
-            dispatch(clearInputField())
+            dispatch(clearInputField());
             document.body.style.overflowY = "visible";
           }}
           className="absolute overflow-hidden h-full w-full  z-[1000] backdrop-blur-lg blur-0"
@@ -214,7 +217,6 @@ const Home = ({ refrrr }) => {
               Number(localStorage.getItem("pinned-prev-index")) + total
             );
 
-           
             dispatch(clearCopyTweetArr());
             setTimeout(() => {
               // dispatch(sortArr());

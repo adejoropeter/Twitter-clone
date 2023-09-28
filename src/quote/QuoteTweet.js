@@ -11,7 +11,11 @@ import { addDoc, collection, serverTimestamp } from "../firebase";
 // import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/button/Button";
-import { addToTweetArr, changeIDIndex } from "../redux/tweetSlice";
+import {
+  addToTweetArr,
+  changeIDIndex,
+  findQuoteTweet4Each,
+} from "../redux/tweetSlice";
 import { clearInputVal } from "../redux/quoteSlice";
 
 const QuoteTweet = () => {
@@ -51,28 +55,35 @@ const QuoteTweet = () => {
       });
   };
   const handleAddTweet = () => {
+          document.documentElement.scrollTop = 0;
+
+    const newArr = {
+      text: text || "Nothing here",
+      profileName: "Adejoro Peter",
+      username: "@ade_peter",
+      comment: [],
+      quote: [],
+      likes: 1,
+      // id: tweet[0].id + 1,
+      id: id + 1,
+      retweeted: false,
+      isQuote: true,
+      quoteTweet: { ...view, is: true },
+      isPinned: false,
+      isEdited: false,
+    };
     dispatch(changeIDIndex());
-   
+    // call the function
     dispatch(
-      addToTweetArr([
-        {
-          text: text || "Nothing here",
-          profileName: "Adejoro Peter",
-          username: "@ade_peter",
-          comment: [],
-          likes: 1,
-          // id: tweet[0].id + 1,
-          id: id + 1,
-          retweeted: false,
-          isQuote: true,
-          quoteTweet: view,
-          isPinned: false,
-          isEdited: false,
-        },
-      ])
+      findQuoteTweet4Each({
+        id: view.id,
+        tweet: newArr,
+      })
     );
+    dispatch(addToTweetArr([newArr]));
     dispatch(clearInputVal());
     navigate(-1);
+    console.log(tweet);
   };
 
   //   const idx = compose.length;
