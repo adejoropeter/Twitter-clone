@@ -6,13 +6,13 @@ import Button from "../components/button/Button";
 import QuoteTweet from "./QuoteTweet";
 import { addToTweetArray } from "../redux/quoteSlice";
 
-const Quote = () => {
+const Quote = ({ quoteInput }) => {
   const navigate = useNavigate();
   const view = useSelector((state) => state.post.viewTweet);
   const inputVal = useSelector((state) => state.quote.inputVal);
   const quote = useSelector((state) => state.post.quote);
+  console.log(quoteInput);
   const dispatch = useDispatch();
-
   return (
     <div className="w-full h-screen bg-[#242d34b3] fixed  z-[200]  overflow-y-hidden ">
       {/* <div className="bg-black      h-screen   w-full    "> */}
@@ -21,18 +21,15 @@ const Quote = () => {
           <div className="flex-1 flex items-center ">
             <abbr
               title="close"
-              className=" w-10 h-10 transition-colors duration-200 hover:bg-[#181919] delay-100 rounded-full flex justify-center items-center"
+              className=" w-10 h-10 transition-colors duration-200 hover:bg-[#181919] delay-100 rounded-full flex justify-center items-center cursor-pointer"
+              onClick={() => {
+                navigate(-1);
+                // dispatch(resetGroupTweet());
+                // dispatch(resetCurr());
+                document.body.style.overflowY = "visible";
+              }}
             >
-              <TbX
-                size="20px"
-                className="text-white   self-center cursor-pointer"
-                onClick={() => {
-                  navigate(-1);
-                  // dispatch(resetGroupTweet());
-                  // dispatch(resetCurr());
-                  document.body.style.overflowY = "visible";
-                }}
-              />
+              <TbX size="20px" className="text-white   self-center " />
             </abbr>
             <div className="flex-1 flex justify-end text-[#00BA7C] font-bold">
               Drafts
@@ -73,11 +70,11 @@ const Quote = () => {
             ></textarea> */}
           <input
             placeholder="Tweet your Reply!"
-           
             value={inputVal}
-          onChange={(e) => {
-            dispatch(addToTweetArray( e.target.value ));
-          }}
+            onChange={(e) => {
+              dispatch(addToTweetArray(e.target.value));
+            }}
+            ref={quoteInput}
             type="text"
             className="w-full border-none bg-transparent outline-none text-white px-3 text-2xl placeholder:text-[#6A6F74]"
           />

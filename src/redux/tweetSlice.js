@@ -35,7 +35,7 @@ export const tweetSlice = createSlice({
         retweeted: true,
         showTweetDlt: false,
         username: "@peter_sam",
-        isPinned: true,
+        isPinned: false,
         quote: [],
         comment: [
           {

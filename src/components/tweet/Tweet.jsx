@@ -26,7 +26,7 @@ import { auth } from "../../firebase";
 import { copyPrevTextToInput } from "../../redux/inputFieldSlice";
 import { BsFillPinFill } from "react-icons/bs";
 
-const Tweet = ({ tweet, reffs }) => {
+const Tweet = ({ tweet, reffs ,refd}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate("");
   const currentUser = useSelector((state) => state.login.currentUser);
@@ -194,7 +194,8 @@ const Tweet = ({ tweet, reffs }) => {
                               );
                             }
                           }
-                          reffs.current.focus();
+                          reffs.current?.focus();
+                          console.log(reffs)
                           localStorage.setItem("editID", tweet.id);
                           dispatch(setShowEdit(true));
                         } else {
@@ -324,6 +325,9 @@ const Tweet = ({ tweet, reffs }) => {
                 e.stopPropagation();
                 dispatch(viewTweet(tweet));
                 navigate("/compose/tweet");
+                console.log(reffs)
+                console.log(refd)
+                refd.current?.focus()
                 localStorage.setItem("quoteId", tweet.id);
               }}
               className="flex items-center gap-2 text-[#6A6F74]"

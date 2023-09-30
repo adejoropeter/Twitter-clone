@@ -22,7 +22,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { clearInputField } from "../../redux/inputFieldSlice";
 import { auth, db } from "../../firebase";
 import { BiArrowFromTop } from "react-icons/bi";
-const Home = ({ refrrr }) => {
+const Home = ({ uploadRef }) => {
   const [nav, setNav] = useState("for you");
   const tweet = useSelector((state) => state.post.tweet);
 
@@ -230,7 +230,7 @@ const Home = ({ refrrr }) => {
             <AiOutlineArrowDown />
           </div>
         </motion.div>
-        <UploadTweet handleAddTweet={handleAddTweet} refrr={refrrr} />
+        <UploadTweet handleAddTweet={handleAddTweet} refrr={uploadRef} />
 
         <Outlet />
       </main>
